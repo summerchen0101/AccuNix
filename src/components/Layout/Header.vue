@@ -1,7 +1,7 @@
 <template>
   <div class="p-3 bg-white flex items-center h-14 fixed top-0 w-screen z-20">
     <div class="w-64">
-      <img class="w-32 h-auto" src="../../assets/logo.png" alt="" />
+      <img class="w-32 h-auto" src="@/assets/logo.png" alt="" />
     </div>
     <div class="flex-1 flex justify-end md:justify-between">
       <i
@@ -15,7 +15,7 @@
 </template>
 
 <script lang="ts">
-import { useLayoutState } from "../../providers/layoutProvider";
+import { useLayoutState } from "@/providers/layoutProvider";
 import { defineComponent } from "vue";
 export default defineComponent({
   name: "Header",

@@ -36,8 +36,8 @@
 </template>
 
 <script lang="ts">
-import MenuItem from "../../components/Layout/MenuItem.vue";
-import { useLayoutState } from "../../providers/layoutProvider";
+import MenuItem from "@/components/Layout/MenuItem.vue";
+import { useLayoutState } from "@/providers/layoutProvider";
 import { defineComponent } from "vue";
 
 export interface Menu {

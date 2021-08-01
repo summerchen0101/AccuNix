@@ -30,7 +30,7 @@
 </template>
 
 <script lang="ts">
-import { useLayoutState } from "../../providers/layoutProvider";
+import { useLayoutState } from "@/providers/layoutProvider";
 import { defineComponent, PropType, ref } from "vue";
 import { Menu } from "./Sidebar.vue";
 

@@ -1,8 +1,8 @@
 <script lang="tsx">
 import { defineComponent, reactive, ref } from "vue";
-import Layout from "../components/Layout/Layout.vue";
-import TabGroup from "../components/TabGroup.vue";
-import { OptionType } from "../types";
+import Layout from "@/components/Layout/Layout.vue";
+import TabGroup from "@/components/TabGroup.vue";
+import { OptionType } from "@/types";
 
 export default defineComponent({
   name: "Home",

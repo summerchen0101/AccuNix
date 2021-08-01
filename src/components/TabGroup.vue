@@ -1,5 +1,5 @@
 <script lang="tsx">
-import { OptionType } from "../types";
+import { OptionType } from "@/types";
 import { defineComponent, PropType } from "vue";
 
 export default defineComponent({

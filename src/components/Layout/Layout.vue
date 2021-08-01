@@ -13,10 +13,10 @@
 </template>
 
 <script lang="ts">
-import Header from "../../components/Layout/Header.vue";
-import PageHeader from "../../components/Layout/PageHeader.vue";
-import Sidebar from "../../components/Layout/Sidebar.vue";
-import { useLayoutState } from "../../providers/layoutProvider";
+import Header from "@/components/Layout/Header.vue";
+import PageHeader from "@/components/Layout/PageHeader.vue";
+import Sidebar from "@/components/Layout/Sidebar.vue";
+import { useLayoutState } from "@/providers/layoutProvider";
 import { defineComponent } from "vue";
 
 export default defineComponent({
