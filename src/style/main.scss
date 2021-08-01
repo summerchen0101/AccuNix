@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+html,
+body,
+#app {
+  height: 100%;
+}
+
+@layer components {
+  .round-btn {
+    @apply w-8 h-8 flex justify-center items-center cursor-pointer rounded-full;
+  }
+  .round-btn-blue {
+    @apply round-btn bg-blue-500 text-white hover:bg-blue-600;
+  }
+  .round-btn-static {
+    @apply round-btn hover:bg-gray-100 text-gray-500;
+  }
+}
+
+.sidebar  {
+  ul.show {
+    @apply max-h-80;
+  }
+  &.mini {
+    ul.show {
+      @apply max-h-0;
+    }
+    &:hover {
+      ul.show {
+        @apply max-h-80;
+      }
+    }
+  }
+}
+
+.tab {
+  @apply w-32 h-9 flex items-center justify-center bg-gray-200 text-gray-500 rounded-full cursor-pointer;
+  &.active {
+    @apply bg-blue-500 text-white
+  }
+}
