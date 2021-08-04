@@ -10,9 +10,12 @@ export default defineConfig({
     },
   },
   esbuild: {
-    jsxFactory: "h",
-    jsxFragment: "Fragment",
     jsxInject: `import React from 'react'`,
   },
   plugins: [vue(), vueJsx()],
+  server: {
+    watch: {
+      usePolling: true,
+    },
+  },
 });
