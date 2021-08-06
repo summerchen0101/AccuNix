@@ -11,6 +11,7 @@ export default defineComponent({
   setup() {
     const selected = ref("1");
     const currentTab = ref(1);
+    const currentAcc = ref(1);
     const tabOptions = reactive<OptionType<number>[]>([
       { label: "儀表板", value: 1 },
       { label: "機器人設定", value: 2 },
@@ -18,12 +19,21 @@ export default defineComponent({
 
     return () => (
       <Layout>
-        <div class="mb-3">
+        <div class="flex flex-col sm:flex-row items-center mb-3">
           <TabGroup
             value={currentTab.value}
             onChange={(value: number) => (currentTab.value = value)}
             options={tabOptions}
           />
+          <div class="flex-1"></div>
+          <div class="flex space-x-3 w-full sm:w-auto mt-3 sm:mt-0">
+            <el-select class="flex-1 sm:w-64" v-model={currentAcc.value}>
+              <el-option label="AccuNix-POC (@755ncvge)" value={1} />
+            </el-select>
+            <div class="bg-blue-500 text-white hover:bg-blue-400 w-9 h-9 rounded-sm flex items-center justify-center cursor-pointer">
+              <i class="fas fa-plus"></i>
+            </div>
+          </div>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           <div class="bg-white rounded-md px-4 py-1 shadow-md sm:col-span-2 text-sm text-gray-600 divide-y">
@@ -55,8 +65,14 @@ export default defineComponent({
           >
             {createSlot(
               <div>
-                <p class="text-gray-500 text-sm">切換預設主選單:</p>
-                <el-select v-model={selected.value} placeholder="請選擇主選單">
+                <p class="text-gray-500 text-sm mb-1 font-bold">
+                  切換預設主選單:
+                </p>
+                <el-select
+                  v-model={selected.value}
+                  placeholder="請選擇主選單"
+                  size="small"
+                >
                   <el-option value="1" label="不設定主選單" />
                 </el-select>
               </div>
