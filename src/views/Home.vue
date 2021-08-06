@@ -1,7 +1,9 @@
 <script lang="tsx">
 import CardPanel from "@/components/CardPanel.vue";
+import SectionPanel from "@/components/SectionPanel.vue";
 import Layout from "@/components/Layout/Layout.vue";
 import TabGroup from "@/components/TabGroup.vue";
+import DoughnutChart from "@/components/DoughnutChart.vue";
 import PageHeader from "@/components/Layout/PageHeader.vue";
 import { OptionType } from "@/types";
 import createSlot from "@/utils/createSlot.vue";
@@ -41,6 +43,93 @@ export default defineComponent({
               </div>
             </div>
           </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+            <SectionPanel class="sm:col-span-2" title="用戶生命週期">
+              {{
+                default: () => [
+                  <div class="flex justify-evenly py-5">
+                    <div class="flex flex-col">
+                      <DoughnutChart />
+                      <div class="mt-5 text-gray-600 text-center text-sm">
+                        新用戶
+                        <el-tooltip
+                          class="ml-2"
+                          effect="dark"
+                          content="特定時間加入, 尚未定義用戶類型暫存區"
+                        >
+                          <i class="fas fa-question-circle"></i>
+                        </el-tooltip>
+                      </div>
+                    </div>
+                    <div class="flex flex-col">
+                      <DoughnutChart />
+                      <div class="mt-5 text-gray-600 text-center text-sm">
+                        無回應
+                        <el-tooltip
+                          class="ml-2"
+                          effect="dark"
+                          content="特定時間加入, 尚未定義用戶類型暫存區"
+                        >
+                          <i class="fas fa-question-circle"></i>
+                        </el-tooltip>
+                      </div>
+                    </div>
+                    <div class="flex flex-col">
+                      <DoughnutChart />
+                      <div class="mt-5 text-gray-600 text-center text-sm">
+                        積極
+                        <el-tooltip
+                          class="ml-2"
+                          effect="dark"
+                          content="特定時間加入, 尚未定義用戶類型暫存區"
+                        >
+                          <i class="fas fa-question-circle"></i>
+                        </el-tooltip>
+                      </div>
+                    </div>
+                    <div class="flex flex-col">
+                      <DoughnutChart />
+                      <div class="mt-5 text-gray-600 text-center text-sm">
+                        消極
+                        <el-tooltip
+                          class="ml-2"
+                          effect="dark"
+                          content="特定時間加入, 尚未定義用戶類型暫存區"
+                        >
+                          <i class="fas fa-question-circle"></i>
+                        </el-tooltip>
+                      </div>
+                    </div>
+                    <div class="flex flex-col">
+                      <DoughnutChart />
+                      <div class="mt-5 text-gray-600 text-center text-sm">
+                        沈睡
+                        <el-tooltip
+                          class="ml-2"
+                          effect="dark"
+                          content="特定時間加入, 尚未定義用戶類型暫存區"
+                        >
+                          <i class="fas fa-question-circle"></i>
+                        </el-tooltip>
+                      </div>
+                    </div>
+                  </div>,
+                ],
+                plus: () => [
+                  <el-radio-group>
+                    <el-radio label="用戶數據" value={1}></el-radio>
+                    <el-radio label="區間數據" value={2}></el-radio>
+                  </el-radio-group>,
+                ],
+                footer: () => [
+                  <div class="flex space-x-4 text-sm text-gray-500">
+                    <div>平均點擊時間：- 天</div>
+                    <div>用戶生命週期：- 天</div>
+                  </div>,
+                ],
+              }}
+            </SectionPanel>
+          </div>
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             <div class="bg-white rounded-md px-4 py-1 shadow-md sm:col-span-2 text-sm text-gray-600 divide-y">
               <div class="flex space-x-5 py-3">
@@ -69,20 +158,22 @@ export default defineComponent({
               icon="far fa-caret-square-left"
               desc="此為預設顯示於聊天室供用戶點選的圖文選單，若用戶有指定主選單，將以指定主選單為主"
             >
-              {createSlot(
-                <div>
-                  <p class="text-gray-500 text-sm mb-1 font-bold">
-                    切換預設主選單:
-                  </p>
-                  <el-select
-                    v-model={selected.value}
-                    placeholder="請選擇主選單"
-                    size="small"
-                  >
-                    <el-option value="1" label="不設定主選單" />
-                  </el-select>
-                </div>
-              )}
+              {{
+                default: () => [
+                  <div>
+                    <p class="text-gray-500 text-sm mb-1 font-bold">
+                      切換預設主選單:
+                    </p>
+                    <el-select
+                      v-model={selected.value}
+                      placeholder="請選擇主選單"
+                      size="small"
+                    >
+                      <el-option value="1" label="不設定主選單" />
+                    </el-select>
+                  </div>,
+                ],
+              }}
             </CardPanel>
             <CardPanel
               title="自動回應設定"
