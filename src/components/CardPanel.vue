@@ -7,7 +7,7 @@ export default defineComponent({
     icon: String,
     desc: String,
   },
-  setup(props) {
+  setup(props, { slots }) {
     const { title, icon, desc } = toRefs(props);
     return () => (
       <div class="bg-white rounded-md p-4 shadow-md">
@@ -21,6 +21,7 @@ export default defineComponent({
           </span>
         </div>
         <div class="text-gray-500 text-sm mt-3 pb-3">{desc.value}</div>
+        {slots.default?.()}
       </div>
     );
   },

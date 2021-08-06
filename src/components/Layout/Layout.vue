@@ -7,7 +7,7 @@
       :class="isMiniSidebar ? 'md:ml-12' : 'md:ml-64'"
     >
       <PageHeader />
-      <div class="p-3 bg-gray-100 flex-1 h-full"><slot></slot></div>
+      <div class="p-3 bg-gray-100 flex-1 overflow-y-auto"><slot></slot></div>
     </div>
   </div>
 </template>

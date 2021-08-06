@@ -5,17 +5,30 @@ import TabGroup from "@/components/TabGroup.vue";
 import { OptionType } from "@/types";
 import CardPanel from "@/components/CardPanel.vue";
 
+import { ElButton, ElOption, ElSelect } from "element-plus";
+
 export default defineComponent({
   name: "Home",
   setup() {
+    const selected = ref("1");
     const currentTab = ref(1);
     const tabOptions = reactive<OptionType<number>[]>([
       { label: "儀表板", value: 1 },
       { label: "機器人設定", value: 2 },
     ]);
+    const mySlots = {
+      default: () => [
+        <div>
+          <p class="text-gray-500 text-sm">切換預設主選單:</p>
+          <el-select v-model={selected.value} placeholder="請選擇主選單">
+            <el-option value="1" label="不設定主選單" />
+          </el-select>
+        </div>,
+      ],
+    };
     return () => (
       <Layout>
-        <div class="py-3">
+        <div class="mb-3">
           <TabGroup
             value={currentTab.value}
             onChange={(value: number) => (currentTab.value = value)}
@@ -23,6 +36,35 @@ export default defineComponent({
           />
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div class="bg-white rounded-md px-4 py-1 shadow-md sm:col-span-2 text-sm text-gray-600 divide-y">
+            <div class="flex space-x-5 py-3">
+              <div>標籤額度： 0/500</div>
+              <div>加入好友： 1</div>
+              <div>封鎖好友： 0</div>
+              <div class="flex-1"></div>
+              <a href="#" class="text-blue-500">
+                下載好友資訊
+              </a>
+            </div>
+            <div class="flex space-x-5 py-3">
+              <div>Webhook 狀態 : 啟用中</div>
+              <div>串接狀態 : 已串接</div>
+            </div>
+            <div class="flex space-x-5 py-3">
+              <div>備註</div>
+              <div class="flex-1"></div>
+              <a href="#" class="text-blue-500">
+                編輯
+              </a>
+            </div>
+          </div>
+          <CardPanel
+            title="機器人主選單"
+            icon="far fa-caret-square-left"
+            desc="此為預設顯示於聊天室供用戶點選的圖文選單，若用戶有指定主選單，將以指定主選單為主"
+          >
+            {mySlots}
+          </CardPanel>
           <CardPanel
             title="自動回應設定"
             icon="far fa-caret-square-left"
