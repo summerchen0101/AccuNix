@@ -1,11 +1,10 @@
 <script lang="tsx">
-import { defineComponent, reactive, ref } from "vue";
+import CardPanel from "@/components/CardPanel.vue";
 import Layout from "@/components/Layout/Layout.vue";
 import TabGroup from "@/components/TabGroup.vue";
 import { OptionType } from "@/types";
-import CardPanel from "@/components/CardPanel.vue";
-
-import { ElButton, ElOption, ElSelect } from "element-plus";
+import createSlot from "@/utils/createSlot.vue";
+import { defineComponent, reactive, ref } from "vue";
 
 export default defineComponent({
   name: "Home",
@@ -16,16 +15,7 @@ export default defineComponent({
       { label: "儀表板", value: 1 },
       { label: "機器人設定", value: 2 },
     ]);
-    const mySlots = {
-      default: () => [
-        <div>
-          <p class="text-gray-500 text-sm">切換預設主選單:</p>
-          <el-select v-model={selected.value} placeholder="請選擇主選單">
-            <el-option value="1" label="不設定主選單" />
-          </el-select>
-        </div>,
-      ],
-    };
+
     return () => (
       <Layout>
         <div class="mb-3">
@@ -63,7 +53,14 @@ export default defineComponent({
             icon="far fa-caret-square-left"
             desc="此為預設顯示於聊天室供用戶點選的圖文選單，若用戶有指定主選單，將以指定主選單為主"
           >
-            {mySlots}
+            {createSlot(
+              <div>
+                <p class="text-gray-500 text-sm">切換預設主選單:</p>
+                <el-select v-model={selected.value} placeholder="請選擇主選單">
+                  <el-option value="1" label="不設定主選單" />
+                </el-select>
+              </div>
+            )}
           </CardPanel>
           <CardPanel
             title="自動回應設定"

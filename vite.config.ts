@@ -11,6 +11,8 @@ export default defineConfig({
   },
   esbuild: {
     jsxInject: `import React from 'react'`,
+    jsxFactory: "h",
+    jsxFragment: "Fragment",
   },
   plugins: [vue(), vueJsx()],
   server: {
