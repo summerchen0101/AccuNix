@@ -1,5 +1,18 @@
 <template>
-  <div class="bg-gray-200 flex items-center px-3 h-10 border-b border-gray-300">
+  <div
+    class="
+      bg-gray-200
+      flex
+      items-center
+      px-3
+      h-10
+      border-b border-gray-300
+      absolute
+      top-0
+      w-full
+      z-10
+    "
+  >
     <Breadcrumb />
   </div>
 </template>
