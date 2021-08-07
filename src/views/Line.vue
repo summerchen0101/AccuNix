@@ -5,15 +5,7 @@ import LineCharts from "@/components/linebot/LineCharts.vue";
 import LineSettings from "@/components/linebot/LineSettings.vue";
 import TabGroup from "@/components/TabGroup.vue";
 import { OptionType } from "@/types";
-import {
-  computed,
-  defineComponent,
-  KeepAlive,
-  reactive,
-  ref,
-  shallowRef,
-  watch,
-} from "vue";
+import { computed, defineComponent, KeepAlive, reactive, ref } from "vue";
 
 export default defineComponent({
   name: "Home",

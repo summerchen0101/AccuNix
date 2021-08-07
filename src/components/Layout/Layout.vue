@@ -3,7 +3,15 @@
     <Header />
     <Sidebar />
     <div
-      class="transition-all relative flex flex-col ml-0 mt-14 h-full"
+      class="
+        transition-all
+        relative
+        flex flex-col
+        ml-0
+        mt-14
+        h-full
+        overflow-y-hidden
+      "
       :class="isMiniSidebar ? 'md:ml-12' : 'md:ml-64'"
     >
       <div class="bg-gray-100 flex-1 overflow-y-auto static"><slot></slot></div>
