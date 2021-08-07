@@ -11,7 +11,7 @@ export default defineComponent({
   setup() {
     const router = useRouter();
     watchEffect(() => {
-      router.push("/line/settings");
+      router.push({ name: "Line" });
     });
   },
 });

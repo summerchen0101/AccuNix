@@ -1,10 +1,19 @@
 <script lang="tsx">
 import Layout from "@/components/Layout/Layout.vue";
 import PageHeader from "@/components/Layout/PageHeader.vue";
+import LineCharts from "@/components/linebot/LineCharts.vue";
+import LineSettings from "@/components/linebot/LineSettings.vue";
 import TabGroup from "@/components/TabGroup.vue";
 import { OptionType } from "@/types";
-import { defineComponent, reactive, ref, watch, watchEffect } from "vue";
-import { useRoute, useRouter } from "vue-router";
+import {
+  computed,
+  defineComponent,
+  KeepAlive,
+  reactive,
+  ref,
+  shallowRef,
+  watch,
+} from "vue";
 
 export default defineComponent({
   name: "Home",
@@ -12,24 +21,19 @@ export default defineComponent({
     PageHeader,
   },
   setup() {
-    const router = useRouter();
-    const route = useRoute();
-    const currentTab = ref(route.name);
+    const currentTab = ref<keyof typeof componentMap>("LineSettings");
     const currentAcc = ref(1);
     const tabOptions = reactive<OptionType<string>[]>([
       { label: "儀表板", value: "LineCharts" },
       { label: "機器人設定", value: "LineSettings" },
     ]);
 
-    watchEffect(() => {
-      if (route.name === "Line") {
-        currentTab.value = "LineSettings";
-      }
-    });
+    const componentMap = {
+      LineCharts,
+      LineSettings,
+    };
 
-    watch(currentTab, (newVal) => {
-      router.push({ name: newVal });
-    });
+    const TabContent = computed(() => componentMap[currentTab.value]);
 
     return () => (
       <Layout>
@@ -37,8 +41,10 @@ export default defineComponent({
         <div class="p-3 mt-10">
           <div class="flex flex-col sm:flex-row items-center mb-3">
             <TabGroup
-              value={currentTab.value as string}
-              onChange={(value) => (currentTab.value = value as string)}
+              value={currentTab.value}
+              onChange={(value) =>
+                (currentTab.value = value as keyof typeof componentMap)
+              }
               options={tabOptions}
             />
             <div class="flex-1"></div>
@@ -51,7 +57,9 @@ export default defineComponent({
               </div>
             </div>
           </div>
-          <router-view />
+          <KeepAlive>
+            <TabContent.value />
+          </KeepAlive>
         </div>
       </Layout>
     );
