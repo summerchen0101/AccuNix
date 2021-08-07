@@ -11,6 +11,18 @@ const routes: Array<RouteRecordRaw> = [
     path: "/line",
     name: "Line",
     component: () => import("@/views/Line.vue"),
+    children: [
+      {
+        path: "/line/charts",
+        name: "LineCharts",
+        component: () => import("@/views/LineCharts.vue"),
+      },
+      {
+        path: "/line/settings",
+        name: "LineSettings",
+        component: () => import("@/views/LineSettings.vue"),
+      },
+    ],
   },
   {
     path: "/facebook",

@@ -9,7 +9,6 @@ export default defineComponent({
   },
   setup(props, { slots }) {
     const { title, icon, desc } = toRefs(props);
-    const children = slots.default?.();
     return () => (
       <div class="bg-white rounded-md p-4 shadow-md">
         <div class="flex items-center">
@@ -22,7 +21,7 @@ export default defineComponent({
           </span>
         </div>
         <div class="text-gray-500 text-sm mt-3 pb-3">{desc.value}</div>
-        {children}
+        {slots.default?.()}
       </div>
     );
   },

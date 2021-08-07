@@ -5,9 +5,9 @@ import { defineComponent, PropType } from "vue";
 export default defineComponent({
   name: "TabGroup",
   props: {
-    value: Number,
-    options: Object as PropType<OptionType<number>[]>,
-    onChange: Function as PropType<(value: number) => void>,
+    value: [Number, String],
+    options: Object as PropType<OptionType<number | string>[]>,
+    onChange: Function as PropType<(value: number | string) => void>,
   },
   setup(props) {
     return () => (

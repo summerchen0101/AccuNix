@@ -21,9 +21,11 @@ export default defineComponent({
           {slots.plus?.()}
         </div>
         {slots.default?.()}
-        <div class="border-t border-gray-200 -mx-2 px-4 pt-3">
-          {slots.footer?.()}
-        </div>
+        {slots.footer && (
+          <div class="border-t border-gray-200 -mx-2 px-4 pt-3">
+            {slots.footer?.()}
+          </div>
+        )}
       </div>
     );
   },

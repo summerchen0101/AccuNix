@@ -11,6 +11,7 @@ export default defineComponent({
         duration={5}
         color="#aaa"
         stroke-width={10}
+        class="flex flex-col justify-center"
       >
         <div class="flex flex-col justify-center space-y-2">
           <span class="text-2xl text-gray-600">80人</span>
