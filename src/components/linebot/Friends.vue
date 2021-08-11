@@ -10,13 +10,50 @@ export default defineComponent({
   },
   setup() {
     const selected = ref(1);
-    const tableData = reactive(
-      [...Array(5)].map(() => ({
-        date: "2016-05-03",
-        name: "王小虎",
-        address: "上海市普陀区金沙江路 1516 弄",
-      }))
-    );
+    const chartOptions = reactive({
+      chart: {
+        toolbar: {
+          show: false,
+        },
+        height: 350,
+        type: "line",
+        zoom: {
+          enabled: false,
+        },
+      },
+      dataLabels: {
+        enabled: false,
+      },
+      stroke: {
+        curve: "straight",
+        width: 2,
+      },
+      grid: {
+        row: {
+          colors: ["#f3f3f3", "transparent"], // takes an array which will be repeated on columns
+          opacity: 0.5,
+        },
+      },
+      xaxis: {
+        categories: [
+          "Jan",
+          "Feb",
+          "Mar",
+          "Apr",
+          "May",
+          "Jun",
+          "Jul",
+          "Aug",
+          "Sep",
+        ],
+      },
+    });
+    const series = reactive([
+      {
+        name: "Desktops",
+        data: [10, 41, 35, 51, 49, 62, 69, 91, 148],
+      },
+    ]);
     return () => (
       <SectionPanel title="好友總人數分析">
         {{
@@ -31,7 +68,6 @@ export default defineComponent({
                   end-placeholder="结束日期"
                   size="small"
                 ></el-date-picker>
-                <el-button size="small">搜尋</el-button>
               </div>
               <el-radio-group class="mb-3" v-model={selected.value}>
                 <el-radio label={1}>累積好友</el-radio>
@@ -39,11 +75,11 @@ export default defineComponent({
                 <el-radio label={3}>累積封鎖數</el-radio>
                 <el-radio label={4}>每日封鎖</el-radio>
               </el-radio-group>
-              <el-table data={tableData} stripe class="w-100" size="small">
-                <el-table-column prop="date" label="日期"></el-table-column>
-                <el-table-column prop="name" label="姓名"></el-table-column>
-                <el-table-column prop="address" label="地址"></el-table-column>
-              </el-table>
+              <apexchart
+                type="line"
+                options={chartOptions}
+                series={series}
+              ></apexchart>
             </div>,
           ],
         }}
