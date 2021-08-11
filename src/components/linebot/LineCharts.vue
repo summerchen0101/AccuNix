@@ -4,6 +4,8 @@ import LinebotFriends from "@/components/linebot/Friends.vue";
 import LinebotMessage from "@/components/linebot/Message.vue";
 import LinebotLifeCircle from "@/components/linebot/LifeCircle.vue";
 import LinebotLabels from "@/components/linebot/Labels.vue";
+import LinebotKeywords from "@/components/linebot/Keywords.vue";
+import LinebotScripts from "@/components/linebot/Scripts.vue";
 import { defineComponent } from "vue";
 
 export default defineComponent({
@@ -16,6 +18,8 @@ export default defineComponent({
         <LinebotFriends />
         <LinebotMessage />
         <LinebotLabels />
+        <LinebotKeywords />
+        <LinebotScripts />
       </div>
     );
   },

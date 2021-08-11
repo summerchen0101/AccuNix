@@ -15,7 +15,6 @@ export default defineComponent({
         toolbar: {
           show: false,
         },
-        height: 350,
         type: "line",
         zoom: {
           enabled: false,
@@ -69,7 +68,6 @@ export default defineComponent({
                   end-placeholder="结束日期"
                   size="small"
                 ></el-date-picker>
-                <el-button size="small">搜尋</el-button>
               </div>
               <el-radio-group class="mb-3" v-model={selected.value}>
                 <el-radio label={1}>自動回應</el-radio>
