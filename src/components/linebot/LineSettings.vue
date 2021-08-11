@@ -1,10 +1,12 @@
 <script lang="tsx">
 import CardPanel from "@/components/CardPanel.vue";
 import { defineComponent, ref } from "vue";
+import { useRouter } from "vue-router";
 
 export default defineComponent({
   name: "LineSettings",
   setup() {
+    const router = useRouter();
     const selected = ref(1);
     return () => (
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -61,6 +63,7 @@ export default defineComponent({
           title="關鍵字庫"
           icon="fab fa-slack-hash"
           desc="提供 LINE 關鍵字互動，可藉由關鍵字動作：貼標籤、發送訊息、切換主選單、進入腳本、呼叫真人客服。"
+          onClick={() => router.push({ name: "KeywordList" })}
         />
         <CardPanel
           title="排程任務"

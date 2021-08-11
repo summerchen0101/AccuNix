@@ -16,6 +16,11 @@ const routes: Array<RouteRecordRaw> = [
     name: "Facebook",
     component: () => import("@/views/Facebook.vue"),
   },
+  {
+    path: "/keywords/list",
+    name: "KeywordList",
+    component: () => import("@/views/keywords/List.vue"),
+  },
 ];
 
 const router = createRouter({
