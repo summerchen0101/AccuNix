@@ -5,11 +5,13 @@
     </div>
     <div class="flex-1 flex justify-end md:justify-between">
       <i
-        class="round-btn-static text-gray-400 fas fa-bars"
+        class="round-btn round-btn-static text-gray-400 fas fa-bars"
         @click="isMiniSidebar = !isMiniSidebar"
       >
       </i>
-      <i class="fas fa-sign-out-alt round-btn-static hidden md:flex"></i>
+      <i
+        class="fas fa-sign-out-alt round-btn round-btn-static hidden md:flex"
+      ></i>
     </div>
   </div>
 </template>

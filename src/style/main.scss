@@ -5,16 +5,14 @@ body,
   height: 100%;
 }
 
-@layer components {
-  .round-btn {
-    @apply w-8 h-8 flex justify-center items-center cursor-pointer rounded-full;
-  }
-  .round-btn-blue {
-    @apply round-btn bg-blue-500 text-white hover:bg-blue-600;
-  }
-  .round-btn-static {
-    @apply round-btn hover:bg-gray-100 text-gray-500;
-  }
+.round-btn {
+  @apply w-8 h-8 flex justify-center items-center cursor-pointer rounded-full;
+}
+.round-btn-blue {
+  @apply bg-blue-500 text-white hover:bg-blue-600;
+}
+.round-btn-static {
+  @apply hover:bg-gray-100 text-gray-500;
 }
 
 .sidebar  {
