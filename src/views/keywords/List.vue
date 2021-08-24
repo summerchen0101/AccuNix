@@ -7,6 +7,7 @@ import Layout from "@/components/Layout/Layout.vue";
 import PageHeader from "@/components/Layout/PageHeader.vue";
 import PageIconBtn from "@/components/PageIconBtn.vue";
 import { defineComponent, reactive, ref } from "vue";
+import { useRouter } from "vue-router";
 
 interface Columns {
   keyword: string;
@@ -20,6 +21,7 @@ interface Columns {
 export default defineComponent({
   name: "KeywordList",
   setup() {
+    const router = useRouter();
     const activeTab = ref("first");
     const keyword = ref("");
     const tableData = reactive<Columns[]>(
@@ -42,7 +44,10 @@ export default defineComponent({
                 <i class="fab fa-slack-hash mr-2"></i>
                 關鍵字庫
               </h3>
-              <div class="py-2 px-4 bg-blue-500 text-white text-sm cursor-pointer hover:bg-blue-400 rounded-md">
+              <div
+                class="py-2 px-4 bg-blue-500 text-white text-sm cursor-pointer hover:bg-blue-400 rounded-md"
+                onClick={() => router.push({ name: "KeywordCreate" })}
+              >
                 新增關鍵字
               </div>
             </div>

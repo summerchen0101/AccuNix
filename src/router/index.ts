@@ -21,6 +21,11 @@ const routes: Array<RouteRecordRaw> = [
     name: "KeywordList",
     component: () => import("@/views/keywords/List.vue"),
   },
+  {
+    path: "/keywords/Create",
+    name: "KeywordCreate",
+    component: () => import("@/views/keywords/Create.vue"),
+  },
 ];
 
 const router = createRouter({
