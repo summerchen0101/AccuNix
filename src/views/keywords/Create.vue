@@ -1,7 +1,3 @@
-<template>
-  <div></div>
-</template>
-
 <script lang="tsx">
 import FormFieldTips from "@/components/FormFieldTips.vue";
 import IconBtn from "@/components/IconBtn.vue";
@@ -9,24 +5,13 @@ import Layout from "@/components/Layout/Layout.vue";
 import PageHeader from "@/components/Layout/PageHeader.vue";
 import { defineComponent, reactive } from "vue";
 import { cloneDeep } from "lodash";
+import MsgTextReview, {
+  MsgText,
+} from "@/components/msgReview/MsgTextReview.vue";
+import MsgTextForm from "@/components/msgForm/MsgTextForm.vue";
+import { MsgType } from "@/lib/enum";
+import MsgBtnForm, { MsgButton } from "@/components/msgForm/MsgBtnForm.vue";
 
-enum MsgType {
-  Text = 1,
-  Button = 2,
-  Image = 3,
-  Video = 4,
-}
-interface MsgText {
-  type: MsgType.Text;
-  content: string;
-}
-interface MsgButton {
-  type: MsgType.Button;
-  title: string;
-  content: string;
-  // btnLabel: string;
-  // btnAction: number;
-}
 interface MsgImage {
   type: MsgType.Image;
   image: string;
@@ -62,24 +47,9 @@ export default defineComponent({
     const toMsgComp = (group: MsgGroupType) => {
       switch (group.type) {
         case MsgType.Text:
-          return (
-            <>
-              <el-form-item label="文字內容">
-                <el-input v-model={group.content}></el-input>
-              </el-form-item>
-            </>
-          );
+          return <MsgTextForm content={group.content} />;
         case MsgType.Button:
-          return (
-            <>
-              <el-form-item label="標題">
-                <el-input v-model={group.title}></el-input>
-              </el-form-item>
-              <el-form-item label="內文">
-                <el-input v-model={group.content}></el-input>
-              </el-form-item>
-            </>
-          );
+          return <MsgBtnForm title={group.title} content={group.content} />;
         case MsgType.Image:
           return (
             <>
@@ -250,9 +220,16 @@ export default defineComponent({
                   </div>
 
                   <div class="w-1/2">
-                    <div class="bg-mobile h-[574px] w-[278px] px-[7px] pt-[47px] pb-[67px]">
+                    <div class="bg-mobile h-[574px] w-[278px] px-[7px] pt-[47px] pb-[67px] mx-auto">
                       <div class="overflow-y-auto overflow-x-hidden h-full">
-                        123
+                        {form.msgGroups.map((msg, i) => (
+                          <div key={i} class="flex items-start space-x-4 p-2">
+                            <i class="fas fa-user-circle text-4xl text-gray-400"></i>
+                            {msg.type === MsgType.Text && (
+                              <MsgTextReview msg={msg} />
+                            )}
+                          </div>
+                        ))}
                       </div>
                     </div>
                   </div>

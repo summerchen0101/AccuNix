@@ -46,3 +46,17 @@ body,
 .el-form-item__label {
   @apply leading-5
 }
+
+.msg-arrow::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.75rem;
+  width: 0;
+  height: 0;
+  border: 0.5rem solid transparent;
+  border-right-color: #e4e8eb;
+  border-left: 0;
+  border-top: 0;
+  margin-left: -0.375rem;
+}
