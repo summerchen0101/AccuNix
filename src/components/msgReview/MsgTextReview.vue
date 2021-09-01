@@ -1,5 +1,6 @@
 <script lang="tsx">
 import { MsgType } from "@/lib/enum";
+import { MsgGroupType } from "@/views/keywords/Create.vue";
 import { defineComponent, PropType, toRefs } from "vue";
 
 export interface MsgText {
@@ -10,7 +11,7 @@ export interface MsgText {
 export default defineComponent({
   name: "MsgTextReview",
   props: {
-    msg: Object as PropType<MsgText>,
+    msg: Object as PropType<MsgGroupType>,
   },
   setup(props) {
     const { content } = toRefs(props.msg);

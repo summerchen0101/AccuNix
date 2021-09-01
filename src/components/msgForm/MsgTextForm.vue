@@ -1,23 +1,29 @@
 <script lang="tsx">
-import { defineComponent, reactive, toRefs } from "vue";
+import { MsgGroupType } from "@/views/keywords/Create.vue";
+import { computed, defineComponent, PropType, reactive, toRefs } from "vue";
+import { MsgText } from "../msgReview/MsgTextReview.vue";
+
 export default defineComponent({
   name: "MsgTextForm",
   props: {
-    content: {
-      type: String,
-      default: "",
+    group: {
+      type: Object as PropType<MsgGroupType>,
+      default: () => ({}),
     },
   },
-  setup(props) {
-    // const { content } = toRefs(props);
-    // const { content } = reactive({ content: "" });
+  emits: ["update:group"],
+  setup(props, { emit }) {
+    const group = computed({
+      get: () => props.group,
+      set: (val) => emit("update:group", val),
+    });
     return () => (
       <>
         <el-form-item label="文字內容">
           <el-input
             type="textarea"
             placeholder="请输入内容"
-            v-model={props.content}
+            v-model={group.value.content}
             maxlength="100"
             show-word-limit
           />

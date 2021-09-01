@@ -3,26 +3,21 @@ import FormFieldTips from "@/components/FormFieldTips.vue";
 import IconBtn from "@/components/IconBtn.vue";
 import Layout from "@/components/Layout/Layout.vue";
 import PageHeader from "@/components/Layout/PageHeader.vue";
-import { defineComponent, reactive } from "vue";
-import { cloneDeep } from "lodash";
+import { computed, defineComponent, reactive } from "vue";
 import MsgTextReview, {
   MsgText,
 } from "@/components/msgReview/MsgTextReview.vue";
 import MsgTextForm from "@/components/msgForm/MsgTextForm.vue";
 import { MsgType } from "@/lib/enum";
 import MsgBtnForm, { MsgButton } from "@/components/msgForm/MsgBtnForm.vue";
+import { cloneDeep } from "lodash";
+import MsgBtnReviewVue from "@/components/msgReview/MsgBtnReview.vue";
 
-interface MsgImage {
-  type: MsgType.Image;
-  image: string;
-}
-interface MsgVideo {
-  type: MsgType.Video;
-  video: string;
-  image: string;
-}
-
-type MsgGroupType = MsgText | MsgButton | MsgImage | MsgVideo;
+export type MsgGroupType = {
+  type: MsgType;
+  title: "";
+  content: "";
+};
 
 interface IState {
   keyword: string;
@@ -30,7 +25,7 @@ interface IState {
   status: 1 | 0;
   tags: number[];
   msgGroups: MsgGroupType[];
-  currentMsgIndex: number;
+  currentMsgIndex: string;
 }
 
 export default defineComponent({
@@ -41,15 +36,20 @@ export default defineComponent({
       desc: "",
       status: 1,
       tags: [],
-      msgGroups: [{ type: MsgType.Text, content: "" }],
-      currentMsgIndex: 0,
+      msgGroups: [{ type: MsgType.Text, title: "", content: "" }],
+      currentMsgIndex: "0",
     });
     const toMsgComp = (group: MsgGroupType) => {
       switch (group.type) {
         case MsgType.Text:
-          return <MsgTextForm content={group.content} />;
+          return <MsgTextForm v-model:content={group.content} />;
         case MsgType.Button:
-          return <MsgBtnForm title={group.title} content={group.content} />;
+          return (
+            <MsgBtnForm
+              v-model:title={group.title}
+              v-model:content={group.content}
+            />
+          );
         case MsgType.Image:
           return (
             <>
@@ -84,14 +84,15 @@ export default defineComponent({
       if (form.msgGroups.length >= 5) return;
       form.msgGroups.push({
         type: MsgType.Text,
+        title: "",
         content: "",
       });
-      form.currentMsgIndex = form.msgGroups.length - 1;
+      form.currentMsgIndex = (form.msgGroups.length - 1).toString();
     };
     const handleCopyMsg = () => {
       if (form.msgGroups.length >= 5) return;
-      form.msgGroups.push(cloneDeep(form.msgGroups[form.currentMsgIndex]));
-      form.currentMsgIndex = form.msgGroups.length - 1;
+      form.msgGroups.push(cloneDeep(form.msgGroups[+form.currentMsgIndex]));
+      form.currentMsgIndex = (form.msgGroups.length - 1).toString();
     };
     return () => (
       <Layout>
@@ -185,20 +186,28 @@ export default defineComponent({
                         onClick={() => {
                           form.msgGroups.push({
                             type: MsgType.Text,
+                            title: "",
                             content: "",
                           });
-                          form.currentMsgIndex = form.msgGroups.length - 1;
+                          form.currentMsgIndex = (
+                            form.msgGroups.length - 1
+                          ).toString();
                         }}
                       ></el-button>
                     </div>
                     <el-tabs
                       type="card"
                       v-model={form.currentMsgIndex}
-                      closable
-                      tab-remove={(v: any) => console.log(v)}
+                      closable={form.msgGroups.length > 1}
+                      onTabRemove={(targetIndex: number) => {
+                        form.msgGroups.splice(targetIndex, 1);
+                        form.currentMsgIndex = (
+                          targetIndex - 1 >= 0 ? targetIndex - 1 : 0
+                        ).toString();
+                      }}
                     >
                       {form.msgGroups.map((g, i) => (
-                        <el-tab-pane label={`第${i + 1}則`} name={i}>
+                        <el-tab-pane label={`第${i + 1}則`} name={i.toString()}>
                           <el-form-item>
                             <el-select
                               v-model={g.type}
@@ -213,20 +222,29 @@ export default defineComponent({
                               </el-option>
                             </el-select>
                           </el-form-item>
-                          {toMsgComp(g)}
+                          {g.type === MsgType.Text ? (
+                            <MsgTextForm v-model={[g, "group"]} />
+                          ) : (
+                            g.type === MsgType.Button && (
+                              <MsgBtnForm v-model={[g, "group"]} />
+                            )
+                          )}
                         </el-tab-pane>
                       ))}
                     </el-tabs>
                   </div>
-
                   <div class="w-1/2">
                     <div class="bg-mobile h-[574px] w-[278px] px-[7px] pt-[47px] pb-[67px] mx-auto">
                       <div class="overflow-y-auto overflow-x-hidden h-full">
                         {form.msgGroups.map((msg, i) => (
                           <div key={i} class="flex items-start space-x-4 p-2">
                             <i class="fas fa-user-circle text-4xl text-gray-400"></i>
-                            {msg.type === MsgType.Text && (
+                            {msg.type === MsgType.Text ? (
                               <MsgTextReview msg={msg} />
+                            ) : (
+                              msg.type === MsgType.Button && (
+                                <MsgBtnReviewVue msg={msg} />
+                              )
                             )}
                           </div>
                         ))}
