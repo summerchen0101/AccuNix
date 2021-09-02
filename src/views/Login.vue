@@ -13,16 +13,12 @@ export default defineComponent({
       password: "50085008",
     });
     const { doLogin, isLoading } = useLogin();
-    watch(
-      () => isLoading.value,
-      (newVal) => console.log(newVal)
-    );
     const handleSubmit = async () => {
       const res = await doLogin({
         ...loginForm,
         app: "accunix",
       });
-      if (res.auth) {
+      if (res?.auth) {
         router.push({ name: "Home" });
       }
     };

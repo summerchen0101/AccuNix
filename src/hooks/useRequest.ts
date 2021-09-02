@@ -2,8 +2,12 @@ import Axios, { AxiosError, AxiosRequestConfig, Method } from "axios";
 import httpStatus from "http-status";
 import store from "store2";
 import { useRoute, useRouter } from "vue-router";
+import useAlert from "./useAlert";
 
-const useRequest = async function <R extends {} = {}, B extends {} = {}>({
+const useRequest = async function <
+  R extends { message?: string } = {},
+  B extends {} = {}
+>({
   method,
   url,
   data,
@@ -14,46 +18,46 @@ const useRequest = async function <R extends {} = {}, B extends {} = {}>({
   data: B;
   config?: AxiosRequestConfig;
 }) {
-  try {
-    const res = await Axios.request<R>({
-      method,
-      url,
-      data,
-      baseURL: "/api",
-      validateStatus: function (status) {
-        return (status >= 200 && status < 300) || status === 422;
-      },
-      headers: {
-        Authorization: `Bearer ${store.session.get("token")}`,
-      },
-      ...config,
-    });
-    const newToken = res.headers.authorization?.replace("Bearer ", "");
-    if (newToken) {
-      const oldToken = store.session.get("token");
-      store.session.set("token", newToken);
-      console.log(`
-            Refresh Token at ${new Date().toLocaleTimeString()}
-            old: ...${oldToken.slice(-3)}
-            new: ...${newToken.slice(-3)}
-          `);
-    }
-    // if (res.data.success === false) {
-    //   console.log(res.data);
-    //   throw Error(res.data?.message || "错误发生");
-    // }
-    return res.data;
-  } catch (err) {
-    apiErrHandler(err);
+  const alert = useAlert();
+  const res = await Axios.request<R>({
+    method,
+    url,
+    data,
+    baseURL: "/api",
+    validateStatus: function (status) {
+      return (status >= 200 && status < 300) || status === 422;
+    },
+    headers: {
+      Authorization: `Bearer ${store.session.get("token")}`,
+    },
+    ...config,
+  });
+  if (res.data.message) {
+    throw new Error(res.data.message);
   }
-  return null;
+  const newToken = res.headers.authorization?.replace("Bearer ", "");
+  if (newToken) {
+    const oldToken = store.session.get("token");
+    store.session.set("token", newToken);
+    console.log(`
+          Refresh Token at ${new Date().toLocaleTimeString()}
+          old: ...${oldToken.slice(-3)}
+          new: ...${newToken.slice(-3)}
+        `);
+  }
+  // if (res.data.success === false) {
+  //   console.log(res.data);
+  //   throw Error(res.data?.message || "错误发生");
+  // }
+  return res.data;
 };
 
 export default useRequest;
 
-function apiErrHandler(error: AxiosError<any>) {
+export function apiErrHandler(error: AxiosError<any>) {
   const router = useRouter();
   const route = useRoute();
+  const alert = useAlert();
   console.log(error.message);
   if (error.response) {
     // 错误来自回传参数
@@ -73,13 +77,13 @@ function apiErrHandler(error: AxiosError<any>) {
       msg = error.response.data.message;
       console.log(msg);
     }
-    alert({ message: msg, status: "error" });
+    alert(msg);
   } else if (error.request) {
     // 错误来自请求参数
     console.log(error.request);
   } else if (error.message) {
     // 错误来自其他因素
-    alert({ message: error.message, status: "error" });
+    alert(error.message);
   }
   // console.log(error.config)
 }

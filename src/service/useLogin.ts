@@ -1,4 +1,4 @@
-import useRequest from "@/hooks/useRequest";
+import useRequest, { apiErrHandler } from "@/hooks/useRequest";
 import { ref } from "vue";
 
 export interface LoginReq {
@@ -35,24 +35,25 @@ export interface Auth {
 }
 
 export interface LoginRes {
-  auth: Auth;
+  auth?: Auth;
+  message?: string;
 }
 
 function useLogin() {
   const isLoading = ref(false);
   const isError = ref(false);
-  const res = ref<LoginRes>();
+  const res = ref<LoginRes>(null);
   const doLogin = async (req: LoginReq) => {
     isLoading.value = true;
     isError.value = false;
     try {
-      res.value = await useRequest({
+      res.value = await useRequest<LoginRes>({
         method: "post",
         url: "login",
         data: req,
       });
     } catch (err) {
-      console.log(err);
+      apiErrHandler(err);
       isError.value = true;
     }
     isLoading.value = false;
