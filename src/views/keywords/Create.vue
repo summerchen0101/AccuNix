@@ -3,15 +3,13 @@ import FormFieldTips from "@/components/FormFieldTips.vue";
 import IconBtn from "@/components/IconBtn.vue";
 import Layout from "@/components/Layout/Layout.vue";
 import PageHeader from "@/components/Layout/PageHeader.vue";
-import { computed, defineComponent, reactive } from "vue";
-import MsgTextReview, {
-  MsgText,
-} from "@/components/msgReview/MsgTextReview.vue";
+import MsgBtnForm from "@/components/msgForm/MsgBtnForm.vue";
 import MsgTextForm from "@/components/msgForm/MsgTextForm.vue";
-import { MsgType } from "@/lib/enum";
-import MsgBtnForm, { MsgButton } from "@/components/msgForm/MsgBtnForm.vue";
-import { cloneDeep } from "lodash";
 import MsgBtnReviewVue from "@/components/msgReview/MsgBtnReview.vue";
+import MsgTextReview from "@/components/msgReview/MsgTextReview.vue";
+import { MsgType } from "@/lib/enum";
+import { cloneDeep } from "lodash";
+import { defineComponent, reactive } from "vue";
 
 export type MsgGroupType = {
   type: MsgType;

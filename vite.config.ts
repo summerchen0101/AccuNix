@@ -2,7 +2,6 @@ import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import vueJsx from "@vitejs/plugin-vue-jsx";
 import path from "path";
-// https://vitejs.dev/config/
 export default defineConfig({
   resolve: {
     alias: {
@@ -20,5 +19,17 @@ export default defineConfig({
       usePolling: true,
     },
     port: 8888,
+    proxy: {
+      "/api": {
+        target: "https://cms2.accunix.net",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ""),
+      },
+    },
   },
+  // define: {
+  //   "process.env": {
+  //     VITE_API_BASE_URL: process.env.VITE_API_BASE_URL,
+  //   },
+  // },
 });

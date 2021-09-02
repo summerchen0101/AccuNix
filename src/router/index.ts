@@ -7,6 +7,11 @@ const routes: Array<RouteRecordRaw> = [
     redirect: { name: "Line" },
   },
   {
+    path: "/login",
+    name: "Login",
+    component: () => import("@/views/Login.vue"),
+  },
+  {
     path: "/line",
     name: "Line",
     component: () => import("@/views/Line.vue"),
