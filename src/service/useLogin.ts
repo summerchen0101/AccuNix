@@ -1,5 +1,5 @@
-import { request } from "@/utils/request";
-import { computed, reactive, ref, watch } from "vue";
+import useRequest from "@/hooks/useRequest";
+import { ref } from "vue";
 
 export interface LoginReq {
   username: string;
@@ -46,7 +46,7 @@ function useLogin() {
     isLoading.value = true;
     isError.value = false;
     try {
-      res.value = await request({
+      res.value = await useRequest({
         method: "post",
         url: "login",
         data: req,
