@@ -36,7 +36,7 @@ function useLifeCycleOverview() {
     try {
       res.value = await useRequest<LifeCycleOverviewRes>({
         method: "get",
-        url: `LINEBot/${lineBotGuid}/dashboard/lifecycle-overview`,
+        url: `LINEBot/${lineBotGuid.value}/dashboard/lifecycle-overview`,
       });
     } catch (err) {
       apiErrHandler(err);

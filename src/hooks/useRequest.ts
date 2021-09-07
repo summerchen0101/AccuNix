@@ -25,7 +25,7 @@ const useRequest = async function <
     method,
     url,
     data,
-    baseURL: "/api",
+    baseURL: import.meta.env.PROD ? import.meta.env.VITE_API_BASE_URL : "/api",
     validateStatus: function (status) {
       return (status >= 200 && status < 300) || status === 422;
     },
