@@ -1,4 +1,4 @@
-import useRequest, { apiErrHandler } from "@/hooks/useRequest";
+import useRequest from "@/hooks/useRequest";
 import { ref } from "vue";
 
 export interface LoginReq {
@@ -53,7 +53,6 @@ function useLogin() {
         data: req,
       });
     } catch (err) {
-      apiErrHandler(err);
       isError.value = true;
     }
     isLoading.value = false;

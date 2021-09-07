@@ -2,11 +2,20 @@
 import DoughnutChart from "@/components/DoughnutChart.vue";
 import SectionPanel from "@/components/SectionPanel.vue";
 import { defineComponent, ref } from "vue";
+import useLifeCycleOverview from "@/service/useLifeCycleOverview";
 
 export default defineComponent({
   name: "LinebotLifeCircle",
   setup() {
     const selected = ref(1);
+    const { fetchData, isLoading } = useLifeCycleOverview();
+
+    const getChartData = async () => {
+      const res = await fetchData();
+      console.log(res);
+    };
+
+    getChartData();
 
     return () => (
       <SectionPanel class="sm:col-span-2" title="用戶生命週期">
