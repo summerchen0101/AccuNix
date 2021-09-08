@@ -4,7 +4,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
     name: "Home",
-    redirect: { name: "Line" },
+    redirect: { name: "LineSetting" },
   },
   {
     path: "/login",
@@ -12,9 +12,14 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import("@/views/Login.vue"),
   },
   {
-    path: "/line",
-    name: "Line",
-    component: () => import("@/views/Line.vue"),
+    path: "/line/chart",
+    name: "LineChart",
+    component: () => import("@/views/LineChart.vue"),
+  },
+  {
+    path: "/line/setting",
+    name: "LineSetting",
+    component: () => import("@/views/LineSetting.vue"),
   },
   {
     path: "/facebook",

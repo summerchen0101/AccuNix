@@ -60,7 +60,7 @@ export default defineComponent({
         path: null,
         icon: "fa-comments",
         subs: [
-          { label: "Line", path: "/line" },
+          { label: "Line", path: "/line/setting" },
           { label: "Facebook", path: "/facebook" },
         ],
       },
