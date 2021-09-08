@@ -25,13 +25,14 @@ const useRequest = async function <
     method,
     url,
     data,
-    baseURL: import.meta.env.PROD ? import.meta.env.VITE_API_BASE_URL : "/api",
+    baseURL: import.meta.env.VITE_API_BASE_URL,
     validateStatus: function (status) {
       return (status >= 200 && status < 300) || status === 422;
     },
     headers: {
       Authorization: `Bearer ${store.session.get("token")}`,
     },
+    withCredentials: true,
     ...config,
   });
 

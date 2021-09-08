@@ -17,20 +17,22 @@ export default defineConfig({
   },
   plugins: [vue(), vueJsx()],
   server: {
+    host: "local.accunix.net",
+    open: true,
     watch: {
       usePolling: true,
     },
     port: 8888,
-    proxy: {
-      "/api": {
-        target: "https://cms2.accunix.net",
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ""),
-      },
-    },
+    // proxy: {
+    //   "/api": {
+    //     target: "https://cms2.accunix.net",
+    //     changeOrigin: true,
+    //     rewrite: (path) => path.replace(/^\/api/, ""),
+    //   },
+    // },
     https: {
-      key: fs.readFileSync(`${__dirname}/src/assets/localhost.key`),
-      cert: fs.readFileSync(`${__dirname}/src/assets/localhost.crt`),
+      key: fs.readFileSync(`${__dirname}/src/assets/accunix.key`),
+      cert: fs.readFileSync(`${__dirname}/src/assets/accunix.crt`),
     },
   },
   // define: {
