@@ -2,6 +2,7 @@ import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import vueJsx from "@vitejs/plugin-vue-jsx";
 import path from "path";
+import fs from "fs";
 
 export default defineConfig({
   resolve: {
@@ -26,6 +27,10 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ""),
       },
+    },
+    https: {
+      key: fs.readFileSync(`${__dirname}/src/assets/localhost.key`),
+      cert: fs.readFileSync(`${__dirname}/src/assets/localhost.crt`),
     },
   },
   // define: {
