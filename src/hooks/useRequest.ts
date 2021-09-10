@@ -20,7 +20,6 @@ const useRequest = async function <
 }) {
   const alert = useAlert();
   const router = useRouter();
-  console.log(router);
   const res = await Axios.request<R>({
     method,
     url,
