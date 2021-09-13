@@ -3,6 +3,7 @@ import DoughnutChart from "@/components/DoughnutChart.vue";
 import SectionPanel from "@/components/SectionPanel.vue";
 import useLifeCycleOverview from "@/service/useLifeCycleOverview";
 import { computed, defineComponent, toRefs } from "vue";
+import Spinner from "@/components/Spinner.vue";
 
 export default defineComponent({
   name: "LifeCycleUserCharts",
@@ -24,7 +25,7 @@ export default defineComponent({
         {{
           default: () => [
             isLoading.value ? (
-              <i class="fas fa-spinner fa-spin"></i>
+              <Spinner />
             ) : (
               <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5">
                 {data.value?.lifecycle.map((t, i) => (

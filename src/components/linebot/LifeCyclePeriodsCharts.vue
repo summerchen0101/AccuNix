@@ -1,8 +1,12 @@
 <script lang="tsx">
 import SectionPanel from "@/components/SectionPanel.vue";
-import useLifeCycleTrand from "@/service/useLifeCycleTrend";
-import { endOfWeek, format, startOfWeek, subDays, subWeeks } from "date-fns";
+import Spinner from "@/components/Spinner.vue";
+import useLifeCycleTrand, {
+  LifeCycleTrandReq,
+} from "@/service/useLifeCycleTrend";
+import { format, subDays } from "date-fns";
 import { computed, defineComponent, onMounted, ref } from "vue";
+
 export default defineComponent({
   name: "LifeCyclePeriodsCharts",
   props: {
@@ -15,10 +19,13 @@ export default defineComponent({
     const { fetchData, isLoading, data } = useLifeCycleTrand();
 
     const onSearch = () => {
-      fetchData({
-        startAt: format(startAt.value, "yyyy-MM-dd"),
-        endAt: format(endAt.value, "yyyy-MM-dd"),
-      });
+      const search: LifeCycleTrandReq = {
+        startAt: startAt.value
+          ? format(startAt.value, "yyyy-MM-dd")
+          : undefined,
+        endAt: endAt.value ? format(endAt.value, "yyyy-MM-dd") : undefined,
+      };
+      fetchData(search);
     };
 
     onMounted(() => {
@@ -94,7 +101,7 @@ export default defineComponent({
         {{
           default: () => [
             isLoading.value ? (
-              <i class="fas fa-spinner fa-spin"></i>
+              <Spinner />
             ) : (
               <div class="mt-3">
                 <div class="flex space-x-2 mb-3">

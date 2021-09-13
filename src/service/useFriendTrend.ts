@@ -2,41 +2,40 @@ import { useApiErrHandler } from "@/hooks/useApiErrHandler";
 import useRequest from "@/hooks/useRequest";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import { useLineBotState } from "./../providers/lineBotProvider";
+import { useLineBotState } from "../providers/lineBotProvider";
 
-export interface LifeCycleTrandReq {
+export interface FriendTrandReq {
   startAt?: string;
   endAt?: string;
 }
 
-export interface LifeCycleTrand {
-  "1": number;
-  "2": number;
-  "3": number;
-  "4": number;
-  "5": number;
+export interface FriendTrand {
   date: Date;
+  dailyFollowers: number;
+  cumulativeFollowers: number;
+  dailyBlocks: number;
+  cumulativeBlocks: number;
 }
 
-export interface LifeCycleTrandRes {
-  data: LifeCycleTrand[];
+export interface FriendTrandRes {
+  data: FriendTrand[];
   message?: string;
 }
 
-function useLifeCycleTrand() {
+function useFriendTrand() {
   const router = useRouter();
   const apiErrHandler = useApiErrHandler();
   const { lineBotGuid } = useLineBotState();
   const isLoading = ref(false);
   const isError = ref(false);
-  const data = ref<LifeCycleTrand[]>([]);
-  const fetchData = async (req: LifeCycleTrandReq) => {
+  const data = ref<FriendTrand[]>([]);
+  const fetchData = async (req: FriendTrandReq) => {
     isLoading.value = true;
     isError.value = false;
     try {
-      const res = await useRequest<LifeCycleTrandRes>({
+      const res = await useRequest<FriendTrandRes>({
         method: "get",
-        url: `LINEBot/${lineBotGuid.value}/dashboard/lifecycle-trend`,
+        url: `LINEBot/${lineBotGuid.value}/dashboard/friend-trend`,
         config: { params: req },
       });
       data.value = res.data;
@@ -45,11 +44,10 @@ function useLifeCycleTrand() {
       isError.value = true;
     }
     isLoading.value = false;
-    console.log(data.value);
     return data.value;
   };
 
   return { data, fetchData, isLoading };
 }
 
-export default useLifeCycleTrand;
+export default useFriendTrand;
