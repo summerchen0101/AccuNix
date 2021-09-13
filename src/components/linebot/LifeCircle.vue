@@ -8,7 +8,7 @@ export default defineComponent({
   name: "LinebotLifeCircle",
   setup() {
     const selected = ref(1);
-    const { fetchData, isLoading, res } = useLifeCycleOverview();
+    const { fetchData, isLoading, data } = useLifeCycleOverview();
 
     const getChartData = async () => {
       const res = await fetchData();
@@ -25,7 +25,7 @@ export default defineComponent({
               <i class="fas fa-spinner fa-spin"></i>
             ) : (
               <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5">
-                {res?.value?.data.lifecycle.map((t, i) => (
+                {data.value?.lifecycle.map((t, i) => (
                   <div key={i} class="flex flex-col py-5">
                     <DoughnutChart
                       percentage={+t.users_percent}
@@ -54,12 +54,8 @@ export default defineComponent({
           ],
           footer: () => [
             <div class="flex space-x-4 text-sm text-gray-500">
-              <div>
-                平均點擊時間：{res?.value?.data.averageClickDays || "-"} 天
-              </div>
-              <div>
-                用戶生命週期：{res?.value?.data.lifecycleDays || "-"} 天
-              </div>
+              <div>平均點擊時間：{data.value?.averageClickDays || "-"} 天</div>
+              <div>用戶生命週期：{data.value?.lifecycleDays || "-"} 天</div>
             </div>,
           ],
         }}

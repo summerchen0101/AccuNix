@@ -29,24 +29,25 @@ function useLifeCycleOverview() {
   const { lineBotGuid } = useLineBotState();
   const isLoading = ref(false);
   const isError = ref(false);
-  const res = ref<LifeCycleOverviewRes>(null);
+  const data = ref<LifeCycleOverviewRes["data"]>(null);
   const fetchData = async () => {
     isLoading.value = true;
     isError.value = false;
     try {
-      res.value = await useRequest<LifeCycleOverviewRes>({
+      const res = await useRequest<LifeCycleOverviewRes>({
         method: "get",
         url: `LINEBot/${lineBotGuid.value}/dashboard/lifecycle-overview`,
       });
+      data.value = res.data;
     } catch (err) {
       apiErrHandler(err);
       isError.value = true;
     }
     isLoading.value = false;
-    return res.value;
+    return data.value;
   };
 
-  return { res, fetchData, isLoading };
+  return { data, fetchData, isLoading };
 }
 
 export default useLifeCycleOverview;
