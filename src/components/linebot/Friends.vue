@@ -106,11 +106,14 @@ export default defineComponent({
                     <el-radio label={value}>{label}</el-radio>
                   ))}
                 </el-radio-group>
-                <apexchart
-                  type="line"
-                  options={chartOptions.value}
-                  series={series.value}
-                ></apexchart>
+                <div class="h-[250px]">
+                  <apexchart
+                    type="line"
+                    options={chartOptions.value}
+                    series={series.value}
+                    height="100%"
+                  ></apexchart>
+                </div>
               </div>
             ),
           ],

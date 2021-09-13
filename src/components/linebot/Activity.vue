@@ -24,11 +24,14 @@ export default defineComponent({
         {{
           default: () => [
             <div class="mt-3">
-              <apexchart
-                type="pie"
-                options={chartOptions}
-                series={series}
-              ></apexchart>
+              <div class="h-[300px]">
+                <apexchart
+                  type="pie"
+                  options={chartOptions}
+                  series={series}
+                  height="100%"
+                ></apexchart>
+              </div>
             </div>,
           ],
         }}

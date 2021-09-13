@@ -1,20 +1,50 @@
 <script lang="tsx">
 import PageHeader from "@/components/Layout/PageHeader.vue";
 import SectionPanel from "@/components/SectionPanel.vue";
-import { defineComponent, reactive, ref } from "vue";
+import { computed, defineComponent, onMounted, reactive, ref } from "vue";
+import { format, subDays } from "date-fns";
+import useMessageTrand, {
+  MessageTrand,
+  MessageTrandReq,
+} from "../../service/useMessageTrend";
+import Spinner from "@/components/Spinner.vue";
 
 export default defineComponent({
-  name: "LinebotMessage",
+  name: "LinebotMessages",
   components: {
     PageHeader,
   },
   setup() {
-    const selected = ref(1);
-    const chartOptions = reactive({
+    const startAt = ref(subDays(new Date(), 8));
+    const endAt = ref(subDays(new Date(), 1));
+    const { fetchData, isLoading, data } = useMessageTrand();
+
+    const onSearch = () => {
+      const search: MessageTrandReq = {
+        startAt: startAt.value
+          ? format(startAt.value, "yyyy-MM-dd")
+          : undefined,
+        endAt: endAt.value ? format(endAt.value, "yyyy-MM-dd") : undefined,
+      };
+      fetchData(search);
+    };
+
+    onMounted(() => {
+      onSearch();
+    });
+
+    const dataMap: Partial<Record<keyof MessageTrand, string>> = {
+      reply: "自動回應",
+      push: "主動推播",
+    };
+
+    const selected = ref<keyof MessageTrand>("reply");
+    const chartOptions = computed(() => ({
       chart: {
         toolbar: {
           show: false,
         },
+        height: 350,
         type: "line",
         zoom: {
           enabled: false,
@@ -29,56 +59,61 @@ export default defineComponent({
       },
       grid: {
         row: {
-          colors: ["#f3f3f3", "transparent"], // takes an array which will be repeated on columns
+          colors: ["#f3f3f3", "transparent"],
           opacity: 0.5,
         },
       },
       xaxis: {
-        categories: [
-          "Jan",
-          "Feb",
-          "Mar",
-          "Apr",
-          "May",
-          "Jun",
-          "Jul",
-          "Aug",
-          "Sep",
-        ],
+        categories: data.value.map((t) => format(new Date(t.date), "M-dd")),
       },
-    });
-    const series = reactive([
+    }));
+    const series = computed(() => [
       {
-        name: "Desktops",
-        data: [10, 41, 35, 51, 49, 62, 69, 91, 148],
+        name: dataMap[selected.value],
+        data: data.value.map((t) => t[selected.value]),
       },
     ]);
-
     return () => (
       <SectionPanel title="訊息使用狀況">
         {{
           default: () => [
-            <div class="mt-3">
-              <div class="flex space-x-3 mb-3">
-                <el-date-picker
-                  type="daterange"
-                  unlink-panels
-                  range-separator="~"
-                  start-placeholder="开始日期"
-                  end-placeholder="结束日期"
-                  size="small"
-                ></el-date-picker>
+            isLoading.value ? (
+              <Spinner />
+            ) : (
+              <div class="mt-3">
+                <div class="flex space-x-2 mb-3">
+                  <el-date-picker
+                    type="date"
+                    size="small"
+                    v-model={startAt.value}
+                    placeholder="開始日期"
+                  ></el-date-picker>
+                  <span>~</span>
+                  <el-date-picker
+                    type="date"
+                    size="small"
+                    v-model={endAt.value}
+                    placeholder="結束日期"
+                  ></el-date-picker>
+                  <el-button type="primary" size="small" onClick={onSearch}>
+                    查詢
+                  </el-button>
+                </div>
+                <el-radio-group class="mb-3" v-model={selected.value}>
+                  {Object.entries(dataMap).map(([value, label]) => (
+                    <el-radio label={value}>{label}</el-radio>
+                  ))}
+                </el-radio-group>
+                <div class="h-[250px]">
+                  <apexchart
+                    type="line"
+                    options={chartOptions.value}
+                    series={series.value}
+                    height="100%"
+                  ></apexchart>
+                </div>
               </div>
-              <el-radio-group class="mb-3" v-model={selected.value}>
-                <el-radio label={1}>自動回應</el-radio>
-                <el-radio label={2}>主動推播</el-radio>
-              </el-radio-group>
-              <apexchart
-                type="line"
-                options={chartOptions}
-                series={series}
-              ></apexchart>
-            </div>,
+            ),
           ],
         }}
       </SectionPanel>

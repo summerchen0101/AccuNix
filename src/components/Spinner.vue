@@ -4,8 +4,8 @@ import { defineComponent } from "vue";
 export default defineComponent({
   setup() {
     return () => (
-      <div class="flex items-center justify-center text-gray-500 p-5">
-        <i class="fas fa-spinner fa-spin fa-3x"></i>
+      <div class="flex items-center justify-center text-gray-500 h-full min-h-[100px]">
+        <i class="fas fa-spinner fa-spin fa-3x opacity-80"></i>
       </div>
     );
   },
