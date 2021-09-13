@@ -4,7 +4,7 @@ import LifeCyclePeriodsChartsVue from "./LifeCyclePeriodsCharts.vue";
 import LifeCycleUserChartsVue from "./LifeCycleUserCharts.vue";
 
 export default defineComponent({
-  name: "LinebotLifeCircle",
+  name: "LinebotLifeCycle",
   setup() {
     const selected = ref(1);
 

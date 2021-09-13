@@ -23,14 +23,14 @@ export interface LifeCycleTrandRes {
   message?: string;
 }
 
-function useLifeCycleTrand(req: LifeCycleTrandReq) {
+function useLifeCycleTrand() {
   const router = useRouter();
   const apiErrHandler = useApiErrHandler();
   const { lineBotGuid } = useLineBotState();
   const isLoading = ref(false);
   const isError = ref(false);
   const data = ref<LifeCycleTrand[]>([]);
-  const fetchData = async () => {
+  const fetchData = async (req: LifeCycleTrandReq) => {
     isLoading.value = true;
     isError.value = false;
     try {

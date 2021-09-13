@@ -2,7 +2,7 @@
 import SectionPanel from "@/components/SectionPanel.vue";
 import useLifeCycleTrand from "@/service/useLifeCycleTrend";
 import { endOfWeek, format, startOfWeek, subDays, subWeeks } from "date-fns";
-import { computed, defineComponent } from "vue";
+import { computed, defineComponent, onMounted, ref } from "vue";
 export default defineComponent({
   name: "LifeCyclePeriodsCharts",
   props: {
@@ -10,11 +10,20 @@ export default defineComponent({
   },
   emits: ["update:tab"],
   setup(props, { emit }) {
-    const { fetchData, isLoading, data } = useLifeCycleTrand({
-      startAt: format(subDays(new Date(), 8), "yyyy-MM-dd"),
-      endAt: format(subDays(new Date(), 1), "yyyy-MM-dd"),
+    const startAt = ref(subDays(new Date(), 8));
+    const endAt = ref(subDays(new Date(), 1));
+    const { fetchData, isLoading, data } = useLifeCycleTrand();
+
+    const onSearch = () => {
+      fetchData({
+        startAt: format(startAt.value, "yyyy-MM-dd"),
+        endAt: format(endAt.value, "yyyy-MM-dd"),
+      });
+    };
+
+    onMounted(() => {
+      onSearch();
     });
-    fetchData();
 
     const tab = computed({
       get: () => props.tab,
@@ -88,21 +97,30 @@ export default defineComponent({
               <i class="fas fa-spinner fa-spin"></i>
             ) : (
               <div class="mt-3">
-                <div class="flex space-x-3 mb-3">
+                <div class="flex space-x-2 mb-3">
                   <el-date-picker
-                    type="daterange"
-                    unlink-panels
-                    range-separator="~"
-                    start-placeholder="开始日期"
-                    end-placeholder="结束日期"
+                    type="date"
                     size="small"
+                    v-model={startAt.value}
+                    placeholder="開始日期"
                   ></el-date-picker>
+                  <span>~</span>
+                  <el-date-picker
+                    type="date"
+                    size="small"
+                    v-model={endAt.value}
+                    placeholder="結束日期"
+                  ></el-date-picker>
+                  <el-button type="primary" size="small" onClick={onSearch}>
+                    查詢
+                  </el-button>
                 </div>
-                <div>
+                <div class="h-[380px]">
                   <apexchart
                     type="line"
                     options={chartOptions.value}
                     series={series.value}
+                    height="100%"
                   ></apexchart>
                 </div>
               </div>

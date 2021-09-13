@@ -2,7 +2,7 @@
 import LinebotActivity from "@/components/linebot/Activity.vue";
 import LinebotFriends from "@/components/linebot/Friends.vue";
 import LinebotMessage from "@/components/linebot/Message.vue";
-import LinebotLifeCircle from "@/components/linebot/LifeCircle.vue";
+import LinebotLifeCycle from "@/components/linebot/LifeCycle.vue";
 import LinebotLabels from "@/components/linebot/Labels.vue";
 import LinebotKeywords from "@/components/linebot/Keywords.vue";
 import LinebotScripts from "@/components/linebot/Scripts.vue";
@@ -13,7 +13,7 @@ export default defineComponent({
   setup() {
     return () => (
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-        <LinebotLifeCircle />
+        <LinebotLifeCycle />
         <LinebotActivity />
         <LinebotFriends />
         <LinebotMessage />
