@@ -1,21 +1,25 @@
 <script lang="tsx">
-import { defineComponent, reactive } from "vue";
-import { useI18n } from "vue-i18n";
+import Layout from "@/components/Layout/Layout.vue";
+import PageHeader from "@/components/Layout/PageHeader.vue";
+import { useLayoutState } from "@/providers/layoutProvider";
+import { defineComponent, onMounted } from "vue";
 
 export default defineComponent({
+  name: "Facebook",
+  components: {
+    PageHeader,
+  },
   setup() {
-    const info = reactive({ title: "Facebook Page" });
-
-    const { t, locale } = useI18n();
-    // Something to do ...
+    const { activePage } = useLayoutState();
+    onMounted(() => {
+      activePage.value = "Facebook";
+    });
     return () => (
-      <div>
-        <h2>{info.title}</h2>
-        <p>{t("message.hello", { name: "summer" })}</p>
-      </div>
+      <Layout>
+        <PageHeader />
+        <div class="p-3 mt-10">hello</div>
+      </Layout>
     );
   },
 });
 </script>
-
-<style scoped></style>

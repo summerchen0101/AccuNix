@@ -2,7 +2,7 @@ import { inject, provide, ref } from "vue";
 
 const state = {
   isMiniSidebar: ref(false),
-  activePage: "Home",
+  activePage: ref("Home"),
 };
 
 export const useLayoutProvider = function () {

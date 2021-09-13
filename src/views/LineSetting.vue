@@ -3,7 +3,8 @@ import CardPanel from "@/components/CardPanel.vue";
 import Layout from "@/components/Layout/Layout.vue";
 import PageHeader from "@/components/Layout/PageHeader.vue";
 import LineRobotCtrlVue from "@/components/LinebotCtrl.vue";
-import { defineComponent, ref } from "vue";
+import { useLayoutState } from "@/providers/layoutProvider";
+import { defineComponent, onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 
 export default defineComponent({
@@ -14,6 +15,10 @@ export default defineComponent({
   setup() {
     const router = useRouter();
     const selected = ref(1);
+    const { activePage } = useLayoutState();
+    onMounted(() => {
+      activePage.value = "Line";
+    });
     return () => (
       <Layout>
         <PageHeader />

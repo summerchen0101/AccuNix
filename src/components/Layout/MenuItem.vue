@@ -1,26 +1,28 @@
 <template>
-  <li v-if="menu.subs">
-    <a
-      href="#"
-      class="bg-blue-500 px-3.5 h-10 flex items-center menu-item"
-      @click="isSubOpen = !isSubOpen"
-    >
-      <div class="flex-1">
-        <i class="fas w-10" :class="menu.icon"></i>
-        <span class="transition-all text-sm">{{ menu.label }}</span>
-      </div>
-      <i class="el-icon-arrow-down"></i>
-    </a>
-    <ul
-      class="transition-all max-h-0 overflow-y-hidden bg-gray-500"
-      :class="isSubOpen && 'show'"
-    >
-      <MenuItem v-for="m in menu.subs" :key="m.label" :menu="m" />
-    </ul>
-  </li>
-  <li v-else-if="menu.path">
+  <li class="bg-blue-500">
+    <template v-if="menu.subs">
+      <a
+        href="#"
+        class="px-3.5 h-10 flex items-center menu-item"
+        @click="isSubOpen = !isSubOpen"
+      >
+        <div class="flex-1">
+          <i class="fas w-10" :class="menu.icon"></i>
+          <span class="transition-all text-sm">{{ menu.label }}</span>
+        </div>
+        <i class="el-icon-arrow-down"></i>
+      </a>
+      <ul
+        class="transition-all max-h-0 overflow-y-hidden"
+        :class="isSubOpen && 'show'"
+      >
+        <MenuItem v-for="m in menu.subs" :key="m.label" :menu="m" />
+      </ul>
+    </template>
     <router-link
-      class="bg-blue-500 px-3.5 h-10 flex items-center"
+      v-else-if="menu.path"
+      class="px-3.5 h-10 flex items-center"
+      :class="isActive && 'bg-yellow-500'"
       :to="menu.path"
     >
       <i class="fas w-10" :class="menu.icon"></i>
@@ -31,7 +33,7 @@
 
 <script lang="ts">
 import { useLayoutState } from "@/providers/layoutProvider";
-import { defineComponent, PropType, ref } from "vue";
+import { computed, defineComponent, PropType, ref, watchEffect } from "vue";
 import { Menu } from "./Sidebar.vue";
 
 export default defineComponent({
@@ -44,10 +46,24 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { isMiniSidebar } = useLayoutState();
+    const { isMiniSidebar, activePage } = useLayoutState();
     const isSubOpen = ref(false);
 
-    return { isSubOpen, isMiniSidebar };
+    const checkActive = (menu: Menu): boolean => {
+      if (menu.subs) {
+        return menu.subs.some((m) => checkActive(m));
+      }
+      return menu.code === activePage.value;
+    };
+    const isActive = computed(() => checkActive(props.menu));
+
+    watchEffect(() => {
+      if (isActive.value && props.menu.subs) {
+        isSubOpen.value = true;
+      }
+    });
+
+    return { isSubOpen, isMiniSidebar, isActive };
   },
 });
 </script>

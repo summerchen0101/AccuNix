@@ -9,7 +9,8 @@ import LinebotLifeCycle from "@/components/linebot/LifeCycle.vue";
 import LinebotMessage from "@/components/linebot/Message.vue";
 import LinebotScripts from "@/components/linebot/Scripts.vue";
 import LineRobotCtrlVue from "@/components/LinebotCtrl.vue";
-import { defineComponent } from "vue";
+import { useLayoutState } from "@/providers/layoutProvider";
+import { defineComponent, onMounted } from "vue";
 
 export default defineComponent({
   name: "LineChart",
@@ -17,6 +18,10 @@ export default defineComponent({
     PageHeader,
   },
   setup() {
+    const { activePage } = useLayoutState();
+    onMounted(() => {
+      activePage.value = "Line";
+    });
     return () => (
       <Layout>
         <PageHeader />

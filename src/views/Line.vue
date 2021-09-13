@@ -5,8 +5,16 @@ import LineCharts from "@/components/linebot/LineCharts.vue";
 import LineSettings from "@/components/linebot/LineSettings.vue";
 import LineRobotCtrlVue from "@/components/LinebotCtrl.vue";
 import TabGroup from "@/components/TabGroup.vue";
+import { useLayoutState } from "@/providers/layoutProvider";
 import { OptionType } from "@/types";
-import { computed, defineComponent, KeepAlive, reactive, ref } from "vue";
+import {
+  computed,
+  defineComponent,
+  KeepAlive,
+  onMounted,
+  reactive,
+  ref,
+} from "vue";
 
 export default defineComponent({
   name: "Home",

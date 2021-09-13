@@ -17,7 +17,6 @@
   >
     <ul class="w-64">
       <MenuItem v-for="m in menuList" :key="m.label" :menu="m" />
-      <MenuItem />
     </ul>
   </div>
   <div
@@ -45,6 +44,7 @@ export interface Menu {
   icon?: string;
   path: string | null;
   subs?: Menu[];
+  code?: string;
 }
 export default defineComponent({
   name: "Sidebar",
@@ -54,14 +54,14 @@ export default defineComponent({
   setup(props) {
     const { isMiniSidebar } = useLayoutState();
     const menuList: Menu[] = [
-      { label: "首頁", path: "/", icon: "fa-home" },
+      { label: "首頁", path: "/", icon: "fa-home", code: "Home" },
       {
         label: "聊天機器人",
         path: null,
         icon: "fa-comments",
         subs: [
-          { label: "Line", path: "/line/setting" },
-          { label: "Facebook", path: "/facebook" },
+          { label: "Line", path: "/line/setting", code: "Line" },
+          { label: "Facebook", path: "/facebook", code: "Facebook" },
         ],
       },
     ];
