@@ -1,7 +1,9 @@
 import { ElMessage } from "element-plus";
 
+type MessageType = "" | "success" | "warning" | "info" | "error";
 function useAlert() {
-  const alert = (msg: string) => ElMessage({ type: "error", message: msg });
+  const alert = (message: string, type: MessageType) =>
+    ElMessage({ type, message });
   return alert;
 }
 

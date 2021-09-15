@@ -18,8 +18,6 @@ const useRequest = async function <
   data?: B;
   config?: AxiosRequestConfig;
 }) {
-  const alert = useAlert();
-  const router = useRouter();
   const res = await Axios.request<R>({
     method,
     url,

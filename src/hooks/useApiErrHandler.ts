@@ -27,13 +27,13 @@ export function useApiErrHandler() {
         msg = error.response.data.message;
         console.log(msg);
       }
-      alert(msg);
+      alert(msg, "error");
     } else if (error.request) {
       // 错误来自请求参数
       console.log(error.request);
     } else if (error.message) {
       // 错误来自其他因素
-      alert(error.message);
+      alert(error.message, "error");
     }
     // console.log(error.config)
   };
