@@ -11,21 +11,26 @@
       </i>
       <i
         class="fas fa-sign-out-alt round-btn round-btn-static hidden md:flex"
+        @click="handleLogout"
       ></i>
     </div>
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
+import useAlert from "@/hooks/useAlert";
 import { useLayoutState } from "@/providers/layoutProvider";
-import { defineComponent } from "vue";
-export default defineComponent({
-  name: "Header",
-  setup(props) {
-    const { isMiniSidebar } = useLayoutState();
-    return { isMiniSidebar };
-  },
-});
+import useLogout from "@/service/useLogout";
+import { useRouter } from "vue-router";
+const router = useRouter();
+const { isMiniSidebar } = useLayoutState();
+const { doLogout, isLoading } = useLogout();
+const alert = useAlert();
+const handleLogout = async () => {
+  await doLogout();
+  alert("登出成功", "success");
+  router.push("/login");
+};
 </script>
 
 <style scoped lang="scss"></style>
