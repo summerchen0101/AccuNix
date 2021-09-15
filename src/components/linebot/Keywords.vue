@@ -1,28 +1,28 @@
 <script lang="tsx">
-import PageHeader from "@/components/Layout/PageHeader.vue";
-import SectionPanel from "@/components/SectionPanel.vue";
-import { defineComponent, reactive, ref } from "vue";
+import PageHeader from '@/components/Layout/PageHeader.vue'
+import SectionPanel from '@/components/SectionPanel.vue'
+import { defineComponent, reactive, ref } from 'vue'
 
 interface Columns {
-  keyword: string;
-  percent: number;
-  count: number;
-  compare: string;
+  keyword: string
+  percent: number
+  count: number
+  compare: string
 }
 export default defineComponent({
-  name: "LinebotKeywords",
+  name: 'LinebotKeywords',
   components: {
     PageHeader,
   },
   setup() {
     const tableData = reactive<Columns[]>(
       [...Array(5)].map(() => ({
-        keyword: "天竺鼠車車",
+        keyword: '天竺鼠車車',
         percent: 48,
         count: 12,
-        compare: "-",
-      }))
-    );
+        compare: '-',
+      })),
+    )
 
     return () => (
       <SectionPanel title="關鍵字趨勢">
@@ -64,7 +64,7 @@ export default defineComponent({
           ],
         }}
       </SectionPanel>
-    );
+    )
   },
-});
+})
 </script>

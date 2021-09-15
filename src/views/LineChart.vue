@@ -1,27 +1,27 @@
 <script lang="tsx">
-import Layout from "@/components/Layout/Layout.vue";
-import PageHeader from "@/components/Layout/PageHeader.vue";
-import LinebotActivity from "@/components/linebot/Activity.vue";
-import LinebotFriends from "@/components/linebot/Friends.vue";
-import LinebotKeywords from "@/components/linebot/Keywords.vue";
-import LinebotLabels from "@/components/linebot/Labels.vue";
-import LinebotLifeCycle from "@/components/linebot/LifeCycle.vue";
-import LinebotMessage from "@/components/linebot/Message.vue";
-import LinebotScripts from "@/components/linebot/Scripts.vue";
-import LineRobotCtrlVue from "@/components/LinebotCtrl.vue";
-import { useLayoutState } from "@/providers/layoutProvider";
-import { defineComponent, onMounted } from "vue";
+import Layout from '@/components/Layout/Layout.vue'
+import PageHeader from '@/components/Layout/PageHeader.vue'
+import LinebotActivity from '@/components/linebot/Activity.vue'
+import LinebotFriends from '@/components/linebot/Friends.vue'
+import LinebotKeywords from '@/components/linebot/Keywords.vue'
+import LinebotLabels from '@/components/linebot/Labels.vue'
+import LinebotLifeCycle from '@/components/linebot/LifeCycle.vue'
+import LinebotMessage from '@/components/linebot/Message.vue'
+import LinebotScripts from '@/components/linebot/Scripts.vue'
+import LineRobotCtrlVue from '@/components/LinebotCtrl.vue'
+import { useLayoutState } from '@/providers/layoutProvider'
+import { defineComponent, onMounted } from 'vue'
 
 export default defineComponent({
-  name: "LineChart",
+  name: 'LineChart',
   components: {
     PageHeader,
   },
   setup() {
-    const { activePage } = useLayoutState();
+    const { activePage } = useLayoutState()
     onMounted(() => {
-      activePage.value = "Line";
-    });
+      activePage.value = 'Line'
+    })
     return () => (
       <Layout>
         <PageHeader />
@@ -38,7 +38,7 @@ export default defineComponent({
           </div>
         </div>
       </Layout>
-    );
+    )
   },
-});
+})
 </script>

@@ -18,19 +18,19 @@
 </template>
 
 <script lang="ts" setup>
-import useAlert from "@/hooks/useAlert";
-import { useLayoutState } from "@/providers/layoutProvider";
-import useLogout from "@/service/useLogout";
-import { useRouter } from "vue-router";
-const router = useRouter();
-const { isMiniSidebar } = useLayoutState();
-const { doLogout, isLoading } = useLogout();
-const alert = useAlert();
+import useAlert from '@/hooks/useAlert'
+import { useLayoutState } from '@/providers/layoutProvider'
+import useLogout from '@/service/useLogout'
+import { useRouter } from 'vue-router'
+const router = useRouter()
+const { isMiniSidebar } = useLayoutState()
+const { doLogout, isLoading } = useLogout()
+const alert = useAlert()
 const handleLogout = async () => {
-  await doLogout();
-  alert("登出成功", "success");
-  router.push("/login");
-};
+  await doLogout()
+  alert('登出成功', 'success')
+  router.push('/login')
+}
 </script>
 
 <style scoped lang="scss"></style>

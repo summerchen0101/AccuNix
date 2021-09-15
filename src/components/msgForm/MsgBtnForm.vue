@@ -1,28 +1,28 @@
 <script lang="tsx">
-import { MsgType } from "@/lib/enum";
-import { computed, defineComponent, PropType, toRefs } from "vue";
+import { MsgType } from '@/lib/enum'
+import { computed, defineComponent, PropType, toRefs } from 'vue'
 
 export interface MsgButton {
-  type: MsgType.Button;
-  title: string;
-  content: string;
+  type: MsgType.Button
+  title: string
+  content: string
   // btnLabel: string;
   // btnAction: number;
 }
 
 export default defineComponent({
-  name: "MsgBtnForm",
+  name: 'MsgBtnForm',
   props: {
     group: {
       type: Object as PropType<MsgButton>,
-      default: () => ({ title: "11", content: "22" }),
+      default: () => ({ title: '11', content: '22' }),
     },
   },
   setup(props, { emit }) {
     const group = computed({
       get: () => props.group,
-      set: (val) => emit("update:group", val),
-    });
+      set: (val) => emit('update:group', val),
+    })
     return () => (
       <>
         <el-form-item label="標題">
@@ -38,7 +38,7 @@ export default defineComponent({
           />
         </el-form-item>
       </>
-    );
+    )
   },
-});
+})
 </script>

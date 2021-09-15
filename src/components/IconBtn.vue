@@ -1,5 +1,5 @@
 <script lang="tsx">
-import { defineComponent } from "vue";
+import { defineComponent } from 'vue'
 
 export default defineComponent({
   props: {
@@ -10,7 +10,7 @@ export default defineComponent({
       <div class="text-white rounded-full w-8 h-8 flex justify-center items-center cursor-pointer hover:scale-110">
         <i class={props.iconClass}></i>
       </div>
-    );
+    )
   },
-});
+})
 </script>

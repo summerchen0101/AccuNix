@@ -1,11 +1,11 @@
 <script lang="tsx">
-import { defineComponent } from "vue";
+import { defineComponent } from 'vue'
 
 export default defineComponent({
   props: {
     iconClass: {
       type: String,
-      default: "fas fa-info-circle",
+      default: 'fas fa-info-circle',
     },
     content: String,
   },
@@ -15,9 +15,9 @@ export default defineComponent({
         <i class={props.iconClass}></i>
         <div>{props.content}</div>
       </div>
-    );
+    )
   },
-});
+})
 </script>
 
 <style scoped></style>

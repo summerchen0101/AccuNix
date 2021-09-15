@@ -1,22 +1,22 @@
 <script lang="tsx">
-import { MsgGroupType } from "@/views/keywords/Create.vue";
-import { computed, defineComponent, PropType, reactive, toRefs } from "vue";
-import { MsgText } from "../msgReview/MsgTextReview.vue";
+import { MsgGroupType } from '@/views/keywords/Create.vue'
+import { computed, defineComponent, PropType, reactive, toRefs } from 'vue'
+import { MsgText } from '../msgReview/MsgTextReview.vue'
 
 export default defineComponent({
-  name: "MsgTextForm",
+  name: 'MsgTextForm',
   props: {
     group: {
       type: Object as PropType<MsgGroupType>,
       default: () => ({}),
     },
   },
-  emits: ["update:group"],
+  emits: ['update:group'],
   setup(props, { emit }) {
     const group = computed({
       get: () => props.group,
-      set: (val) => emit("update:group", val),
-    });
+      set: (val) => emit('update:group', val),
+    })
     return () => (
       <>
         <el-form-item label="文字內容">
@@ -29,7 +29,7 @@ export default defineComponent({
           />
         </el-form-item>
       </>
-    );
+    )
   },
-});
+})
 </script>

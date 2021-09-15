@@ -1,20 +1,20 @@
 <script lang="tsx">
-import { MsgType } from "@/lib/enum";
-import { MsgGroupType } from "@/views/keywords/Create.vue";
-import { defineComponent, PropType, toRefs } from "vue";
+import { MsgType } from '@/lib/enum'
+import { MsgGroupType } from '@/views/keywords/Create.vue'
+import { defineComponent, PropType, toRefs } from 'vue'
 
 export interface MsgText {
-  type: MsgType.Text;
-  content: string;
+  type: MsgType.Text
+  content: string
 }
 
 export default defineComponent({
-  name: "MsgTextReview",
+  name: 'MsgTextReview',
   props: {
     msg: Object as PropType<MsgGroupType>,
   },
   setup(props) {
-    const { content } = toRefs(props.msg);
+    const { content } = toRefs(props.msg)
     return () => (
       <div
         hidden={!content.value}
@@ -22,7 +22,7 @@ export default defineComponent({
       >
         {content.value}
       </div>
-    );
+    )
   },
-});
+})
 </script>

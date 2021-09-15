@@ -3,26 +3,26 @@
 </template>
 
 <script lang="tsx">
-import { useLineBotState } from "@/providers/lineBotProvider";
-import { OptionType } from "@/types";
-import { defineComponent } from "vue";
-import { useRoute, useRouter } from "vue-router";
-import TabGroupVue from "./TabGroup.vue";
+import { useLineBotState } from '@/providers/lineBotProvider'
+import { OptionType } from '@/types'
+import { defineComponent } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import TabGroupVue from './TabGroup.vue'
 
 const tabOptions: OptionType<string>[] = [
-  { label: "儀表板", value: "LineChart" },
-  { label: "機器人設定", value: "LineSetting" },
-];
+  { label: '儀表板', value: 'LineChart' },
+  { label: '機器人設定', value: 'LineSetting' },
+]
 
 export default defineComponent({
   // props: {
   //   currentTab: String
   // },
-  name: "LinebotCtrl",
+  name: 'LinebotCtrl',
   setup() {
-    const router = useRouter();
-    const route = useRoute();
-    const { lineBotGuid } = useLineBotState();
+    const router = useRouter()
+    const route = useRoute()
+    const { lineBotGuid } = useLineBotState()
     return () => (
       <div class="flex flex-col sm:flex-row items-center mb-3">
         <TabGroupVue
@@ -40,9 +40,9 @@ export default defineComponent({
           </div>
         </div>
       </div>
-    );
+    )
   },
-});
+})
 </script>
 
 <style scoped></style>

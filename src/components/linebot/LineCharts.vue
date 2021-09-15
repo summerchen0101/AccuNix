@@ -1,15 +1,15 @@
 <script lang="tsx">
-import LinebotActivity from "@/components/linebot/Activity.vue";
-import LinebotFriends from "@/components/linebot/Friends.vue";
-import LinebotMessage from "@/components/linebot/Message.vue";
-import LinebotLifeCycle from "@/components/linebot/LifeCycle.vue";
-import LinebotLabels from "@/components/linebot/Labels.vue";
-import LinebotKeywords from "@/components/linebot/Keywords.vue";
-import LinebotScripts from "@/components/linebot/Scripts.vue";
-import { defineComponent } from "vue";
+import LinebotActivity from '@/components/linebot/Activity.vue'
+import LinebotFriends from '@/components/linebot/Friends.vue'
+import LinebotMessage from '@/components/linebot/Message.vue'
+import LinebotLifeCycle from '@/components/linebot/LifeCycle.vue'
+import LinebotLabels from '@/components/linebot/Labels.vue'
+import LinebotKeywords from '@/components/linebot/Keywords.vue'
+import LinebotScripts from '@/components/linebot/Scripts.vue'
+import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: "LineChart",
+  name: 'LineChart',
   setup() {
     return () => (
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
@@ -21,7 +21,7 @@ export default defineComponent({
         <LinebotKeywords />
         <LinebotScripts />
       </div>
-    );
+    )
   },
-});
+})
 </script>

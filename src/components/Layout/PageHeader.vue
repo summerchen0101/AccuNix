@@ -18,18 +18,18 @@
 </template>
 
 <script lang="ts">
-import Breadcrumb from "@/components/Breadcrumb.vue";
-import { defineComponent } from "vue";
+import Breadcrumb from '@/components/Breadcrumb.vue'
+import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: "PageHeader",
+  name: 'PageHeader',
   components: {
     Breadcrumb,
   },
   setup(props) {
     //
   },
-});
+})
 </script>
 
 <style scoped lang="scss"></style>

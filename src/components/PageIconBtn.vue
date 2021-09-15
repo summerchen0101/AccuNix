@@ -1,15 +1,15 @@
 <script lang="tsx">
-import { defineComponent, PropType } from "vue";
+import { defineComponent, PropType } from 'vue'
 
 export default defineComponent({
   props: {
     iconClass: {
       type: String,
-      default: "fas fa-check",
+      default: 'fas fa-check',
     },
     color: {
       type: String,
-      default: "gray",
+      default: 'gray',
     },
     onClick: Function as PropType<() => void>,
   },
@@ -21,7 +21,7 @@ export default defineComponent({
       >
         <i class={props.iconClass}></i>
       </div>
-    );
+    )
   },
-});
+})
 </script>

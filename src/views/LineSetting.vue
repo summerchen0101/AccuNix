@@ -1,24 +1,24 @@
 <script lang="tsx">
-import CardPanel from "@/components/CardPanel.vue";
-import Layout from "@/components/Layout/Layout.vue";
-import PageHeader from "@/components/Layout/PageHeader.vue";
-import LineRobotCtrlVue from "@/components/LinebotCtrl.vue";
-import { useLayoutState } from "@/providers/layoutProvider";
-import { defineComponent, onMounted, ref } from "vue";
-import { useRouter } from "vue-router";
+import CardPanel from '@/components/CardPanel.vue'
+import Layout from '@/components/Layout/Layout.vue'
+import PageHeader from '@/components/Layout/PageHeader.vue'
+import LineRobotCtrlVue from '@/components/LinebotCtrl.vue'
+import { useLayoutState } from '@/providers/layoutProvider'
+import { defineComponent, onMounted, ref } from 'vue'
+import { useRouter } from 'vue-router'
 
 export default defineComponent({
-  name: "Home",
+  name: 'Home',
   components: {
     PageHeader,
   },
   setup() {
-    const router = useRouter();
-    const selected = ref(1);
-    const { activePage } = useLayoutState();
+    const router = useRouter()
+    const selected = ref(1)
+    const { activePage } = useLayoutState()
     onMounted(() => {
-      activePage.value = "Line";
-    });
+      activePage.value = 'Line'
+    })
     return () => (
       <Layout>
         <PageHeader />
@@ -78,7 +78,7 @@ export default defineComponent({
               title="關鍵字庫"
               icon="fab fa-slack-hash"
               desc="提供 LINE 關鍵字互動，可藉由關鍵字動作：貼標籤、發送訊息、切換主選單、進入腳本、呼叫真人客服。"
-              onClick={() => router.push({ name: "KeywordList" })}
+              onClick={() => router.push({ name: 'KeywordList' })}
             />
             <CardPanel
               title="排程任務"
@@ -103,7 +103,7 @@ export default defineComponent({
           </div>
         </div>
       </Layout>
-    );
+    )
   },
-});
+})
 </script>

@@ -1,24 +1,24 @@
 <script lang="tsx">
-import DoughnutChart from "@/components/DoughnutChart.vue";
-import SectionPanel from "@/components/SectionPanel.vue";
-import useLifeCycleOverview from "@/service/useLifeCycleOverview";
-import { computed, defineComponent, toRefs } from "vue";
-import Spinner from "@/components/Spinner.vue";
+import DoughnutChart from '@/components/DoughnutChart.vue'
+import SectionPanel from '@/components/SectionPanel.vue'
+import useLifeCycleOverview from '@/service/useLifeCycleOverview'
+import { computed, defineComponent, toRefs } from 'vue'
+import Spinner from '@/components/Spinner.vue'
 
 export default defineComponent({
-  name: "LifeCycleUserCharts",
+  name: 'LifeCycleUserCharts',
   props: {
     tab: Number,
   },
-  emits: ["update:tab"],
+  emits: ['update:tab'],
   setup(props, { emit }) {
-    const { fetchData, isLoading, data } = useLifeCycleOverview();
-    fetchData();
+    const { fetchData, isLoading, data } = useLifeCycleOverview()
+    fetchData()
 
     const tab = computed({
       get: () => props.tab,
-      set: (val) => emit("update:tab", val),
-    });
+      set: (val) => emit('update:tab', val),
+    })
 
     return () => (
       <SectionPanel class="sm:col-span-2" title="用戶生命週期">
@@ -57,13 +57,13 @@ export default defineComponent({
           ],
           footer: () => [
             <div class="flex space-x-4 text-sm text-gray-500">
-              <div>平均點擊時間：{data.value?.averageClickDays || "-"} 天</div>
-              <div>用戶生命週期：{data.value?.lifecycleDays || "-"} 天</div>
+              <div>平均點擊時間：{data.value?.averageClickDays || '-'} 天</div>
+              <div>用戶生命週期：{data.value?.lifecycleDays || '-'} 天</div>
             </div>,
           ],
         }}
       </SectionPanel>
-    );
+    )
   },
-});
+})
 </script>

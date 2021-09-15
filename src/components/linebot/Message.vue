@@ -1,51 +1,51 @@
 <script lang="tsx">
-import PageHeader from "@/components/Layout/PageHeader.vue";
-import SectionPanel from "@/components/SectionPanel.vue";
-import { computed, defineComponent, onMounted, reactive, ref } from "vue";
-import { format, subDays } from "date-fns";
+import PageHeader from '@/components/Layout/PageHeader.vue'
+import SectionPanel from '@/components/SectionPanel.vue'
+import { computed, defineComponent, onMounted, reactive, ref } from 'vue'
+import { format, subDays } from 'date-fns'
 import useMessageTrand, {
   MessageTrand,
   MessageTrandReq,
-} from "../../service/useMessageTrend";
-import Spinner from "@/components/Spinner.vue";
+} from '../../service/useMessageTrend'
+import Spinner from '@/components/Spinner.vue'
 
 export default defineComponent({
-  name: "LinebotMessages",
+  name: 'LinebotMessages',
   components: {
     PageHeader,
   },
   setup() {
-    const startAt = ref(subDays(new Date(), 8));
-    const endAt = ref(subDays(new Date(), 1));
-    const { fetchData, isLoading, data } = useMessageTrand();
+    const startAt = ref(subDays(new Date(), 8))
+    const endAt = ref(subDays(new Date(), 1))
+    const { fetchData, isLoading, data } = useMessageTrand()
 
     const onSearch = () => {
       const search: MessageTrandReq = {
         startAt: startAt.value
-          ? format(startAt.value, "yyyy-MM-dd")
+          ? format(startAt.value, 'yyyy-MM-dd')
           : undefined,
-        endAt: endAt.value ? format(endAt.value, "yyyy-MM-dd") : undefined,
-      };
-      fetchData(search);
-    };
+        endAt: endAt.value ? format(endAt.value, 'yyyy-MM-dd') : undefined,
+      }
+      fetchData(search)
+    }
 
     onMounted(() => {
-      onSearch();
-    });
+      onSearch()
+    })
 
     const dataMap: Partial<Record<keyof MessageTrand, string>> = {
-      reply: "自動回應",
-      push: "主動推播",
-    };
+      reply: '自動回應',
+      push: '主動推播',
+    }
 
-    const selected = ref<keyof MessageTrand>("reply");
+    const selected = ref<keyof MessageTrand>('reply')
     const chartOptions = computed(() => ({
       chart: {
         toolbar: {
           show: false,
         },
         height: 350,
-        type: "line",
+        type: 'line',
         zoom: {
           enabled: false,
         },
@@ -54,25 +54,25 @@ export default defineComponent({
         enabled: false,
       },
       stroke: {
-        curve: "straight",
+        curve: 'straight',
         width: 2,
       },
       grid: {
         row: {
-          colors: ["#f3f3f3", "transparent"],
+          colors: ['#f3f3f3', 'transparent'],
           opacity: 0.5,
         },
       },
       xaxis: {
-        categories: data.value.map((t) => format(new Date(t.date), "M-dd")),
+        categories: data.value.map((t) => format(new Date(t.date), 'M-dd')),
       },
-    }));
+    }))
     const series = computed(() => [
       {
         name: dataMap[selected.value],
         data: data.value.map((t) => t[selected.value]),
       },
-    ]);
+    ])
     return () => (
       <SectionPanel title="訊息使用狀況">
         {{
@@ -117,7 +117,7 @@ export default defineComponent({
           ],
         }}
       </SectionPanel>
-    );
+    )
   },
-});
+})
 </script>

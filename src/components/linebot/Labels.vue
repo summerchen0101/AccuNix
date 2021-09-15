@@ -1,26 +1,13 @@
 <script lang="ts" setup>
-import PageHeader from "@/components/Layout/PageHeader.vue";
-import SectionPanel from "@/components/SectionPanel.vue";
-import useTagOverview from "@/service/useTagOverview";
-import { onMounted, reactive, ref } from "vue";
-const selected = ref(1);
-const limit = ref(10);
-const { list, fetchData } = useTagOverview();
-onMounted(() => {
-  fetchData();
-});
-// const tableData_1 = reactive(
-//   [...Array(5)].map(() => ({
-//     label: "積極買家1",
-//     count: 12,
-//   }))
-// );
-// const tableData_2 = reactive(
-//   [...Array(5)].map(() => ({
-//     label: "積極買家2",
-//     count: 10,
-//   }))
-// );
+import SectionPanel from '@/components/SectionPanel.vue'
+import useTagOverview from '@/service/useTagOverview'
+import { ref } from 'vue'
+
+const selected = ref(1)
+const limit = ref(10)
+const { list, fetchData, isLoading } = useTagOverview()
+
+await fetchData()
 </script>
 
 <template>

@@ -1,10 +1,10 @@
 <script lang="tsx">
-import PageHeader from "@/components/Layout/PageHeader.vue";
-import SectionPanel from "@/components/SectionPanel.vue";
-import { defineComponent, reactive, ref } from "vue";
+import PageHeader from '@/components/Layout/PageHeader.vue'
+import SectionPanel from '@/components/SectionPanel.vue'
+import { defineComponent, reactive, ref } from 'vue'
 
 export default defineComponent({
-  name: "LinebotActivity",
+  name: 'LinebotActivity',
   components: {
     PageHeader,
   },
@@ -13,11 +13,11 @@ export default defineComponent({
       chart: {
         height: 400,
         width: 380,
-        type: "pie",
+        type: 'pie',
       },
-      labels: ["Team A", "Team B", "Team C", "Team D", "Team E"],
-    });
-    const series = reactive([44, 55, 13, 43, 22]);
+      labels: ['Team A', 'Team B', 'Team C', 'Team D', 'Team E'],
+    })
+    const series = reactive([44, 55, 13, 43, 22])
 
     return () => (
       <SectionPanel title="24小時好友活躍分佈">
@@ -36,7 +36,7 @@ export default defineComponent({
           ],
         }}
       </SectionPanel>
-    );
+    )
   },
-});
+})
 </script>

@@ -1,53 +1,53 @@
 <script lang="tsx">
-import PageHeader from "@/components/Layout/PageHeader.vue";
-import SectionPanel from "@/components/SectionPanel.vue";
-import { computed, defineComponent, onMounted, reactive, ref } from "vue";
-import { format, subDays } from "date-fns";
+import PageHeader from '@/components/Layout/PageHeader.vue'
+import SectionPanel from '@/components/SectionPanel.vue'
+import { computed, defineComponent, onMounted, reactive, ref } from 'vue'
+import { format, subDays } from 'date-fns'
 import useFriendTrand, {
   FriendTrand,
   FriendTrandReq,
-} from "../../service/useFriendTrend";
-import Spinner from "@/components/Spinner.vue";
+} from '../../service/useFriendTrend'
+import Spinner from '@/components/Spinner.vue'
 
 export default defineComponent({
-  name: "LinebotFriends",
+  name: 'LinebotFriends',
   components: {
     PageHeader,
   },
   setup() {
-    const startAt = ref(subDays(new Date(), 8));
-    const endAt = ref(subDays(new Date(), 1));
-    const { fetchData, isLoading, data } = useFriendTrand();
+    const startAt = ref(subDays(new Date(), 8))
+    const endAt = ref(subDays(new Date(), 1))
+    const { fetchData, isLoading, data } = useFriendTrand()
 
     const onSearch = () => {
       const search: FriendTrandReq = {
         startAt: startAt.value
-          ? format(startAt.value, "yyyy-MM-dd")
+          ? format(startAt.value, 'yyyy-MM-dd')
           : undefined,
-        endAt: endAt.value ? format(endAt.value, "yyyy-MM-dd") : undefined,
-      };
-      fetchData(search);
-    };
+        endAt: endAt.value ? format(endAt.value, 'yyyy-MM-dd') : undefined,
+      }
+      fetchData(search)
+    }
 
     onMounted(() => {
-      onSearch();
-    });
+      onSearch()
+    })
 
     const dataMap: Partial<Record<keyof FriendTrand, string>> = {
-      cumulativeFollowers: "累積好友",
-      dailyFollowers: "每日加入",
-      cumulativeBlocks: "累積封鎖",
-      dailyBlocks: "每日封鎖",
-    };
+      cumulativeFollowers: '累積好友',
+      dailyFollowers: '每日加入',
+      cumulativeBlocks: '累積封鎖',
+      dailyBlocks: '每日封鎖',
+    }
 
-    const selected = ref<keyof FriendTrand>("cumulativeFollowers");
+    const selected = ref<keyof FriendTrand>('cumulativeFollowers')
     const chartOptions = computed(() => ({
       chart: {
         toolbar: {
           show: false,
         },
         height: 350,
-        type: "line",
+        type: 'line',
         zoom: {
           enabled: false,
         },
@@ -56,25 +56,25 @@ export default defineComponent({
         enabled: false,
       },
       stroke: {
-        curve: "straight",
+        curve: 'straight',
         width: 2,
       },
       grid: {
         row: {
-          colors: ["#f3f3f3", "transparent"],
+          colors: ['#f3f3f3', 'transparent'],
           opacity: 0.5,
         },
       },
       xaxis: {
-        categories: data.value.map((t) => format(new Date(t.date), "M-dd")),
+        categories: data.value.map((t) => format(new Date(t.date), 'M-dd')),
       },
-    }));
+    }))
     const series = computed(() => [
       {
         name: dataMap[selected.value],
         data: data.value.map((t) => t[selected.value]),
       },
-    ]);
+    ])
     return () => (
       <SectionPanel title="好友總人數分析">
         {{
@@ -119,7 +119,7 @@ export default defineComponent({
           ],
         }}
       </SectionPanel>
-    );
+    )
   },
-});
+})
 </script>

@@ -1,26 +1,26 @@
 <script lang="tsx">
-import PageHeader from "@/components/Layout/PageHeader.vue";
-import SectionPanel from "@/components/SectionPanel.vue";
-import { defineComponent, reactive, ref } from "vue";
+import PageHeader from '@/components/Layout/PageHeader.vue'
+import SectionPanel from '@/components/SectionPanel.vue'
+import { defineComponent, reactive, ref } from 'vue'
 
 interface Columns {
-  name: string;
-  count: number;
-  percent: number;
+  name: string
+  count: number
+  percent: number
 }
 export default defineComponent({
-  name: "LinebotScripts",
+  name: 'LinebotScripts',
   components: {
     PageHeader,
   },
   setup() {
     const tableData = reactive<Columns[]>(
       [...Array(5)].map(() => ({
-        name: "購買行為",
+        name: '購買行為',
         count: 8,
         percent: 48,
-      }))
-    );
+      })),
+    )
 
     return () => (
       <SectionPanel title="觸發腳本與完成率">
@@ -52,7 +52,7 @@ export default defineComponent({
           ],
         }}
       </SectionPanel>
-    );
+    )
   },
-});
+})
 </script>

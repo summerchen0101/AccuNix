@@ -1,14 +1,14 @@
-import { inject, provide, ref } from "vue";
+import { inject, provide, ref } from 'vue'
 
 const state = {
   isMiniSidebar: ref(false),
-  activePage: ref("Home"),
-};
+  activePage: ref('Home'),
+}
 
 export const useLayoutProvider = function () {
-  provide("layout", state);
-};
+  provide('layout', state)
+}
 
 export const useLayoutState = function () {
-  return inject<typeof state>("layout");
-};
+  return inject<typeof state>('layout')
+}

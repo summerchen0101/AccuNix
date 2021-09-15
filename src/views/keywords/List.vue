@@ -3,37 +3,37 @@
 </template>
 
 <script lang="tsx">
-import Layout from "@/components/Layout/Layout.vue";
-import PageHeader from "@/components/Layout/PageHeader.vue";
-import PageIconBtn from "@/components/PageIconBtn.vue";
-import { defineComponent, reactive, ref } from "vue";
-import { useRouter } from "vue-router";
+import Layout from '@/components/Layout/Layout.vue'
+import PageHeader from '@/components/Layout/PageHeader.vue'
+import PageIconBtn from '@/components/PageIconBtn.vue'
+import { defineComponent, reactive, ref } from 'vue'
+import { useRouter } from 'vue-router'
 
 interface Columns {
-  keyword: string;
-  desc: string;
-  action: string;
-  qrcode: string;
-  compare: string;
-  status: string;
+  keyword: string
+  desc: string
+  action: string
+  qrcode: string
+  compare: string
+  status: string
 }
 
 export default defineComponent({
-  name: "KeywordList",
+  name: 'KeywordList',
   setup() {
-    const router = useRouter();
-    const activeTab = ref("first");
-    const keyword = ref("");
+    const router = useRouter()
+    const activeTab = ref('first')
+    const keyword = ref('')
     const tableData = reactive<Columns[]>(
       [...Array(5)].map(() => ({
-        keyword: "天竺鼠車車",
-        desc: "-",
-        action: "-",
-        qrcode: "-",
-        compare: "-",
-        status: "-",
-      }))
-    );
+        keyword: '天竺鼠車車',
+        desc: '-',
+        action: '-',
+        qrcode: '-',
+        compare: '-',
+        status: '-',
+      })),
+    )
     return () => (
       <Layout>
         <PageHeader />
@@ -46,7 +46,7 @@ export default defineComponent({
               </h3>
               <div
                 class="py-2 px-4 bg-blue-500 text-white text-sm cursor-pointer hover:bg-blue-400 rounded-md"
-                onClick={() => router.push({ name: "KeywordCreate" })}
+                onClick={() => router.push({ name: 'KeywordCreate' })}
               >
                 新增關鍵字
               </div>
@@ -92,13 +92,13 @@ export default defineComponent({
                     <el-table-column label="操作" width={150}>
                       <div class="flex space-x-2">
                         <PageIconBtn
-                          onClick={() => console.log("clicked")}
+                          onClick={() => console.log('clicked')}
                           iconClass="fas fa-edit"
                         />
                         <PageIconBtn
                           color="red"
                           iconClass="fas fa-trash-alt"
-                          onClick={() => console.log("clicked")}
+                          onClick={() => console.log('clicked')}
                         />
                       </div>
                     </el-table-column>
@@ -116,7 +116,7 @@ export default defineComponent({
                       <div class="flex space-x-2">
                         <PageIconBtn
                           iconClass="fas fa-reply"
-                          onClick={() => console.log("clicked")}
+                          onClick={() => console.log('clicked')}
                         />
                       </div>
                     </el-table-column>
@@ -127,9 +127,9 @@ export default defineComponent({
           </div>
         </div>
       </Layout>
-    );
+    )
   },
-});
+})
 </script>
 
 <style scoped></style>

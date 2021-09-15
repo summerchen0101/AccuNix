@@ -32,12 +32,12 @@
 </template>
 
 <script lang="ts">
-import { useLayoutState } from "@/providers/layoutProvider";
-import { computed, defineComponent, PropType, ref, watchEffect } from "vue";
-import { Menu } from "./Sidebar.vue";
+import { useLayoutState } from '@/providers/layoutProvider'
+import { computed, defineComponent, PropType, ref, watchEffect } from 'vue'
+import { Menu } from './Sidebar.vue'
 
 export default defineComponent({
-  name: "MenuItem",
+  name: 'MenuItem',
   components: {},
   props: {
     menu: {
@@ -46,26 +46,26 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { isMiniSidebar, activePage } = useLayoutState();
-    const isSubOpen = ref(false);
+    const { isMiniSidebar, activePage } = useLayoutState()
+    const isSubOpen = ref(false)
 
     const checkActive = (menu: Menu): boolean => {
       if (menu.subs) {
-        return menu.subs.some((m) => checkActive(m));
+        return menu.subs.some((m) => checkActive(m))
       }
-      return menu.code === activePage.value;
-    };
-    const isActive = computed(() => checkActive(props.menu));
+      return menu.code === activePage.value
+    }
+    const isActive = computed(() => checkActive(props.menu))
 
     watchEffect(() => {
       if (isActive.value && props.menu.subs) {
-        isSubOpen.value = true;
+        isSubOpen.value = true
       }
-    });
+    })
 
-    return { isSubOpen, isMiniSidebar, isActive };
+    return { isSubOpen, isMiniSidebar, isActive }
   },
-});
+})
 </script>
 
 <style scoped lang="scss"></style>

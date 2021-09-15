@@ -1,5 +1,5 @@
 <script lang="tsx">
-import { defineComponent, onMounted, toRef, toRefs, watchEffect } from "vue";
+import { defineComponent, onMounted, toRef, toRefs, watchEffect } from 'vue'
 
 export default defineComponent({
   props: {
@@ -13,7 +13,7 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { percentage, count } = toRefs(props);
+    const { percentage, count } = toRefs(props)
     return () => (
       <el-progress
         type="dashboard"
@@ -29,9 +29,9 @@ export default defineComponent({
           <span class="text-blue-500">占比{percentage.value}%</span>
         </div>
       </el-progress>
-    );
+    )
   },
-});
+})
 </script>
 
 <style scoped></style>

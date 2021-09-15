@@ -1,23 +1,23 @@
-import { defineConfig } from "vite";
-import vue from "@vitejs/plugin-vue";
-import vueJsx from "@vitejs/plugin-vue-jsx";
-import path from "path";
-import fs from "fs";
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import vueJsx from '@vitejs/plugin-vue-jsx'
+import path from 'path'
+import fs from 'fs'
 
 export default defineConfig({
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "src"),
+      '@': path.resolve(__dirname, 'src'),
     },
   },
   esbuild: {
     jsxInject: `import React from 'react'`,
-    jsxFactory: "h",
-    jsxFragment: "Fragment",
+    jsxFactory: 'h',
+    jsxFragment: 'Fragment',
   },
   plugins: [vue(), vueJsx()],
   server: {
-    host: "local.accunix.net",
+    host: 'local.accunix.net',
     open: true,
     watch: {
       usePolling: true,
@@ -40,4 +40,4 @@ export default defineConfig({
   //     VITE_API_BASE_URL: process.env.VITE_API_BASE_URL,
   //   },
   // },
-});
+})

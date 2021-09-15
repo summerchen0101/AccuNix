@@ -1,10 +1,10 @@
-import { ElMessage } from "element-plus";
+import { ElMessage } from 'element-plus'
 
-type MessageType = "" | "success" | "warning" | "info" | "error";
+type MessageType = '' | 'success' | 'warning' | 'info' | 'error'
 function useAlert() {
   const alert = (message: string, type: MessageType) =>
-    ElMessage({ type, message });
-  return alert;
+    ElMessage({ type, message })
+  return alert
 }
 
-export default useAlert;
+export default useAlert

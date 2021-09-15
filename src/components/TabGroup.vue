@@ -1,9 +1,9 @@
 <script lang="tsx">
-import { OptionType } from "@/types";
-import { defineComponent, PropType } from "vue";
+import { OptionType } from '@/types'
+import { defineComponent, PropType } from 'vue'
 
 export default defineComponent({
-  name: "TabGroup",
+  name: 'TabGroup',
   props: {
     value: [Number, String],
     options: Object as PropType<OptionType<number | string>[]>,
@@ -14,14 +14,14 @@ export default defineComponent({
       <div class="flex space-x-2">
         {props.options?.map((t) => (
           <div
-            class={["tab", props.value === t.value && "active"].join(" ")}
+            class={['tab', props.value === t.value && 'active'].join(' ')}
             onClick={() => props.onChange?.(t.value)}
           >
             {t.label}
           </div>
         ))}
       </div>
-    );
+    )
   },
-});
+})
 </script>

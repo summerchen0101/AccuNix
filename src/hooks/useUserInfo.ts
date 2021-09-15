@@ -1,16 +1,16 @@
-import { ref } from "vue";
+import { ref } from 'vue'
 
 const useUserInfo = function () {
-  const user = ref<{ name: string }>(null);
+  const user = ref<{ name: string }>(null)
 
   const getUser = async () => {
-    user.value = { name: "summer" };
-  };
+    user.value = { name: 'summer' }
+  }
 
   return {
     user,
     getUser,
-  };
-};
+  }
+}
 
-export default useUserInfo;
+export default useUserInfo

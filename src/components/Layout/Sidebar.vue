@@ -35,39 +35,39 @@
 </template>
 
 <script lang="ts">
-import MenuItem from "@/components/Layout/MenuItem.vue";
-import { useLayoutState } from "@/providers/layoutProvider";
-import { defineComponent } from "vue";
+import MenuItem from '@/components/Layout/MenuItem.vue'
+import { useLayoutState } from '@/providers/layoutProvider'
+import { defineComponent } from 'vue'
 
 export interface Menu {
-  label: string;
-  icon?: string;
-  path: string | null;
-  subs?: Menu[];
-  code?: string;
+  label: string
+  icon?: string
+  path: string | null
+  subs?: Menu[]
+  code?: string
 }
 export default defineComponent({
-  name: "Sidebar",
+  name: 'Sidebar',
   components: {
     MenuItem,
   },
   setup(props) {
-    const { isMiniSidebar } = useLayoutState();
+    const { isMiniSidebar } = useLayoutState()
     const menuList: Menu[] = [
-      { label: "首頁", path: "/", icon: "fa-home", code: "Home" },
+      { label: '首頁', path: '/', icon: 'fa-home', code: 'Home' },
       {
-        label: "聊天機器人",
+        label: '聊天機器人',
         path: null,
-        icon: "fa-comments",
+        icon: 'fa-comments',
         subs: [
-          { label: "Line", path: "/line/setting", code: "Line" },
-          { label: "Facebook", path: "/facebook", code: "Facebook" },
+          { label: 'Line', path: '/line/setting', code: 'Line' },
+          { label: 'Facebook', path: '/facebook', code: 'Facebook' },
         ],
       },
-    ];
-    return { isMiniSidebar, menuList };
+    ]
+    return { isMiniSidebar, menuList }
   },
-});
+})
 </script>
 
 <style scoped lang="scss"></style>

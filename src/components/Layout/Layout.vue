@@ -20,22 +20,22 @@
 </template>
 
 <script lang="ts">
-import Header from "@/components/Layout/Header.vue";
-import Sidebar from "@/components/Layout/Sidebar.vue";
-import { useLayoutState } from "@/providers/layoutProvider";
-import { defineComponent } from "vue";
+import Header from '@/components/Layout/Header.vue'
+import Sidebar from '@/components/Layout/Sidebar.vue'
+import { useLayoutState } from '@/providers/layoutProvider'
+import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: "Layout",
+  name: 'Layout',
   components: {
     Header,
     Sidebar,
   },
   setup(props) {
-    const { isMiniSidebar } = useLayoutState();
-    return { isMiniSidebar };
+    const { isMiniSidebar } = useLayoutState()
+    return { isMiniSidebar }
   },
-});
+})
 </script>
 
 <style scoped lang="scss"></style>

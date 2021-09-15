@@ -1,53 +1,53 @@
 <script lang="tsx">
-import FormFieldTips from "@/components/FormFieldTips.vue";
-import IconBtn from "@/components/IconBtn.vue";
-import Layout from "@/components/Layout/Layout.vue";
-import PageHeader from "@/components/Layout/PageHeader.vue";
-import MsgBtnForm from "@/components/msgForm/MsgBtnForm.vue";
-import MsgTextForm from "@/components/msgForm/MsgTextForm.vue";
-import MsgBtnReviewVue from "@/components/msgReview/MsgBtnReview.vue";
-import MsgTextReview from "@/components/msgReview/MsgTextReview.vue";
-import { MsgType } from "@/lib/enum";
-import { cloneDeep } from "lodash";
-import { defineComponent, reactive } from "vue";
+import FormFieldTips from '@/components/FormFieldTips.vue'
+import IconBtn from '@/components/IconBtn.vue'
+import Layout from '@/components/Layout/Layout.vue'
+import PageHeader from '@/components/Layout/PageHeader.vue'
+import MsgBtnForm from '@/components/msgForm/MsgBtnForm.vue'
+import MsgTextForm from '@/components/msgForm/MsgTextForm.vue'
+import MsgBtnReviewVue from '@/components/msgReview/MsgBtnReview.vue'
+import MsgTextReview from '@/components/msgReview/MsgTextReview.vue'
+import { MsgType } from '@/lib/enum'
+import { cloneDeep } from 'lodash'
+import { defineComponent, reactive } from 'vue'
 
 export type MsgGroupType = {
-  type: MsgType;
-  title: "";
-  content: "";
-};
+  type: MsgType
+  title: ''
+  content: ''
+}
 
 interface IState {
-  keyword: string;
-  desc: string;
-  status: 1 | 0;
-  tags: number[];
-  msgGroups: MsgGroupType[];
-  currentMsgIndex: string;
+  keyword: string
+  desc: string
+  status: 1 | 0
+  tags: number[]
+  msgGroups: MsgGroupType[]
+  currentMsgIndex: string
 }
 
 export default defineComponent({
-  name: "KeywordCreate",
+  name: 'KeywordCreate',
   setup() {
     const form = reactive<IState>({
-      keyword: "",
-      desc: "",
+      keyword: '',
+      desc: '',
       status: 1,
       tags: [],
-      msgGroups: [{ type: MsgType.Text, title: "", content: "" }],
-      currentMsgIndex: "0",
-    });
+      msgGroups: [{ type: MsgType.Text, title: '', content: '' }],
+      currentMsgIndex: '0',
+    })
     const toMsgComp = (group: MsgGroupType) => {
       switch (group.type) {
         case MsgType.Text:
-          return <MsgTextForm v-model:content={group.content} />;
+          return <MsgTextForm v-model:content={group.content} />
         case MsgType.Button:
           return (
             <MsgBtnForm
               v-model:title={group.title}
               v-model:content={group.content}
             />
-          );
+          )
         case MsgType.Image:
           return (
             <>
@@ -72,26 +72,26 @@ export default defineComponent({
                 </el-upload>
               </el-form-item>
             </>
-          );
+          )
         default:
-          break;
+          break
       }
-    };
+    }
 
     const handleCreateMsg = () => {
-      if (form.msgGroups.length >= 5) return;
+      if (form.msgGroups.length >= 5) return
       form.msgGroups.push({
         type: MsgType.Text,
-        title: "",
-        content: "",
-      });
-      form.currentMsgIndex = (form.msgGroups.length - 1).toString();
-    };
+        title: '',
+        content: '',
+      })
+      form.currentMsgIndex = (form.msgGroups.length - 1).toString()
+    }
     const handleCopyMsg = () => {
-      if (form.msgGroups.length >= 5) return;
-      form.msgGroups.push(cloneDeep(form.msgGroups[+form.currentMsgIndex]));
-      form.currentMsgIndex = (form.msgGroups.length - 1).toString();
-    };
+      if (form.msgGroups.length >= 5) return
+      form.msgGroups.push(cloneDeep(form.msgGroups[+form.currentMsgIndex]))
+      form.currentMsgIndex = (form.msgGroups.length - 1).toString()
+    }
     return () => (
       <Layout>
         <PageHeader />
@@ -184,12 +184,12 @@ export default defineComponent({
                         onClick={() => {
                           form.msgGroups.push({
                             type: MsgType.Text,
-                            title: "",
-                            content: "",
-                          });
+                            title: '',
+                            content: '',
+                          })
                           form.currentMsgIndex = (
                             form.msgGroups.length - 1
-                          ).toString();
+                          ).toString()
                         }}
                       ></el-button>
                     </div>
@@ -198,10 +198,10 @@ export default defineComponent({
                       v-model={form.currentMsgIndex}
                       closable={form.msgGroups.length > 1}
                       onTabRemove={(targetIndex: number) => {
-                        form.msgGroups.splice(targetIndex, 1);
+                        form.msgGroups.splice(targetIndex, 1)
                         form.currentMsgIndex = (
                           targetIndex - 1 >= 0 ? targetIndex - 1 : 0
-                        ).toString();
+                        ).toString()
                       }}
                     >
                       {form.msgGroups.map((g, i) => (
@@ -221,10 +221,10 @@ export default defineComponent({
                             </el-select>
                           </el-form-item>
                           {g.type === MsgType.Text ? (
-                            <MsgTextForm v-model={[g, "group"]} />
+                            <MsgTextForm v-model={[g, 'group']} />
                           ) : (
                             g.type === MsgType.Button && (
-                              <MsgBtnForm v-model={[g, "group"]} />
+                              <MsgBtnForm v-model={[g, 'group']} />
                             )
                           )}
                         </el-tab-pane>
@@ -255,9 +255,9 @@ export default defineComponent({
           </div>
         </div>
       </Layout>
-    );
+    )
   },
-});
+})
 </script>
 
 <style scoped></style>

@@ -1,27 +1,27 @@
 <script lang="tsx">
-import useLogin from "@/service/useLogin";
-import { defineComponent, reactive, watch } from "vue";
-import logo from "@/assets/logo.png";
-import { useRouter } from "vue-router";
+import useLogin from '@/service/useLogin'
+import { defineComponent, reactive, watch } from 'vue'
+import logo from '@/assets/logo.png'
+import { useRouter } from 'vue-router'
 
 export default defineComponent({
-  name: "LoginPage",
+  name: 'LoginPage',
   setup() {
-    const router = useRouter();
+    const router = useRouter()
     const loginForm = reactive({
-      username: "accunix@develop",
-      password: "50085008",
-    });
-    const { doLogin, isLoading } = useLogin();
+      username: 'accunix@develop',
+      password: '50085008',
+    })
+    const { doLogin, isLoading } = useLogin()
     const handleSubmit = async () => {
       const res = await doLogin({
         ...loginForm,
-        app: "accunix",
-      });
+        app: 'accunix',
+      })
       if (res?.auth) {
-        router.push({ name: "Home" });
+        router.push({ name: 'Home' })
       }
-    };
+    }
     return () => (
       <div class="w-full h-full bg-gray-100 flex justify-center items-center">
         <div class="w-full max-w-xs">
@@ -89,9 +89,9 @@ export default defineComponent({
           </p>
         </div>
       </div>
-    );
+    )
   },
-});
+})
 </script>
 
 <style scoped></style>

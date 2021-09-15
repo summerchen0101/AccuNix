@@ -1,7 +1,7 @@
 <script lang="tsx">
-import { defineComponent, PropType, toRefs } from "vue";
+import { defineComponent, PropType, toRefs } from 'vue'
 export default defineComponent({
-  name: "CardPanel",
+  name: 'CardPanel',
   props: {
     title: String,
     icon: String,
@@ -9,12 +9,12 @@ export default defineComponent({
     onClick: Function as PropType<(e: MouseEvent) => void>,
   },
   setup(props, { slots }) {
-    const { title, icon, desc, onClick } = toRefs(props);
+    const { title, icon, desc, onClick } = toRefs(props)
     return () => (
       <div class="bg-white rounded-md p-4 shadow-md">
         <div class="flex items-center">
           <div class="flex-1 space-x-2 flex items-center">
-            <i class={["text-gray-400 text-xl", icon.value].join(" ")}></i>
+            <i class={['text-gray-400 text-xl', icon.value].join(' ')}></i>
             <span class="text-lg text-gray-600 font-bold">{title.value}</span>
           </div>
           <span
@@ -27,7 +27,7 @@ export default defineComponent({
         <div class="text-gray-500 text-sm mt-3 pb-3">{desc.value}</div>
         {slots.default?.()}
       </div>
-    );
+    )
   },
-});
+})
 </script>

@@ -1,20 +1,20 @@
 <script lang="tsx">
-import { defineComponent, toRefs } from "vue";
+import { defineComponent, toRefs } from 'vue'
 export default defineComponent({
-  name: "SectionPanel",
+  name: 'SectionPanel',
   props: {
     title: String,
     icon: String,
   },
   setup(props, { slots }) {
-    const { title, icon } = toRefs(props);
+    const { title, icon } = toRefs(props)
 
     return () => (
       <div class="bg-white rounded-md p-4 shadow-md">
         <div class="flex items-center">
           <div class="flex-1 flex items-center">
             {icon && (
-              <i class={["text-gray-400 text-xl", icon.value].join(" ")}></i>
+              <i class={['text-gray-400 text-xl', icon.value].join(' ')}></i>
             )}
             <span class="text-lg text-gray-600 font-bold">{title.value}</span>
           </div>
@@ -27,7 +27,7 @@ export default defineComponent({
           </div>
         )}
       </div>
-    );
+    )
   },
-});
+})
 </script>
