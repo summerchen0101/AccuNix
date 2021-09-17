@@ -97,7 +97,7 @@ export default defineComponent({
     ])
 
     return () => (
-      <SectionPanel class="sm:col-span-2" title="用戶生命週期">
+      <SectionPanel class="lg:col-span-2" title="用戶生命週期">
         {{
           default: () => [
             isLoading.value ? (
