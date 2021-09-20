@@ -269,13 +269,16 @@ export default defineComponent({
                       class="flex items-start space-x-4 p-2"
                     >
                       <i class="fas fa-user-circle text-4xl text-gray-400"></i>
+                      <!-- {{ msg.form }} -->
 
                       <MsgTextReview
                         v-if="msg.type === MsgType.Text"
+                        :key="new Date().getTime() + MsgType.Text"
                         :data="msg.form"
                       />
                       <MsgBtnReview
                         v-else-if="msg.type === MsgType.Button"
+                        :key="new Date().getTime() + MsgType.Button"
                         :data="msg.form"
                       />
                     </div>

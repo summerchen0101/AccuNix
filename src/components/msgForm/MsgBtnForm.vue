@@ -11,7 +11,7 @@ export default defineComponent({
           review: '',
           title: '',
           content: '',
-          btns: [],
+          btns: [{ title: '', action: 1, reply: '' }],
         } as MsgBtnFields),
     },
   },
@@ -21,7 +21,13 @@ export default defineComponent({
       get: () => props.form,
       set: (val) => emit('update:form', val),
     })
-    return { formData }
+    const handleBtnCreate = () => {
+      formData.value.btns.push({ title: '按鈕', action: 1, reply: '' })
+    }
+    const handleBtnClose = (index: number) => {
+      formData.value.btns.splice(index, 1)
+    }
+    return { formData, handleBtnCreate, handleBtnClose }
   },
 })
 </script>
@@ -44,7 +50,46 @@ export default defineComponent({
         show-word-limit
       />
     </el-form-item>
-    <template v-for="(btn, i) in formData.btns" :key="i">
+    <div
+      v-for="(btn, i) in formData.btns"
+      :key="i"
+      class="bg-gray-100 p-3 relative mx-3 mb-5"
+    >
+      <div
+        class="
+          absolute
+          top-0
+          left-0
+          rounded-full
+          bg-gray-400
+          text-white
+          w-6
+          h-6
+          text-center
+          -m-2
+        "
+      >
+        {{ i + 1 }}
+      </div>
+      <div
+        :hidden="formData.btns.length <= 1"
+        class="
+          absolute
+          top-0
+          right-0
+          rounded-full
+          bg-red-400
+          text-white
+          w-6
+          h-6
+          text-center
+          -m-2
+          cursor-pointer
+        "
+        @click="() => handleBtnClose(i)"
+      >
+        <i class="fas fa-times"></i>
+      </div>
       <el-form-item label="按鈕標題">
         <el-input placeholder="请输入按鈕標題" v-model="btn.title" />
       </el-form-item>
@@ -54,6 +99,22 @@ export default defineComponent({
       <el-form-item label="按鈕回覆文字">
         <el-input placeholder="请输入按鈕回覆文字" v-model="btn.reply" />
       </el-form-item>
-    </template>
+    </div>
+    <div class="text-center">
+      <button
+        class="
+          bg-gray-400
+          py-1
+          px-2
+          rounded
+          text-sm text-white
+          hover:bg-gray-400/80
+        "
+        type="button"
+        @click="handleBtnCreate"
+      >
+        <i class="fas fa-plus"></i> 增加按鈕
+      </button>
+    </div>
   </el-form>
 </template>

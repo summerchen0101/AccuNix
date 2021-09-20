@@ -8,7 +8,7 @@ export default defineComponent({
   },
   setup(props) {
     const { title, content, review, btns } = toRefs(props.data)
-    return { title, content, review, btns }
+    return { props, title, content, review, btns }
   },
 })
 </script>
@@ -41,9 +41,10 @@ export default defineComponent({
           rounded
           py-1
           px-2
-          text-gray-600
+          text-gray-500
           cursor-pointer
-          hover:bg-gray-100 hover:text-gray-500
+          hover:bg-gray-200/80
+          text-center
         "
       >
         {{ btn.title }}
