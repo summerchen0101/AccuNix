@@ -1,24 +1,29 @@
-<script lang="ts" setup>
-import SectionPanel from '@/components/SectionPanel.vue'
+<script lang="ts">
 import useKeywordTrand from '@/service/useKeywordTrend'
-import { subDays, format } from 'date-fns'
-import { reactive, ref, onMounted } from 'vue'
-import Spinner from '../Spinner.vue'
+import { format, subDays } from 'date-fns'
+import { defineComponent, onMounted, ref } from 'vue'
 
-const startAt = ref(subDays(new Date(), 8))
-const endAt = ref(subDays(new Date(), 1))
-const { list, fetchData, isLoading } = useKeywordTrand()
+export default defineComponent({
+  setup() {
+    const startAt = ref(subDays(new Date(), 8))
+    const endAt = ref(subDays(new Date(), 1))
+    const { list, fetchData, isLoading } = useKeywordTrand()
 
-const onSearch = () => {
-  const search = {
-    startAt: startAt.value ? format(startAt.value, 'yyyy-MM-dd') : undefined,
-    endAt: endAt.value ? format(endAt.value, 'yyyy-MM-dd') : undefined,
-  }
-  fetchData(search)
-}
+    const onSearch = () => {
+      const search = {
+        startAt: startAt.value
+          ? format(startAt.value, 'yyyy-MM-dd')
+          : undefined,
+        endAt: endAt.value ? format(endAt.value, 'yyyy-MM-dd') : undefined,
+      }
+      fetchData(search)
+    }
 
-onMounted(() => {
-  onSearch()
+    onMounted(() => {
+      onSearch()
+    })
+    return { startAt, endAt, list, isLoading, onSearch }
+  },
 })
 </script>
 

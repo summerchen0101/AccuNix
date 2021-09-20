@@ -17,20 +17,27 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts">
 import useAlert from '@/hooks/useAlert'
 import { useLayoutState } from '@/providers/layoutProvider'
 import useLogout from '@/service/useLogout'
+import { defineComponent, PropType } from '@vue/runtime-core'
 import { useRouter } from 'vue-router'
-const router = useRouter()
-const { isMiniSidebar } = useLayoutState()
-const { doLogout, isLoading } = useLogout()
-const alert = useAlert()
-const handleLogout = async () => {
-  await doLogout()
-  alert('登出成功', 'success')
-  router.push('/login')
-}
+
+export default defineComponent({
+  setup(props) {
+    const router = useRouter()
+    const { isMiniSidebar } = useLayoutState()
+    const { doLogout, isLoading } = useLogout()
+    const alert = useAlert()
+    const handleLogout = async () => {
+      await doLogout()
+      alert('登出成功', 'success')
+      router.push('/login')
+    }
+    return { isMiniSidebar, handleLogout }
+  },
+})
 </script>
 
 <style scoped lang="scss"></style>

@@ -1,35 +1,35 @@
-<script lang="tsx">
-import { MsgGroupType } from '@/views/keywords/Create.vue'
-import { computed, defineComponent, PropType, reactive, toRefs } from 'vue'
-import { MsgText } from '../msgReview/MsgTextReview.vue'
+<script lang="ts" setup>
+import { computed, defineEmits, defineProps, withDefaults } from 'vue'
 
-export default defineComponent({
-  name: 'MsgTextForm',
-  props: {
-    group: {
-      type: Object as PropType<MsgGroupType>,
-      default: () => ({}),
-    },
+const props = withDefaults(
+  defineProps<{
+    form: {
+      content: string
+    }
+  }>(),
+  {
+    form: () => ({
+      content: '',
+    }),
   },
-  emits: ['update:group'],
-  setup(props, { emit }) {
-    const group = computed({
-      get: () => props.group,
-      set: (val) => emit('update:group', val),
-    })
-    return () => (
-      <>
-        <el-form-item label="文字內容">
-          <el-input
-            type="textarea"
-            placeholder="请输入内容"
-            v-model={group.value.content}
-            maxlength="100"
-            show-word-limit
-          />
-        </el-form-item>
-      </>
-    )
-  },
+)
+const emit = defineEmits(['update:form'])
+const formData = computed({
+  get: () => props.form,
+  set: (val) => emit('update:form', val),
 })
 </script>
+
+<template>
+  <el-form :model="formData" ref="form" label-position="top" label-width="80px">
+    <el-form-item label="內容">
+      <el-input
+        type="textarea"
+        placeholder="请输入内容"
+        v-model="formData.content"
+        maxlength="100"
+        show-word-limit
+      />
+    </el-form-item>
+  </el-form>
+</template>

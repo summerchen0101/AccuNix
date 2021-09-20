@@ -10,6 +10,7 @@
     "resolveJsonModule": true,
     "strictNullChecks": false,
     "esModuleInterop": true,
+    "noImplicitAny": false,
     "lib": ["esnext", "dom", "DOM.Iterable", "ScriptHost"],
     "baseUrl": ".",
     "paths": {
