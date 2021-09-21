@@ -1,26 +1,17 @@
-<script lang="ts" setup>
-import SectionPanel from '@/components/SectionPanel.vue'
+<script lang="ts">
 import useTagOverview from '@/service/useTagOverview'
-import { onMounted, ref } from 'vue'
-import Spinner from '../Spinner.vue'
-const selected = ref(1)
-const limit = ref(10)
-const { list, fetchData, isLoading } = useTagOverview()
-onMounted(() => {
-  fetchData()
+import { defineComponent, onMounted, ref } from 'vue'
+export default defineComponent({
+  setup() {
+    const selected = ref(1)
+    const limit = ref(10)
+    const { list, fetchData, isLoading } = useTagOverview()
+    onMounted(() => {
+      fetchData()
+    })
+    return { selected, limit, list, isLoading }
+  },
 })
-// const tableData_1 = reactive(
-//   [...Array(5)].map(() => ({
-//     label: "積極買家1",
-//     count: 12,
-//   }))
-// );
-// const tableData_2 = reactive(
-//   [...Array(5)].map(() => ({
-//     label: "積極買家2",
-//     count: 10,
-//   }))
-// );
 </script>
 
 <template>
