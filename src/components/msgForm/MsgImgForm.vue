@@ -1,8 +1,8 @@
 <script lang="ts">
-import { computed, defineComponent, defineEmits, PropType, watch } from 'vue'
-import { MsgImgFields, ImgUploadRes } from '../types'
+import useImgSizeCheck from '@/hooks/useImgSizeCheck'
+import { computed, defineComponent, PropType, watch } from 'vue'
+import { ImgUploadRes, MsgImgFields } from '../types'
 
-const emit = defineEmits(['update:form'])
 export default defineComponent({
   props: {
     form: {
@@ -11,6 +11,7 @@ export default defineComponent({
     },
   },
   setup(props, { emit }) {
+    const imgSizeCheck = useImgSizeCheck()
     const formData = computed({
       get: () => props.form,
       set: (val) => emit('update:form', val),
@@ -27,9 +28,9 @@ export default defineComponent({
       path: `xxx`,
     }
 
-    const handleSuccessUpload = (res: ImgUploadRes, file: File) => {
-      console.log(file)
-      console.log(res)
+    const handleBeforeUpload = (file: File) => imgSizeCheck(file, 2, 'MB')
+
+    const handleSuccessUpload = (res: ImgUploadRes) => {
       formData.value = { ...formData.value, imgRes: res }
     }
     return {
@@ -37,6 +38,7 @@ export default defineComponent({
       uploadPath: `${import.meta.env.VITE_API_BASE_URL}/uploadFile/store`,
       plusData,
       handleSuccessUpload,
+      handleBeforeUpload,
     }
   },
 })
@@ -52,12 +54,17 @@ export default defineComponent({
         :data="plusData"
         with-credentials
         :on-success="handleSuccessUpload"
+        accept="image/jpeg, image/png"
+        :limit="1"
+        :before-upload="handleBeforeUpload"
       >
         <i class="el-icon-upload"></i>
         <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
         <template #tip>
-          <div class="el-upload__tip">
-            只能上传 jpg/png 文件，且不超过 500kb
+          <div class="text-gray-400 text-sm">
+            檔案格式：JPG、JPEG、PNG<br />
+            檔案容量：2MB以下<br />
+            可上傳的最大圖片寬x高: 尺寸為 4096px × 4096px
           </div>
         </template>
       </el-upload>
