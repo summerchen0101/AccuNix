@@ -13,6 +13,8 @@ import { MsgBtnFields, MsgTextFields } from '@/components/types'
 import { useLayoutState } from '@/providers/layoutProvider'
 import MsgImgForm from '@/components/msgForm/MsgImgForm.vue'
 import MsgImgReview from '@/components/msgReview/MsgImgReview.vue'
+import MsgVideoFormVue from '@/components/msgForm/MsgVideoForm.vue'
+import MsgVideoReviewVue from '@/components/msgReview/MsgVideoReview.vue'
 // import { MsgBtnFields } from '@/components/types'
 
 type MsgGroupType =
@@ -114,11 +116,13 @@ export default defineComponent({
       [MsgType.Text]: MsgTextForm,
       [MsgType.Button]: MsgBtnForm,
       [MsgType.Image]: MsgImgForm,
+      [MsgType.Video]: MsgVideoFormVue,
     }
     const reviewMap = {
       [MsgType.Text]: MsgTextReview,
       [MsgType.Button]: MsgBtnReview,
       [MsgType.Image]: MsgImgReview,
+      [MsgType.Video]: MsgVideoReviewVue,
     }
 
     return {
@@ -243,7 +247,6 @@ export default defineComponent({
                       <el-select
                         v-model="g.type"
                         placeholder="請選擇類型"
-                        class="w-full"
                         @change="(val) => onTypeChange(i, val)"
                       >
                         <el-option :value="MsgType.Text" label="文字">
@@ -254,6 +257,9 @@ export default defineComponent({
                         </el-option>
                         <el-option :value="MsgType.Image" label="圖片">
                           <span>圖片</span> <i class="far fa-image"></i>
+                        </el-option>
+                        <el-option :value="MsgType.Video" label="影片">
+                          <span>影片</span> <i class="fas fa-film"></i>
                         </el-option>
                       </el-select>
                     </el-form-item>
@@ -280,6 +286,7 @@ export default defineComponent({
                       class="flex items-start space-x-4 p-2"
                     >
                       <i class="fas fa-user-circle text-4xl text-gray-400"></i>
+                      <!-- {{ msg.form }} -->
                       <component
                         :is="reviewMap[msg.type]"
                         :key="new Date().getTime() + MsgType.Text"

@@ -30,8 +30,10 @@ export interface MsgImgFields {
   imgRes?: ImgUploadRes
 }
 export interface MsgVideoFields {
-  file: File
-  preview: string
+  videoFile: File
+  imgFile: File
+  videoRes?: ImgUploadRes
+  imgRes?: ImgUploadRes
 }
 
 export interface CardGroup {
