@@ -11,6 +11,8 @@ import MsgBtnForm from '@/components/msgForm/MsgBtnForm.vue'
 import MsgBtnReview from '@/components/msgReview/MsgBtnReview.vue'
 import { MsgBtnFields, MsgTextFields } from '@/components/types'
 import { useLayoutState } from '@/providers/layoutProvider'
+import MsgImgForm from '@/components/msgForm/MsgImgForm.vue'
+import MsgImgReview from '@/components/msgReview/MsgImgReview.vue'
 // import { MsgBtnFields } from '@/components/types'
 
 type MsgGroupType =
@@ -108,7 +110,20 @@ export default defineComponent({
       }
     }
 
+    const formMap = {
+      [MsgType.Text]: MsgTextForm,
+      [MsgType.Button]: MsgBtnForm,
+      [MsgType.Image]: MsgImgForm,
+    }
+    const reviewMap = {
+      [MsgType.Text]: MsgTextReview,
+      [MsgType.Button]: MsgBtnReview,
+      [MsgType.Image]: MsgImgReview,
+    }
+
     return {
+      formMap,
+      reviewMap,
       onTabRemove,
       handleUserSet,
       handleCopyMsg,
@@ -235,18 +250,14 @@ export default defineComponent({
                           <span>文字</span> <i class="fas fa-font"></i>
                         </el-option>
                         <el-option :value="MsgType.Button" label="按鈕">
-                          <span>按鈕</span> <i class="fas fa-font"></i>
+                          <span>按鈕</span> <i class="far fa-hand-pointer"></i>
+                        </el-option>
+                        <el-option :value="MsgType.Image" label="圖片">
+                          <span>圖片</span> <i class="far fa-image"></i>
                         </el-option>
                       </el-select>
                     </el-form-item>
-                    <MsgTextForm
-                      v-if="g.type === MsgType.Text"
-                      v-model:form="g.form"
-                    />
-                    <MsgBtnForm
-                      v-if="g.type === MsgType.Button"
-                      v-model:form="g.form"
-                    />
+                    <component :is="formMap[g.type]" v-model:form="g.form" />
                   </el-tab-pane>
                 </el-tabs>
               </div>
@@ -269,16 +280,9 @@ export default defineComponent({
                       class="flex items-start space-x-4 p-2"
                     >
                       <i class="fas fa-user-circle text-4xl text-gray-400"></i>
-                      <!-- {{ msg.form }} -->
-
-                      <MsgTextReview
-                        v-if="msg.type === MsgType.Text"
+                      <component
+                        :is="reviewMap[msg.type]"
                         :key="new Date().getTime() + MsgType.Text"
-                        :data="msg.form"
-                      />
-                      <MsgBtnReview
-                        v-else-if="msg.type === MsgType.Button"
-                        :key="new Date().getTime() + MsgType.Button"
                         :data="msg.form"
                       />
                     </div>

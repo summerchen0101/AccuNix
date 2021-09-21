@@ -1,22 +1,22 @@
-<script lang="ts" setup>
-import { computed, defineEmits, defineProps, withDefaults } from 'vue'
+<script lang="ts">
+import { computed, defineComponent, defineEmits, PropType } from 'vue'
+import { MsgTextFields } from '../types'
 
-const props = withDefaults(
-  defineProps<{
-    form: {
-      content: string
-    }
-  }>(),
-  {
-    form: () => ({
-      content: '',
-    }),
-  },
-)
 const emit = defineEmits(['update:form'])
-const formData = computed({
-  get: () => props.form,
-  set: (val) => emit('update:form', val),
+export default defineComponent({
+  props: {
+    form: {
+      type: Object as PropType<MsgTextFields>,
+      default: () => ({ content: '' } as MsgTextFields),
+    },
+  },
+  setup(props) {
+    const formData = computed({
+      get: () => props.form,
+      set: (val) => emit('update:form', val),
+    })
+    return { formData }
+  },
 })
 </script>
 
