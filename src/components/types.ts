@@ -38,6 +38,7 @@ export interface MsgVideoFields {
 
 export interface CardGroup {
   file: File
+  imgRes?: ImgUploadRes
   title: string
   content: string
   btns: Btn[]

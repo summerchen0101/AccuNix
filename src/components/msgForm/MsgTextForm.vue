@@ -1,8 +1,7 @@
 <script lang="ts">
-import { computed, defineComponent, defineEmits, PropType } from 'vue'
+import { computed, defineComponent, PropType } from 'vue'
 import { MsgTextFields } from '../types'
 
-const emit = defineEmits(['update:form'])
 export default defineComponent({
   props: {
     form: {
@@ -10,7 +9,7 @@ export default defineComponent({
       default: () => ({ content: '' } as MsgTextFields),
     },
   },
-  setup(props) {
+  setup(props, { emit }) {
     const formData = computed({
       get: () => props.form,
       set: (val) => emit('update:form', val),

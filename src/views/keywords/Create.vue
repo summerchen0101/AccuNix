@@ -9,12 +9,18 @@ import { reactive, defineComponent, onMounted } from 'vue'
 import MsgTextForm from '@/components/msgForm/MsgTextForm.vue'
 import MsgBtnForm from '@/components/msgForm/MsgBtnForm.vue'
 import MsgBtnReview from '@/components/msgReview/MsgBtnReview.vue'
-import { MsgBtnFields, MsgTextFields } from '@/components/types'
+import {
+  MsgBtnFields,
+  MsgCardGroupFields,
+  MsgTextFields,
+} from '@/components/types'
 import { useLayoutState } from '@/providers/layoutProvider'
 import MsgImgForm from '@/components/msgForm/MsgImgForm.vue'
 import MsgImgReview from '@/components/msgReview/MsgImgReview.vue'
 import MsgVideoFormVue from '@/components/msgForm/MsgVideoForm.vue'
 import MsgVideoReviewVue from '@/components/msgReview/MsgVideoReview.vue'
+import MsgCardGroupFormVue from '@/components/msgForm/MsgCardGroupForm.vue'
+import MsgCardGroupReviewVue from '@/components/msgReview/MsgCardGroupReview.vue'
 // import { MsgBtnFields } from '@/components/types'
 
 type MsgGroupType =
@@ -25,6 +31,10 @@ type MsgGroupType =
   | {
       type: MsgType.Button
       form: MsgBtnFields
+    }
+  | {
+      type: MsgType.CardGroup
+      form: MsgCardGroupFields
     }
 
 interface IState {
@@ -106,6 +116,20 @@ export default defineComponent({
             btns: [{ title: '按鈕', action: 1, reply: '' }],
           } as MsgBtnFields
           break
+        case MsgType.CardGroup:
+          formData.msgGroups[index].form = {
+            review: '',
+            btnCount: 1,
+            groups: [
+              {
+                file: null,
+                title: '',
+                content: '',
+                btns: [{ title: '按鈕', action: 1, reply: '' }],
+              },
+            ],
+          } as MsgCardGroupFields
+          break
 
         default:
           break
@@ -117,12 +141,14 @@ export default defineComponent({
       [MsgType.Button]: MsgBtnForm,
       [MsgType.Image]: MsgImgForm,
       [MsgType.Video]: MsgVideoFormVue,
+      [MsgType.CardGroup]: MsgCardGroupFormVue,
     }
     const reviewMap = {
       [MsgType.Text]: MsgTextReview,
       [MsgType.Button]: MsgBtnReview,
       [MsgType.Image]: MsgImgReview,
       [MsgType.Video]: MsgVideoReviewVue,
+      [MsgType.CardGroup]: MsgCardGroupReviewVue,
     }
 
     return {
@@ -260,6 +286,9 @@ export default defineComponent({
                         </el-option>
                         <el-option :value="MsgType.Video" label="影片">
                           <span>影片</span> <i class="fas fa-film"></i>
+                        </el-option>
+                        <el-option :value="MsgType.CardGroup" label="圖卡樣板">
+                          <span>圖卡樣板</span> <i class="far fa-clone"></i>
                         </el-option>
                       </el-select>
                     </el-form-item>
