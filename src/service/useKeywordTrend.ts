@@ -35,7 +35,7 @@ function useKeywordTrand() {
     try {
       const res = await useRequest<KeywordTrandRes>({
         method: 'get',
-        url: `LINEBot/${lineBotGuid.value}/dashboard/keyword-trend`,
+        url: `LINEBot/${lineBotGuid.value}/Dashboard/keyword-trend`,
         config: { params: req },
       })
       list.value = res.data

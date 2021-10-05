@@ -35,7 +35,7 @@ function useScriptOverview() {
     try {
       const res = await useRequest<ScriptOverviewRes>({
         method: 'get',
-        url: `LINEBot/${lineBotGuid.value}/dashboard/script-overview`,
+        url: `LINEBot/${lineBotGuid.value}/Dashboard/script-overview`,
         config: { params: req },
       })
       list.value = res.data

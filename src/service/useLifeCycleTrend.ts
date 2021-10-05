@@ -36,7 +36,7 @@ function useLifeCycleTrand() {
     try {
       const res = await useRequest<LifeCycleTrandRes>({
         method: 'get',
-        url: `LINEBot/${lineBotGuid.value}/dashboard/lifecycle-trend`,
+        url: `LINEBot/${lineBotGuid.value}/Dashboard/lifecycle-trend`,
         config: { params: req },
       })
       data.value = res.data

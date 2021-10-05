@@ -30,7 +30,7 @@ function useTagOverview() {
     try {
       const res = await useRequest<TagOverviewRes>({
         method: 'get',
-        url: `LINEBot/${lineBotGuid.value}/dashboard/tag-overview`,
+        url: `LINEBot/${lineBotGuid.value}/Dashboard/tag-overview`,
       })
       list.value = res.data
     } catch (err) {

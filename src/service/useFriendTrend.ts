@@ -35,7 +35,7 @@ function useFriendTrand() {
     try {
       const res = await useRequest<FriendTrandRes>({
         method: 'get',
-        url: `LINEBot/${lineBotGuid.value}/dashboard/friend-trend`,
+        url: `LINEBot/${lineBotGuid.value}/Dashboard/friend-trend`,
         config: { params: req },
       })
       data.value = res.data

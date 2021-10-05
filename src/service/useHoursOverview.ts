@@ -26,7 +26,7 @@ function useHoursOverview() {
     try {
       const res = await useRequest<HoursOverviewRes>({
         method: 'get',
-        url: `LINEBot/${lineBotGuid.value}/dashboard/freqhour-overview`,
+        url: `LINEBot/${lineBotGuid.value}/Dashboard/freqhour-overview`,
       })
       list.value = res.data
     } catch (err) {

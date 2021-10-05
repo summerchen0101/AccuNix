@@ -33,7 +33,7 @@ function useMessageTrand() {
     try {
       const res = await useRequest<MessageTrandRes>({
         method: 'get',
-        url: `LINEBot/${lineBotGuid.value}/dashboard/message-trend`,
+        url: `LINEBot/${lineBotGuid.value}/Dashboard/message-trend`,
         config: { params: req },
       })
       data.value = res.data
