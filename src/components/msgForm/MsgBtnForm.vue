@@ -53,7 +53,7 @@ export default defineComponent({
     <div
       v-for="(btn, i) in formData.btns"
       :key="i"
-      class="bg-gray-100 p-3 relative mx-3 mb-5"
+      class="bg-gray-100 p-3 relative mx-2 mb-5"
     >
       <div
         class="
@@ -100,7 +100,7 @@ export default defineComponent({
         <el-input placeholder="请输入按鈕回覆文字" v-model="btn.reply" />
       </el-form-item>
     </div>
-    <div class="text-center">
+    <div class="mb-5">
       <button
         class="
           bg-gray-400

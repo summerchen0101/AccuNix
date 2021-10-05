@@ -236,7 +236,7 @@ export default defineComponent({
               </el-form-item>
             </div>
 
-            <div class="flex space-x-4 mt-5">
+            <div class="flex flex-col lg:flex-row space-x-4 mt-5">
               <div class="flex-1">
                 <div class="flex space-x-2 mb-4">
                   <el-button

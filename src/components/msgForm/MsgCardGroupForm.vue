@@ -102,7 +102,7 @@ export default defineComponent({
       </el-select>
       <p class="text-red-400">(*每個圖卡按鈕數量需一致，最多3個)</p>
     </el-form-item>
-    <div class="text-right">
+    <div class="mb-2">
       <button
         type="button"
         @click="handleCardCreate"
@@ -113,26 +113,27 @@ export default defineComponent({
           rounded
           text-sm text-white
           hover:bg-blue-400/80
-          mb-2
         "
       >
         <i class="fas fa-plus"></i> 增加圖卡
       </button>
     </div>
-    <el-tabs
-      type="card"
-      v-model="activeGroupIndex"
-      :closable="formData.groups.length > 1"
-      @tab-remove="onTabRemove"
-    >
-      <el-tab-pane
-        v-for="(g, i) in formData.groups"
-        :key="i"
-        :label="(i + 1).toString()"
-        :name="i.toString()"
+    <div class="max-w-[500px] overflow-x-auto">
+      <el-tabs
+        type="card"
+        v-model="activeGroupIndex"
+        :closable="formData.groups.length > 1"
+        @tab-remove="onTabRemove"
       >
-        <CardGroupItemForm v-model:form="formData.groups[i]" />
-      </el-tab-pane>
-    </el-tabs>
+        <el-tab-pane
+          v-for="(g, i) in formData.groups"
+          :key="i"
+          :label="(i + 1).toString()"
+          :name="i.toString()"
+        >
+          <CardGroupItemForm v-model:form="formData.groups[i]" />
+        </el-tab-pane>
+      </el-tabs>
+    </div>
   </el-form>
 </template>
