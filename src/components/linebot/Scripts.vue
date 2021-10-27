@@ -2,8 +2,12 @@
 import useScriptOverview from '@/service/useScriptOverview'
 import { format, subDays } from 'date-fns'
 import { defineComponent, onMounted, ref } from 'vue'
+import SectionPanel from '../SectionPanel.vue'
 
 export default defineComponent({
+  components: {
+    SectionPanel,
+  },
   setup() {
     const startAt = ref(subDays(new Date(), 8))
     const endAt = ref(subDays(new Date(), 1))

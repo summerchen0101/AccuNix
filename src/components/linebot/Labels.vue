@@ -1,7 +1,11 @@
 <script lang="ts">
 import useTagOverview from '@/service/useTagOverview'
 import { defineComponent, onMounted, ref } from 'vue'
+import SectionPanel from '../SectionPanel.vue'
 export default defineComponent({
+  components: {
+    SectionPanel,
+  },
   setup() {
     const selected = ref(1)
     const limit = ref(10)

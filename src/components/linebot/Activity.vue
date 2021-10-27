@@ -1,7 +1,11 @@
 <script lang="ts">
 import useHoursOverview from '@/service/useHoursOverview'
 import { computed, defineComponent, onMounted } from 'vue'
+import SectionPanel from '../SectionPanel.vue'
 export default defineComponent({
+  components: {
+    SectionPanel,
+  },
   setup() {
     const { fetchData, isLoading, list } = useHoursOverview()
 
