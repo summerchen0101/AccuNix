@@ -38,14 +38,8 @@
 import MenuItem from '@/components/Layout/MenuItem.vue'
 import { useLayoutState } from '@/providers/layoutProvider'
 import { defineComponent } from 'vue'
+import { menuList } from '@/lib/menu'
 
-export interface Menu {
-  label: string
-  icon?: string
-  path: string | null
-  subs?: Menu[]
-  code?: string
-}
 export default defineComponent({
   name: 'Sidebar',
   components: {
@@ -53,18 +47,6 @@ export default defineComponent({
   },
   setup(props) {
     const { isMiniSidebar } = useLayoutState()
-    const menuList: Menu[] = [
-      { label: '首頁', path: '/', icon: 'fa-home', code: 'Home' },
-      {
-        label: '聊天機器人',
-        path: null,
-        icon: 'fa-comments',
-        subs: [
-          { label: 'Line', path: '/line/setting', code: 'Line' },
-          { label: 'Facebook', path: '/facebook', code: 'Facebook' },
-        ],
-      },
-    ]
     return { isMiniSidebar, menuList }
   },
 })
