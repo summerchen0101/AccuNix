@@ -2,6 +2,7 @@
 import Layout from '@/components/Layout/Layout.vue'
 import PageHeader from '@/components/Layout/PageHeader.vue'
 import PageIconBtn from '@/components/PageIconBtn.vue'
+import { orderTypeMap } from '@/lib/maps'
 import { useLayoutState } from '@/providers/layoutProvider'
 import useInboxList, { InboxListReq } from '@/service/useInboxList'
 import { defineComponent, onMounted, reactive } from 'vue'
@@ -23,11 +24,17 @@ export default defineComponent({
       req.page = page
       fetchData(req)
     }
+    const onSortChange = ({ column, prop, order }) => {
+      req.sort = prop
+      req.order = orderTypeMap[order]
+      req.page = 1
+      fetchData(req)
+    }
     onMounted(() => {
       activePage.value = 'Line'
       fetchData(req)
     })
-    return { req, isLoading, list, fetchData, meta, onPageChange }
+    return { req, isLoading, list, fetchData, meta, onPageChange, onSortChange }
   },
 })
 </script>
@@ -73,9 +80,19 @@ export default defineComponent({
               ></template>
             </el-input>
           </div>
-          <el-table :data="list" stripe class="w-100" v-loading="isLoading">
+          <el-table
+            :data="list"
+            stripe
+            class="w-100"
+            v-loading="isLoading"
+            @sort-change="onSortChange"
+          >
             <el-table-column prop="guid" label="GUID"></el-table-column>
-            <el-table-column prop="name" label="選單名稱"></el-table-column>
+            <el-table-column
+              prop="name"
+              label="選單名稱"
+              sortable="custom"
+            ></el-table-column>
             <el-table-column
               :formatter="(row) => row.description || '-'"
               label="選單說明"
@@ -93,6 +110,11 @@ export default defineComponent({
               label="預設選單"
             >
             </el-table-column>
+            <el-table-column
+              prop="created_at"
+              label="建立時間"
+              sortable="custom"
+            ></el-table-column>
             <el-table-column label="操作" prop :width="150">
               <template #default>
                 <div class="flex space-x-2">

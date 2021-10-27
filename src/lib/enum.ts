@@ -6,3 +6,8 @@ export enum MsgType {
   CardGroup = 5,
   ImgGroup = 6,
 }
+
+export enum OrderType {
+  descending = 'desc',
+  ascending = 'asc',
+}

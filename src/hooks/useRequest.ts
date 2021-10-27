@@ -15,7 +15,6 @@ const useRequest = async function <
   data?: B
   config?: AxiosRequestConfig
 }) {
-  console.log(url, config)
   const res = await Axios.request<R>({
     method,
     url,
