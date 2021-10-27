@@ -36,6 +36,16 @@ const routes: Array<RouteRecordRaw> = [
     name: 'KeywordCreate',
     component: () => import('@/views/keywords/Create.vue'),
   },
+  {
+    path: '/inbox/list',
+    name: 'InboxList',
+    component: () => import('@/views/inbox/List.vue'),
+  },
+  {
+    path: '/inbox/Create',
+    name: 'InboxCreate',
+    component: () => import('@/views/inbox/Create.vue'),
+  },
 ]
 
 const router = createRouter({

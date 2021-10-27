@@ -6,7 +6,8 @@
 import Layout from '@/components/Layout/Layout.vue'
 import PageHeader from '@/components/Layout/PageHeader.vue'
 import PageIconBtn from '@/components/PageIconBtn.vue'
-import { defineComponent, reactive, ref } from 'vue'
+import { useLayoutState } from '@/providers/layoutProvider'
+import { defineComponent, reactive, ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 
 interface Columns {
@@ -23,6 +24,7 @@ export default defineComponent({
   setup() {
     const router = useRouter()
     const activeTab = ref('first')
+    const { activePage } = useLayoutState()
     const keyword = ref('')
     const tableData = reactive<Columns[]>(
       [...Array(5)].map(() => ({
@@ -34,6 +36,9 @@ export default defineComponent({
         status: '-',
       })),
     )
+    onMounted(() => {
+      activePage.value = 'Line'
+    })
     return () => (
       <Layout>
         <PageHeader />
