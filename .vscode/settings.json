@@ -1,3 +1,4 @@
 {
-  "vue-i18n.i18nPaths": "src/locales"
+  "vue-i18n.i18nPaths": "src/locales",
+  "liveServer.settings.port": 5501
 }
