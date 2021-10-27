@@ -33,7 +33,7 @@ export default defineComponent({
         <div class="flex-1"></div>
         <div class="flex space-x-3 w-full sm:w-auto mt-3 sm:mt-0">
           <el-select class="flex-1 sm:w-64" v-model={lineBotGuid.value}>
-            <el-option label="AccuNix-POC (@755ncvge)" value="5d8c6e29" />
+            <el-option label="AccuNix-POC (@5db13bab)" value="5db13bab" />
           </el-select>
           <div class="bg-blue-500 text-white hover:bg-blue-400 w-9 h-9 rounded-sm flex items-center justify-center cursor-pointer">
             <i class="fas fa-plus"></i>

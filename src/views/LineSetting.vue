@@ -2,6 +2,7 @@
 import CardPanel from '@/components/CardPanel.vue'
 import Layout from '@/components/Layout/Layout.vue'
 import PageHeader from '@/components/Layout/PageHeader.vue'
+import LinebotCtrl from '@/components/LinebotCtrl.vue'
 import { useLayoutState } from '@/providers/layoutProvider'
 import { defineComponent, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
@@ -12,6 +13,7 @@ export default defineComponent({
     PageHeader,
     CardPanel,
     Layout,
+    LinebotCtrl,
   },
   setup() {
     const router = useRouter()
@@ -29,7 +31,7 @@ export default defineComponent({
   <Layout>
     <PageHeader />
     <div class="p-3 mt-10">
-      <LineRobotCtrlVue />
+      <LinebotCtrl />
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         <div
           class="

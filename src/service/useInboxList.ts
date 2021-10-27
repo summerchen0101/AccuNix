@@ -17,7 +17,7 @@ export interface TagOverviewRes {
   message?: string
 }
 
-function useKeywordList() {
+function useInboxList() {
   const router = useRouter()
   const apiErrHandler = useApiErrHandler()
   const { lineBotGuid } = useLineBotState()
@@ -30,7 +30,7 @@ function useKeywordList() {
     try {
       const res = await useRequest<TagOverviewRes>({
         method: 'get',
-        url: `api/line/${lineBotGuid.value}/keywords`,
+        url: `/LINEBot/5db13bab/Richmenu/getIndexList`,
       })
       list.value = res.data
     } catch (err) {
@@ -44,4 +44,4 @@ function useKeywordList() {
   return { list, fetchData, isLoading }
 }
 
-export default useKeywordList
+export default useInboxList

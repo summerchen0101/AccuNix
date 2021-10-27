@@ -9,7 +9,7 @@ export default defineComponent({
   setup() {
     const router = useRouter()
     const loginForm = reactive({
-      username: 'accunix@develop',
+      username: 'accunix@test',
       password: '50085008',
     })
     const { doLogin, isLoading } = useLogin()
@@ -17,6 +17,7 @@ export default defineComponent({
       const res = await doLogin({
         ...loginForm,
         app: 'accunix',
+        redirectUrl: 'https://www.google.com',
       })
       if (res?.auth) {
         router.push({ name: 'Home' })

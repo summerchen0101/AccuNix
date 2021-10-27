@@ -5,6 +5,7 @@ export interface LoginReq {
   username: string
   password: string
   app: string
+  redirectUrl: string
 }
 
 export interface ClientInfo {

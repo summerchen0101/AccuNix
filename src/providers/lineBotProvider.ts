@@ -1,7 +1,7 @@
 import { inject, provide, ref } from 'vue'
 
 const state = {
-  lineBotGuid: ref('5d8c6e29'),
+  lineBotGuid: ref('5db13bab'),
 }
 
 export const useLineBotProvider = function () {

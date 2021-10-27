@@ -1,3 +1,53 @@
+<script lang="ts">
+import Layout from '@/components/Layout/Layout.vue'
+import PageHeader from '@/components/Layout/PageHeader.vue'
+import PageIconBtn from '@/components/PageIconBtn.vue'
+import { useLayoutState } from '@/providers/layoutProvider'
+import useInboxList from '@/service/useInboxList'
+import { defineComponent, reactive, ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+
+interface Columns {
+  keyword: string
+  desc: string
+  action: string
+  qrcode: string
+  compare: string
+  status: string
+}
+
+export default defineComponent({
+  name: 'InboxList',
+  components: {
+    Layout,
+    PageHeader,
+    PageIconBtn,
+  },
+  setup() {
+    const router = useRouter()
+    const { activePage } = useLayoutState()
+    const { fetchData } = useInboxList()
+    const keyword = ref('')
+    const page = ref(1)
+    const tableData = reactive<Columns[]>(
+      [...Array(5)].map(() => ({
+        keyword: '天竺鼠車車',
+        desc: '-',
+        action: '-',
+        qrcode: '-',
+        compare: '-',
+        status: '-',
+      })),
+    )
+    onMounted(() => {
+      activePage.value = 'Line'
+      fetchData()
+    })
+    return { page, keyword, tableData }
+  },
+})
+</script>
+
 <template>
   <Layout>
     <PageHeader />
@@ -59,52 +109,5 @@
     </div>
   </Layout>
 </template>
-
-<script lang="ts">
-import Layout from '@/components/Layout/Layout.vue'
-import PageHeader from '@/components/Layout/PageHeader.vue'
-import PageIconBtn from '@/components/PageIconBtn.vue'
-import { useLayoutState } from '@/providers/layoutProvider'
-import { defineComponent, reactive, ref, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
-
-interface Columns {
-  keyword: string
-  desc: string
-  action: string
-  qrcode: string
-  compare: string
-  status: string
-}
-
-export default defineComponent({
-  name: 'InboxList',
-  components: {
-    Layout,
-    PageHeader,
-    PageIconBtn,
-  },
-  setup() {
-    const router = useRouter()
-    const { activePage } = useLayoutState()
-    const keyword = ref('')
-    const page = ref(1)
-    const tableData = reactive<Columns[]>(
-      [...Array(5)].map(() => ({
-        keyword: '天竺鼠車車',
-        desc: '-',
-        action: '-',
-        qrcode: '-',
-        compare: '-',
-        status: '-',
-      })),
-    )
-    onMounted(() => {
-      activePage.value = 'Line'
-    })
-    return { page, keyword, tableData }
-  },
-})
-</script>
 
 <style scoped></style>
