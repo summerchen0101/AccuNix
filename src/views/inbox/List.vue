@@ -4,17 +4,9 @@ import PageHeader from '@/components/Layout/PageHeader.vue'
 import PageIconBtn from '@/components/PageIconBtn.vue'
 import { useLayoutState } from '@/providers/layoutProvider'
 import useInboxList from '@/service/useInboxList'
-import { defineComponent, reactive, ref, onMounted } from 'vue'
+import { defineComponent, computed, ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-
-interface Columns {
-  keyword: string
-  desc: string
-  action: string
-  qrcode: string
-  compare: string
-  status: string
-}
+import { toCurrency } from '@/utils'
 
 export default defineComponent({
   name: 'InboxList',
@@ -26,24 +18,14 @@ export default defineComponent({
   setup() {
     const router = useRouter()
     const { activePage } = useLayoutState()
-    const { fetchData } = useInboxList()
+    const { fetchData, isLoading, list } = useInboxList()
     const keyword = ref('')
     const page = ref(1)
-    const tableData = reactive<Columns[]>(
-      [...Array(5)].map(() => ({
-        keyword: '天竺鼠車車',
-        desc: '-',
-        action: '-',
-        qrcode: '-',
-        compare: '-',
-        status: '-',
-      })),
-    )
     onMounted(() => {
       activePage.value = 'Line'
       fetchData()
     })
-    return { page, keyword, tableData }
+    return { page, keyword, isLoading, list, toCurrency }
   },
 })
 </script>
@@ -81,19 +63,33 @@ export default defineComponent({
               ></template>
             </el-input>
           </div>
-          <el-table :data="tableData" stripe class="w-100">
-            <el-table-column prop="keyword" label="GUID"></el-table-column>
-            <el-table-column prop="desc" label="說明"></el-table-column>
-            <el-table-column prop="action" label="選單名稱"></el-table-column>
-            <el-table-column prop="qrcode" label="選單說明"></el-table-column>
-            <el-table-column prop="compare" label="圖片"></el-table-column>
-            <el-table-column prop="status" label="人數"></el-table-column>
-            <el-table-column prop="status" label="預設選單"></el-table-column>
-            <el-table-column label="操作" :width="150">
-              <div class="flex space-x-2">
-                <PageIconBtn iconClass="fas fa-edit" />
-                <PageIconBtn color="danger" iconClass="fas fa-trash-alt" />
-              </div>
+          <el-table :data="list" stripe class="w-100" v-loading="isLoading">
+            <el-table-column prop="guid" label="GUID"></el-table-column>
+            <el-table-column prop="name" label="選單名稱"></el-table-column>
+            <el-table-column
+              :formatter="(row) => row.description || '-'"
+              label="選單說明"
+            ></el-table-column>
+            <el-table-column label="圖片">
+              <template #default="scope">
+                <a :href="scope.row.image_path" target="_blank"
+                  ><img :src="scope.row.image_path" alt="" />
+                </a>
+              </template>
+            </el-table-column>
+            <el-table-column prop="users_count" label="人數"></el-table-column>
+            <el-table-column
+              :formatter="(row) => (row.is_default ? '是' : '否')"
+              label="預設選單"
+            >
+            </el-table-column>
+            <el-table-column label="操作" prop :width="150">
+              <template #default>
+                <div class="flex space-x-2">
+                  <PageIconBtn iconClass="fas fa-edit" />
+                  <PageIconBtn color="danger" iconClass="fas fa-trash-alt" />
+                </div>
+              </template>
             </el-table-column>
           </el-table>
           <el-pagination

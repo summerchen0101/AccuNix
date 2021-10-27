@@ -4,7 +4,7 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useLineBotState } from './../providers/lineBotProvider'
 
-export interface Tag {
+export interface Keyword {
   name: string
   user_count: number
   user_percentage: string
@@ -12,8 +12,8 @@ export interface Tag {
   active_percentage: string
 }
 
-export interface TagOverviewRes {
-  data: Tag[]
+export interface KeywordOverviewRes {
+  data: Keyword[]
   message?: string
 }
 
@@ -23,12 +23,12 @@ function useKeywordList() {
   const { lineBotGuid } = useLineBotState()
   const isLoading = ref(false)
   const isError = ref(false)
-  const list = ref<TagOverviewRes['data']>([])
+  const list = ref<KeywordOverviewRes['data']>([])
   const fetchData = async () => {
     isLoading.value = true
     isError.value = false
     try {
-      const res = await useRequest<TagOverviewRes>({
+      const res = await useRequest<KeywordOverviewRes>({
         method: 'get',
         url: `api/line/${lineBotGuid.value}/keywords`,
       })
