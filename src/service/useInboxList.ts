@@ -1,13 +1,18 @@
+import { ListBaseReq, ListMeta } from './../types/index'
 import { useApiErrHandler } from '@/hooks/useApiErrHandler'
 import useRequest from '@/hooks/useRequest'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useLineBotState } from './../providers/lineBotProvider'
 
+export interface InboxListReq extends ListBaseReq {
+  search?: string
+  fields?: string
+}
 export interface InboxListRes {
   data: Data
   links: Links
-  meta: Meta
+  meta: ListMeta
   message?: string
 }
 
@@ -35,16 +40,6 @@ export interface Links {
   next: string
 }
 
-export interface Meta {
-  current_page: number
-  from: number
-  last_page: number
-  path: string
-  per_page: number
-  to: number
-  total: number
-}
-
 function useInboxList() {
   const router = useRouter()
   const apiErrHandler = useApiErrHandler()
@@ -52,15 +47,18 @@ function useInboxList() {
   const isLoading = ref(false)
   const isError = ref(false)
   const list = ref<Inbox[]>([])
-  const fetchData = async () => {
+  const meta = ref<ListMeta>()
+  const fetchData = async (req: InboxListReq = {}) => {
     isLoading.value = true
     isError.value = false
     try {
       const res = await useRequest<InboxListRes>({
         method: 'get',
         url: `/LINEBot/${lineBotGuid.value}/Richmenu/getIndexList`,
+        config: { params: req },
       })
       list.value = res.data.rows
+      meta.value = res.meta
     } catch (err) {
       apiErrHandler(err)
       isError.value = true
@@ -69,7 +67,7 @@ function useInboxList() {
     return list.value
   }
 
-  return { list, fetchData, isLoading }
+  return { list, meta, fetchData, isLoading }
 }
 
 export default useInboxList

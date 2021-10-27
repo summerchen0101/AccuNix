@@ -1,8 +1,5 @@
-import Axios, { AxiosError, AxiosRequestConfig, Method } from 'axios'
-import httpStatus from 'http-status'
+import Axios, { AxiosRequestConfig, Method } from 'axios'
 import store from 'store2'
-import { Router, useRoute, useRouter } from 'vue-router'
-import useAlert from './useAlert'
 
 const useRequest = async function <
   R extends { message?: string } = {},
@@ -18,6 +15,7 @@ const useRequest = async function <
   data?: B
   config?: AxiosRequestConfig
 }) {
+  console.log(url, config)
   const res = await Axios.request<R>({
     method,
     url,

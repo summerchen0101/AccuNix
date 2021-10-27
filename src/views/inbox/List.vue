@@ -3,10 +3,9 @@ import Layout from '@/components/Layout/Layout.vue'
 import PageHeader from '@/components/Layout/PageHeader.vue'
 import PageIconBtn from '@/components/PageIconBtn.vue'
 import { useLayoutState } from '@/providers/layoutProvider'
-import useInboxList from '@/service/useInboxList'
-import { defineComponent, computed, ref, onMounted } from 'vue'
+import useInboxList, { InboxListReq } from '@/service/useInboxList'
+import { defineComponent, onMounted, reactive } from 'vue'
 import { useRouter } from 'vue-router'
-import { toCurrency } from '@/utils'
 
 export default defineComponent({
   name: 'InboxList',
@@ -18,14 +17,17 @@ export default defineComponent({
   setup() {
     const router = useRouter()
     const { activePage } = useLayoutState()
-    const { fetchData, isLoading, list } = useInboxList()
-    const keyword = ref('')
-    const page = ref(1)
+    const { fetchData, isLoading, list, meta } = useInboxList()
+    const req = reactive<InboxListReq>({ page: 1 })
+    const onPageChange = (page: number) => {
+      req.page = page
+      fetchData(req)
+    }
     onMounted(() => {
       activePage.value = 'Line'
-      fetchData()
+      fetchData(req)
     })
-    return { page, keyword, isLoading, list, toCurrency }
+    return { req, isLoading, list, fetchData, meta, onPageChange }
   },
 })
 </script>
@@ -57,9 +59,17 @@ export default defineComponent({
         </div>
         <div>
           <div class="sm:inline-flex">
-            <el-input size="small" v-model="keyword" placeholder="請輸入主選單">
+            <el-input
+              size="small"
+              v-model="req.search"
+              placeholder="請輸入主選單"
+              clearable
+            >
               <template #append
-                ><el-button icon="el-icon-search"></el-button
+                ><el-button
+                  icon="el-icon-search"
+                  @click="fetchData(req)"
+                ></el-button
               ></template>
             </el-input>
           </div>
@@ -92,12 +102,15 @@ export default defineComponent({
               </template>
             </el-table-column>
           </el-table>
+          <!-- {{ meta.per_page }} -->
           <el-pagination
-            v-model:currentPage="page"
-            :page-size="100"
+            v-if="meta"
+            v-model:currentPage="req.page"
+            :page-size="meta.per_page"
             layout="prev, pager, next, jumper"
-            :total="1000"
+            :total="meta.total"
             class="mt-4"
+            @current-change="onPageChange"
           >
           </el-pagination>
         </div>
