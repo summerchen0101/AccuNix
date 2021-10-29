@@ -1,63 +1,31 @@
 <script lang="ts">
-import FormFieldTips from '@/components/FormFieldTips.vue'
+import Layout1 from '@/components/inbox/gridbox/Layout1.vue'
 import Layout from '@/components/Layout/Layout.vue'
 import PageHeader from '@/components/Layout/PageHeader.vue'
-import MsgTextReview from '@/components/msgReview/MsgTextReview.vue'
-import { MsgType } from '@/lib/enum'
-import { cloneDeep } from 'lodash'
-import { reactive, defineComponent, onMounted } from 'vue'
-import MsgTextForm from '@/components/msgForm/MsgTextForm.vue'
-import MsgBtnForm from '@/components/msgForm/MsgBtnForm.vue'
-import MsgBtnReview from '@/components/msgReview/MsgBtnReview.vue'
-import {
-  MsgBtnFields,
-  MsgCardGroupFields,
-  MsgTextFields,
-} from '@/components/types'
 import { useLayoutState } from '@/providers/layoutProvider'
-import MsgImgForm from '@/components/msgForm/MsgImgForm.vue'
-import MsgImgReview from '@/components/msgReview/MsgImgReview.vue'
-import MsgVideoFormVue from '@/components/msgForm/MsgVideoForm.vue'
-import MsgVideoReviewVue from '@/components/msgReview/MsgVideoReview.vue'
-import MsgCardGroupFormVue from '@/components/msgForm/MsgCardGroupForm.vue'
-import MsgCardGroupReviewVue from '@/components/msgReview/MsgCardGroupReview.vue'
+import { defineComponent, onMounted, reactive, ref } from 'vue'
+import LayoutSelector from '@/components/inbox/popups/LayoutSelector.vue'
 // import { MsgBtnFields } from '@/components/types'
-
-type MsgGroupType =
-  | {
-      type: MsgType.Text
-      form: MsgTextFields
-    }
-  | {
-      type: MsgType.Button
-      form: MsgBtnFields
-    }
-  | {
-      type: MsgType.CardGroup
-      form: MsgCardGroupFields
-    }
 
 interface IState {
   keyword: string
   desc: string
   status: boolean
   tags: number[]
-  msgGroups: MsgGroupType[]
-  currentMsgIndex: string
 }
 
 export default defineComponent({
   components: {
-    FormFieldTips,
     Layout,
     PageHeader,
-    MsgTextReview,
-    MsgTextForm,
-    MsgBtnForm,
-    MsgBtnReview,
+    Layout1,
+    LayoutSelector,
   },
   setup() {
     const { activePage } = useLayoutState()
+    const layoutSelectorVisible = ref(false)
+    const activeBox = ref<number>(1)
+    const selectedLayout = ref<number>(1)
     onMounted(() => {
       activePage.value = 'Line'
     })
@@ -66,101 +34,13 @@ export default defineComponent({
       desc: '',
       status: true,
       tags: [],
-      msgGroups: [{ type: MsgType.Text, form: { content: '' } }],
-      currentMsgIndex: '0',
     })
 
-    const handleCreateMsg = () => {
-      if (formData.msgGroups.length >= 5) return
-      formData.msgGroups.push({
-        type: MsgType.Text,
-        form: { content: '' },
-      })
-      formData.currentMsgIndex = (formData.msgGroups.length - 1).toString()
-    }
-    const handleCopyMsg = () => {
-      if (formData.msgGroups.length >= 5) return
-      formData.msgGroups.push(
-        cloneDeep(formData.msgGroups[+formData.currentMsgIndex]),
-      )
-      formData.currentMsgIndex = (formData.msgGroups.length - 1).toString()
-    }
-    const handleUserSet = () => {
-      // formData.msgGroups.push({
-      //   type: MsgType.Text,
-      //   title: '',
-      //   content: '',
-      // })
-      // formData.currentMsgIndex = (formData.msgGroups.length - 1).toString()
-    }
-
-    const onTabRemove = (targetIndex: number) => {
-      formData.msgGroups.splice(targetIndex, 1)
-      formData.currentMsgIndex = (
-        targetIndex - 1 >= 0 ? targetIndex - 1 : 0
-      ).toString()
-    }
-
-    const onTypeChange = (index: number, val: number) => {
-      switch (val) {
-        case MsgType.Text:
-          formData.msgGroups[index].form = {
-            content: '',
-          } as MsgTextFields
-          break
-        case MsgType.Button:
-          formData.msgGroups[index].form = {
-            title: '',
-            content: '',
-            review: '',
-            btns: [{ title: '按鈕', action: 1, reply: '' }],
-          } as MsgBtnFields
-          break
-        case MsgType.CardGroup:
-          formData.msgGroups[index].form = {
-            review: '',
-            btnCount: 1,
-            groups: [
-              {
-                file: null,
-                title: '',
-                content: '',
-                btns: [{ title: '按鈕', action: 1, reply: '' }],
-              },
-            ],
-          } as MsgCardGroupFields
-          break
-
-        default:
-          break
-      }
-    }
-
-    const formMap = {
-      [MsgType.Text]: MsgTextForm,
-      [MsgType.Button]: MsgBtnForm,
-      [MsgType.Image]: MsgImgForm,
-      [MsgType.Video]: MsgVideoFormVue,
-      [MsgType.CardGroup]: MsgCardGroupFormVue,
-    }
-    const reviewMap = {
-      [MsgType.Text]: MsgTextReview,
-      [MsgType.Button]: MsgBtnReview,
-      [MsgType.Image]: MsgImgReview,
-      [MsgType.Video]: MsgVideoReviewVue,
-      [MsgType.CardGroup]: MsgCardGroupReviewVue,
-    }
-
     return {
-      formMap,
-      reviewMap,
-      onTabRemove,
-      handleUserSet,
-      handleCopyMsg,
-      handleCreateMsg,
-      onTypeChange,
       formData,
-      MsgType,
+      activeBox,
+      selectedLayout,
+      layoutSelectorVisible,
     }
   },
 })
@@ -174,161 +54,89 @@ export default defineComponent({
         <div class="flex justify-between mb-7">
           <h3 class="text-gray-700 text-xl">
             <i class="fab fa-slack-hash mr-2"></i>
-            新增主選單庫
+            新增主選單
           </h3>
         </div>
-        <div class="px-3">
-          <el-form
-            :model="formData"
-            ref="form"
-            label-position="top"
-            label-width="80px"
-          >
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6">
-              <el-form-item label="主選單">
+        <div class="px-3 flex flex-col lg:flex-row">
+          <div class="flex-1">
+            <el-form
+              :model="formData"
+              ref="form"
+              label-position="top"
+              label-width="80px"
+            >
+              <el-form-item label="主選單名稱" required>
                 <el-input v-model="formData.keyword"></el-input>
               </el-form-item>
-              <el-form-item label="說明">
+              <el-form-item label="主選單說明">
                 <el-input v-model="formData.desc"></el-input>
               </el-form-item>
-
-              <el-form-item label="標籤">
-                <el-select
-                  v-model="formData.tags"
-                  placeholder="請選擇標籤"
-                  multiple
-                  :multiple-limit="3"
-                  class="w-full"
-                >
-                  <el-option label="区域一" value="shanghai"></el-option>
-                  <el-option label="区域二" value="beijing"></el-option>
-                </el-select>
-                <FormFieldTips
-                  class="mt-2"
-                  content="標籤設定最多 3 個，目前額度： 0/3"
-                />
-                <FormFieldTips content="標籤不能使用以下特殊符號：..." />
+              <el-form-item label="訊息欄文字">
+                <el-input v-model="formData.desc"></el-input>
               </el-form-item>
-              <el-form-item label="訊息設定">
-                <el-select
-                  v-model="formData.tags"
-                  placeholder="請選擇動作"
-                  class="w-full"
-                ></el-select>
-                <FormFieldTips
-                  class="mt-2"
-                  content="選擇常用訊息做編輯，或直接開始做訊息設定吧！"
-                />
+              <el-form-item label="主選單顯示 展開/隱藏">
+                <el-radio-group>
+                  <el-radio label="預設展開選單"></el-radio>
+                  <el-radio label="預設隱藏選單"></el-radio>
+                </el-radio-group>
               </el-form-item>
-              <el-form-item label="主選單動作">
-                <el-select
-                  v-model="formData.tags"
-                  placeholder="請選擇動作"
-                  class="w-full"
-                >
-                  <el-option label="發送訊息" value="1"></el-option>
-                  <el-option label="觸發腳本" value="2"></el-option>
-                </el-select>
+              <el-form-item label="主選單尺寸">
+                <el-radio-group>
+                  <el-radio label="2500x1686 大型"></el-radio>
+                  <el-radio label="2500x843 小型"></el-radio>
+                </el-radio-group>
               </el-form-item>
-
-              <el-form-item label="狀態">
-                <el-switch v-model="formData.status"></el-switch>
-              </el-form-item>
-            </div>
-
-            <div class="flex flex-col lg:flex-row space-x-4 mt-5">
-              <div class="flex-1">
-                <div class="flex space-x-2 mb-4">
-                  <el-button
-                    icon="fas fa-plus"
-                    circle
-                    @click="handleCreateMsg"
-                  ></el-button>
-
-                  <el-button
-                    icon="fas fa-copy"
-                    circle
-                    @click="handleCopyMsg"
-                  ></el-button>
-
-                  <el-button
-                    icon="fas fa-user-cog"
-                    circle
-                    @click="handleUserSet"
-                  ></el-button>
-                </div>
-                <el-tabs
-                  type="card"
-                  v-model="formData.currentMsgIndex"
-                  :closable="formData.msgGroups.length > 1"
-                  @tab-remove="onTabRemove"
-                >
-                  <el-tab-pane
-                    v-for="(g, i) in formData.msgGroups"
-                    :key="i"
-                    :label="`第${i + 1}則`"
-                    :name="i.toString()"
-                  >
-                    <el-form-item>
-                      <el-select
-                        v-model="g.type"
-                        placeholder="請選擇類型"
-                        @change="(val) => onTypeChange(i, val)"
-                      >
-                        <el-option :value="MsgType.Text" label="文字">
-                          <span>文字</span> <i class="fas fa-font"></i>
-                        </el-option>
-                        <el-option :value="MsgType.Button" label="按鈕">
-                          <span>按鈕</span> <i class="far fa-hand-pointer"></i>
-                        </el-option>
-                        <el-option :value="MsgType.Image" label="圖片">
-                          <span>圖片</span> <i class="far fa-image"></i>
-                        </el-option>
-                        <el-option :value="MsgType.Video" label="影片">
-                          <span>影片</span> <i class="fas fa-film"></i>
-                        </el-option>
-                        <el-option :value="MsgType.CardGroup" label="圖卡樣板">
-                          <span>圖卡樣板</span> <i class="far fa-clone"></i>
-                        </el-option>
-                      </el-select>
-                    </el-form-item>
-                    <component :is="formMap[g.type]" v-model:form="g.form" />
-                  </el-tab-pane>
-                </el-tabs>
-              </div>
-              <div class="w-1/2">
-                <div
-                  class="
-                    bg-mobile
-                    h-[574px]
-                    w-[278px]
-                    px-[7px]
-                    pt-[47px]
-                    pb-[67px]
-                    mx-auto
-                  "
-                >
-                  <div class="overflow-y-auto overflow-x-hidden h-full">
-                    <div
-                      v-for="(msg, i) in formData.msgGroups"
-                      :key="i"
-                      class="flex items-start space-x-4 p-2"
+              <div class="flex gap-8">
+                <div class="text-gray-500 text-sm">
+                  <div class="w-[320px] h-[200px]">
+                    <Layout1 v-model:activeBox="activeBox" />
+                  </div>
+                  <div class="leading-5 mt-3">
+                    檔案格式：JPG、JPEG、PNG <br />
+                    檔案容量：1MB以下 <br />
+                    圖片尺寸：2500px 1686px
+                  </div>
+                  <div class="space-y-2 mt-3">
+                    <el-button class="w-full m-0">上傳圖片</el-button>
+                    <el-button
+                      class="w-full m-0"
+                      @click="layoutSelectorVisible = true"
+                      >選擇版型</el-button
                     >
-                      <i class="fas fa-user-circle text-4xl text-gray-400"></i>
-                      <!-- {{ msg.form }} -->
-                      <component
-                        :is="reviewMap[msg.type]"
-                        :key="new Date().getTime() + MsgType.Text"
-                        :data="msg.form"
-                      />
-                    </div>
                   </div>
                 </div>
+                <div class="">
+                  <el-form-item :label="`按鈕${activeBox}動作設定`">
+                    <el-select v-model="formData.keyword">
+                      <el-option label="無設定" value=""></el-option>
+                      <el-option label="開啟連結" value="1"></el-option>
+                    </el-select>
+                  </el-form-item>
+                </div>
               </div>
+            </el-form>
+          </div>
+          <div class="p-10">
+            <div
+              class="
+                bg-mobile
+                h-[574px]
+                w-[278px]
+                px-[7px]
+                pt-[47px]
+                pb-[67px]
+                mx-auto
+              "
+            >
+              <div class="overflow-y-auto overflow-x-hidden h-full"></div>
             </div>
-          </el-form>
+          </div>
         </div>
       </div>
     </div>
+    <LayoutSelector
+      v-model:visible="layoutSelectorVisible"
+      v-model:selected="selectedLayout"
+    />
   </Layout>
 </template>

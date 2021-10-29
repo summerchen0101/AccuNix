@@ -70,3 +70,14 @@ body,
   background-image: url('@/assets/mobile.png');
 }
 
+.border-box {
+  @apply border border-blue-300
+}
+
+.border-box.active {
+  @apply text-white bg-blue-300
+}
+
+.el-button+.el-button {
+  @apply ml-0
+}
