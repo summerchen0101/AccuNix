@@ -1,10 +1,20 @@
 <script lang="ts">
-import Layout1 from '@/components/inbox/gridbox/Layout1.vue'
 import Layout from '@/components/Layout/Layout.vue'
 import PageHeader from '@/components/Layout/PageHeader.vue'
 import { useLayoutState } from '@/providers/layoutProvider'
-import { defineComponent, onMounted, reactive, ref } from 'vue'
+import {
+  defineComponent,
+  onMounted,
+  reactive,
+  ref,
+  computed,
+  watch,
+  shallowRef,
+  DefineComponent,
+  defineAsyncComponent,
+} from 'vue'
 import LayoutSelector from '@/components/inbox/popups/LayoutSelector.vue'
+import boxLayouts from '@/components/inbox/gridbox'
 // import { MsgBtnFields } from '@/components/types'
 
 interface IState {
@@ -18,14 +28,22 @@ export default defineComponent({
   components: {
     Layout,
     PageHeader,
-    Layout1,
     LayoutSelector,
+    ...boxLayouts,
   },
   setup() {
     const { activePage } = useLayoutState()
     const layoutSelectorVisible = ref(false)
     const activeBox = ref<number>(1)
     const selectedLayout = ref<number>(1)
+    watch(
+      () => selectedLayout.value,
+      () => {
+        activeBox.value = 1
+      },
+    )
+    const boxLayout = computed(() => `Layout${selectedLayout.value}`)
+
     onMounted(() => {
       activePage.value = 'Line'
     })
@@ -41,6 +59,7 @@ export default defineComponent({
       activeBox,
       selectedLayout,
       layoutSelectorVisible,
+      boxLayout,
     }
   },
 })
@@ -89,7 +108,7 @@ export default defineComponent({
               <div class="flex gap-8">
                 <div class="text-gray-500 text-sm">
                   <div class="w-[320px] h-[200px]">
-                    <Layout1 v-model:activeBox="activeBox" />
+                    <component :is="boxLayout" v-model:activeBox="activeBox" />
                   </div>
                   <div class="leading-5 mt-3">
                     檔案格式：JPG、JPEG、PNG <br />
