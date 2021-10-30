@@ -1,27 +1,26 @@
 <script lang="ts">
+import actionForms from '@/components/inbox/form'
+import boxLayouts from '@/components/inbox/gridbox'
+import LayoutSelector from '@/components/inbox/popups/LayoutSelector.vue'
 import Layout from '@/components/Layout/Layout.vue'
 import PageHeader from '@/components/Layout/PageHeader.vue'
 import { useLayoutState } from '@/providers/layoutProvider'
-import {
-  defineComponent,
-  onMounted,
-  reactive,
-  ref,
-  computed,
-  watch,
-  shallowRef,
-  DefineComponent,
-  defineAsyncComponent,
-} from 'vue'
-import LayoutSelector from '@/components/inbox/popups/LayoutSelector.vue'
-import boxLayouts from '@/components/inbox/gridbox'
+import { OptionsType } from '@/types'
+import { computed, defineComponent, onMounted, reactive, ref, watch } from 'vue'
 // import { MsgBtnFields } from '@/components/types'
 
+export interface ActionForm {
+  type: string
+  msg: number
+  url: string
+  tags: OptionsType<number>
+}
 interface IState {
   keyword: string
   desc: string
   status: boolean
   tags: number[]
+  boxsAction: Record<number, ActionForm>
 }
 
 export default defineComponent({
@@ -30,6 +29,7 @@ export default defineComponent({
     PageHeader,
     LayoutSelector,
     ...boxLayouts,
+    ...actionForms,
   },
   setup() {
     const { activePage } = useLayoutState()
@@ -42,6 +42,7 @@ export default defineComponent({
         activeBox.value = 1
       },
     )
+
     const boxLayout = computed(() => `Layout${selectedLayout.value}`)
 
     onMounted(() => {
@@ -52,9 +53,31 @@ export default defineComponent({
       desc: '',
       status: true,
       tags: [],
+      boxsAction: { 1: { type: '', url: '', msg: null, tags: [] } },
     })
 
+    const actionTypes: OptionsType<string> = [
+      { label: '無設定', value: '' },
+      { label: '開啟連結', value: 'Link' },
+      { label: '發送常用訊息', value: 'Message' },
+    ]
+
+    watch(
+      () => activeBox.value,
+      () => {
+        formData.boxsAction[activeBox.value] = formData.boxsAction[
+          activeBox.value
+        ] || {
+          type: '',
+          url: '',
+          msg: null,
+          tags: [],
+        }
+      },
+    )
+
     return {
+      actionTypes,
       formData,
       activeBox,
       selectedLayout,
@@ -126,10 +149,20 @@ export default defineComponent({
                 </div>
                 <div class="">
                   <el-form-item :label="`按鈕${activeBox}動作設定`">
-                    <el-select v-model="formData.keyword">
-                      <el-option label="無設定" value=""></el-option>
-                      <el-option label="開啟連結" value="1"></el-option>
+                    <el-select v-model="formData.boxsAction[activeBox].type">
+                      <el-option
+                        v-for="t in actionTypes"
+                        :key="t.value"
+                        :label="t.label"
+                        :value="t.value"
+                      >
+                      </el-option>
                     </el-select>
+                    <component
+                      v-if="formData.boxsAction[activeBox].type"
+                      :is="formData.boxsAction[activeBox].type"
+                      v-model:form-data="formData.boxsAction[activeBox]"
+                    />
                   </el-form-item>
                 </div>
               </div>

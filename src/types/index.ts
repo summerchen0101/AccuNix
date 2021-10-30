@@ -1,7 +1,8 @@
-export interface OptionType<T = number | string> {
+export interface OptionType<T> {
   label: string
   value: T
 }
+export type OptionsType<T> = OptionType<T>[]
 
 export interface ListBaseReq {
   sort?: string
