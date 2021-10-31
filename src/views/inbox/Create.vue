@@ -11,8 +11,7 @@ import { computed, defineComponent, onMounted, reactive, ref, watch } from 'vue'
 
 export interface ActionForm {
   type: string
-  msg: number
-  url: string
+  value: string | number
   tags: OptionsType<number>
 }
 interface IState {
@@ -53,14 +52,29 @@ export default defineComponent({
       desc: '',
       status: true,
       tags: [],
-      boxsAction: { 1: { type: '', url: '', msg: null, tags: [] } },
+      boxsAction: { 1: { type: '', value: '', tags: [] } },
     })
 
     const actionTypes: OptionsType<string> = [
       { label: '無設定', value: '' },
       { label: '開啟連結', value: 'Link' },
       { label: '發送常用訊息', value: 'Message' },
+      { label: '切換主選單', value: 'Inbox' },
+      { label: '回覆文字', value: 'Text' },
+      { label: '關鍵字', value: 'Keyword' },
+      { label: '分享好友', value: 'Share' },
+      { label: '開啟票券券夾', value: 'OpenTicket' },
+      { label: '發送票券活動', value: 'TicketActivity' },
+      { label: '發送票券券庫', value: 'TicketBox' },
     ]
+
+    const initActionForm = () => {
+      formData.boxsAction[activeBox.value] = {
+        ...formData.boxsAction[activeBox.value],
+        value: '',
+        tags: [],
+      }
+    }
 
     watch(
       () => activeBox.value,
@@ -69,8 +83,7 @@ export default defineComponent({
           activeBox.value
         ] || {
           type: '',
-          url: '',
-          msg: null,
+          value: '',
           tags: [],
         }
       },
@@ -83,6 +96,7 @@ export default defineComponent({
       selectedLayout,
       layoutSelectorVisible,
       boxLayout,
+      initActionForm,
     }
   },
 })
@@ -149,7 +163,10 @@ export default defineComponent({
                 </div>
                 <div class="">
                   <el-form-item :label="`按鈕${activeBox}動作設定`">
-                    <el-select v-model="formData.boxsAction[activeBox].type">
+                    <el-select
+                      v-model="formData.boxsAction[activeBox].type"
+                      @change="initActionForm"
+                    >
                       <el-option
                         v-for="t in actionTypes"
                         :key="t.value"

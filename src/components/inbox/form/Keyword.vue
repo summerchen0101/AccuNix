@@ -1,0 +1,51 @@
+<script lang="ts">
+import { OptionType } from '@/types'
+import { ActionForm } from '@/views/inbox/Create.vue'
+import { defineComponent, PropType } from 'vue'
+
+export default defineComponent({
+  props: {
+    formData: {
+      type: Object as PropType<ActionForm>,
+      default: () => ({
+        value: '',
+        tags: [],
+      }),
+    },
+  },
+  emits: ['update:formData'],
+  setup(props) {
+    const keywords: OptionType<number>[] = [
+      { label: '關鍵字一', value: 1 },
+      { label: '關鍵字二', value: 2 },
+    ]
+    return { keywords }
+  },
+})
+</script>
+
+<template>
+  <el-form
+    :model="formData"
+    ref="form"
+    label-position="top"
+    class="mt-3 space-y-3"
+  >
+    <el-form-item required>
+      <el-select
+        :modelValue="formData.value"
+        @update:modelValue="
+          (val) => $emit('update:formData', { ...formData, value: val })
+        "
+        placeholder="請選擇關鍵字"
+        ><el-option
+          v-for="t in keywords"
+          :key="t.value"
+          :label="t.label"
+          :value="t.value"
+        >
+        </el-option
+      ></el-select>
+    </el-form-item>
+  </el-form>
+</template>

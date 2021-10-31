@@ -107,9 +107,9 @@ export default defineComponent({
           desc="提供 LINE 常用訊息庫設定，支援多種樣式靈活調整。"
         />
         <CardPanel
-          title="問卷腳本"
+          title="問券腳本"
           icon="far fa-sticky-note"
-          desc="可透過問卷腳本，與問卷管理對接，完成好友個人基本資料或愛好蒐集。"
+          desc="可透過問券腳本，與問券管理對接，完成好友個人基本資料或愛好蒐集。"
         />
       </div>
     </div>

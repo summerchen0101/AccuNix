@@ -41,7 +41,7 @@ export default defineComponent({
         @update:modelValue="
           (val) => $emit('update:formData', { ...formData, value: val })
         "
-        placeholder="選擇要發送的常用訊息"
+        placeholder="選擇要切換的主選單"
         ><el-option
           v-for="tag in msgs"
           :key="tag.value"
