@@ -34,7 +34,7 @@
 <script lang="ts">
 import { useLayoutState } from '@/providers/layoutProvider'
 import { computed, defineComponent, PropType, ref, watchEffect } from 'vue'
-import { Menu } from './Sidebar.vue'
+import { Menu } from '@/lib/menu'
 
 export default defineComponent({
   name: 'MenuItem',
