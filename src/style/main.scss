@@ -81,3 +81,20 @@ body,
 .el-button+.el-button {
   @apply ml-0
 }
+
+
+.grid-box-num {
+  @apply absolute
+    top-0
+    left-0
+    -ml-2
+    -mt-2
+    bg-yellow-500
+    text-white
+    w-5
+    h-5
+    flex
+    justify-center
+    items-center
+    rounded-full
+}

@@ -5,12 +5,14 @@ export default defineComponent({
   props: {
     visible: Boolean,
     selected: Number,
+    size: String,
   },
   components: {
     ...boxLayouts,
   },
   emits: ['update:visible', 'update:selected'],
   setup(props, { emit }) {
+    const layouts = ref([...Array(17)].map((_, i) => i + 1))
     const localSelected = ref<number>()
 
     const init = () => {
@@ -27,7 +29,7 @@ export default defineComponent({
       init()
       emit('update:visible', false)
     }
-    return { localSelected, handleConfirm, handleCancel }
+    return { localSelected, handleConfirm, handleCancel, layouts }
   },
 })
 </script>
@@ -37,11 +39,11 @@ export default defineComponent({
     :modelValue="visible"
     @close="handleCancel"
     title="選擇版型"
-    :width="720"
+    :width="750"
   >
-    <div class="grid grid-cols-4 gap-6">
+    <div v-if="size === '2500x1686'" class="grid grid-cols-4 gap-6">
       <div
-        v-for="t in 12"
+        v-for="(t, i) in layouts.slice(0, 12)"
         :key="t"
         class="w-full h-28 p-3 relative"
         :class="{
@@ -49,24 +51,24 @@ export default defineComponent({
         }"
         @click="localSelected = t"
       >
-        <div
-          class="
-            absolute
-            top-0
-            left-0
-            -ml-2
-            -mt-2
-            bg-yellow-500
-            text-white
-            w-5
-            h-5
-            flex
-            justify-center
-            items-center
-            rounded-full
-          "
-        >
-          {{ t }}
+        <div class="grid-box-num">
+          {{ i + 1 }}
+        </div>
+        <component :is="`Layout${t}`" is-demo />
+      </div>
+    </div>
+    <div v-else class="grid grid-cols-3 gap-6">
+      <div
+        v-for="(t, i) in layouts.slice(12, layouts.length)"
+        :key="t"
+        class="w-full h-24 p-3 relative"
+        :class="{
+          'bg-yellow-100': t === localSelected,
+        }"
+        @click="localSelected = t"
+      >
+        <div class="grid-box-num">
+          {{ i + 1 }}
         </div>
         <component :is="`Layout${t}`" is-demo />
       </div>

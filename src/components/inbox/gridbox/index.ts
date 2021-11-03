@@ -10,6 +10,11 @@ import Layout9 from '@/components/inbox/gridbox/Layout9.vue'
 import Layout10 from '@/components/inbox/gridbox/Layout10.vue'
 import Layout11 from '@/components/inbox/gridbox/Layout11.vue'
 import Layout12 from '@/components/inbox/gridbox/Layout12.vue'
+import Layout13 from '@/components/inbox/gridbox/Layout13.vue'
+import Layout14 from '@/components/inbox/gridbox/Layout14.vue'
+import Layout15 from '@/components/inbox/gridbox/Layout15.vue'
+import Layout16 from '@/components/inbox/gridbox/Layout16.vue'
+import Layout17 from '@/components/inbox/gridbox/Layout17.vue'
 
 export default {
   Layout1,
@@ -24,4 +29,9 @@ export default {
   Layout10,
   Layout11,
   Layout12,
+  Layout13,
+  Layout14,
+  Layout15,
+  Layout16,
+  Layout17,
 }

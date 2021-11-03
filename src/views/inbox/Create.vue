@@ -1,7 +1,7 @@
 <script lang="ts">
 import actionForms from '@/components/inbox/form'
 import boxLayouts from '@/components/inbox/gridbox'
-import LayoutSelector from '@/components/inbox/popups/LayoutSelector.vue'
+import LayoutSelectorPopup from '@/components/inbox/popups/LayoutSelectorPopup.vue'
 import Layout from '@/components/Layout/Layout.vue'
 import PageHeader from '@/components/Layout/PageHeader.vue'
 import { useLayoutState } from '@/providers/layoutProvider'
@@ -28,7 +28,7 @@ export default defineComponent({
   components: {
     Layout,
     PageHeader,
-    LayoutSelector,
+    LayoutSelectorPopup,
     ...boxLayouts,
     ...actionForms,
   },
@@ -43,6 +43,11 @@ export default defineComponent({
         activeBox.value = 1
       },
     )
+
+    const sizeInfo = computed(() => {
+      const _size = formData.menuSize.split('x')
+      return { x: _size[0], y: _size[1] }
+    })
 
     const boxLayout = computed(() => `Layout${selectedLayout.value}`)
 
@@ -93,6 +98,13 @@ export default defineComponent({
       },
     )
 
+    watch(
+      () => formData.menuSize,
+      () => {
+        selectedLayout.value = formData.menuSize === '2500x1686' ? 1 : 13
+      },
+    )
+
     return {
       actionTypes,
       formData,
@@ -101,6 +113,7 @@ export default defineComponent({
       layoutSelectorVisible,
       boxLayout,
       initActionForm,
+      sizeInfo,
     }
   },
 })
@@ -154,7 +167,7 @@ export default defineComponent({
                   <div class="leading-5 mt-3">
                     檔案格式：JPG、JPEG、PNG <br />
                     檔案容量：1MB以下 <br />
-                    圖片尺寸：2500px 1686px
+                    圖片尺寸：{{ sizeInfo.x }}px {{ sizeInfo.y }}px
                   </div>
                   <div class="space-y-2 mt-3">
                     <el-button class="w-full m-0">上傳圖片</el-button>
@@ -208,8 +221,9 @@ export default defineComponent({
         </div>
       </div>
     </div>
-    <LayoutSelector
+    <LayoutSelectorPopup
       v-model:visible="layoutSelectorVisible"
+      :size="formData.menuSize"
       v-model:selected="selectedLayout"
     />
   </Layout>
