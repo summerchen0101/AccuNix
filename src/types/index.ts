@@ -20,3 +20,7 @@ export interface ListMeta {
   to: number
   total: number
 }
+
+export interface ResBase {
+  message?: string
+}

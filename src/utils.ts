@@ -10,14 +10,30 @@ export const toCurrency = (num: number, decimal = 0) =>
   numeral(num).format(
     decimal ? `0,0.${Array(decimal).fill('0').join('')}` : '0,0',
   )
-export const fileToDataUrl = async (file: Blob): Promise<string> => {
+
+interface ImageInfo {
+  src: string
+  width: number
+  height: number
+}
+export const getImageInfo = async (file: Blob): Promise<ImageInfo> => {
   return new Promise((resolve, reject) => {
     if (!file) {
       return
     }
     const reader = new FileReader()
     reader.onload = () => {
-      resolve(reader.result as string)
+      const image = new Image()
+
+      image.src = reader.result as string
+
+      image.onload = (d) => {
+        resolve({ src: image.src, width: image.width, height: image.height })
+        return true
+      }
+      image.onerror = () => {
+        reject('image error')
+      }
     }
     reader.onerror = () => {
       reject(reader.error)

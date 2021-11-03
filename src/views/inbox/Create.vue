@@ -4,8 +4,12 @@ import boxLayouts from '@/components/inbox/gridbox'
 import LayoutSelectorPopup from '@/components/inbox/popups/LayoutSelectorPopup.vue'
 import Layout from '@/components/Layout/Layout.vue'
 import PageHeader from '@/components/Layout/PageHeader.vue'
+import useAlert from '@/hooks/useAlert'
 import { useLayoutState } from '@/providers/layoutProvider'
+import { useLineBotState } from '@/providers/lineBotProvider'
+import useImgUpload from '@/service/useImgUpload'
 import { OptionsType } from '@/types'
+import { getImageInfo } from '@/utils'
 import { computed, defineComponent, onMounted, reactive, ref, watch } from 'vue'
 // import { MsgBtnFields } from '@/components/types'
 
@@ -34,6 +38,9 @@ export default defineComponent({
   },
   setup() {
     const { activePage } = useLayoutState()
+    const layoutImgUrl = ref('')
+    const alert = useAlert()
+    const { lineBotGuid, orgGuid } = useLineBotState()
     const layoutSelectorVisible = ref(false)
     const activeBox = ref<number>(1)
     const selectedLayout = ref<number>(1)
@@ -44,9 +51,11 @@ export default defineComponent({
       },
     )
 
+    const { doUpload, isLoading: isUploadLoading } = useImgUpload()
+
     const sizeInfo = computed(() => {
       const _size = formData.menuSize.split('x')
-      return { x: _size[0], y: _size[1] }
+      return { w: +_size[0], h: +_size[1] }
     })
 
     const boxLayout = computed(() => `Layout${selectedLayout.value}`)
@@ -85,6 +94,22 @@ export default defineComponent({
       }
     }
 
+    const handleFileChanged = async (e: Event) => {
+      const file = (e.target as HTMLInputElement).files[0]
+      const imgInfo = await getImageInfo(file)
+      const result =
+        imgInfo.width === sizeInfo.value.w &&
+        imgInfo.height === sizeInfo.value.h
+      if (!result) {
+        alert(
+          `圖片尺寸錯誤，尺寸應為${sizeInfo.value.w}x${sizeInfo.value.h}`,
+          'error',
+        )
+        return
+      }
+      layoutImgUrl.value = imgInfo.src
+    }
+
     watch(
       () => activeBox.value,
       () => {
@@ -102,6 +127,7 @@ export default defineComponent({
       () => formData.menuSize,
       () => {
         selectedLayout.value = formData.menuSize === '2500x1686' ? 1 : 13
+        layoutImgUrl.value = ''
       },
     )
 
@@ -114,6 +140,8 @@ export default defineComponent({
       boxLayout,
       initActionForm,
       sizeInfo,
+      handleFileChanged,
+      layoutImgUrl,
     }
   },
 })
@@ -161,16 +189,41 @@ export default defineComponent({
               </el-form-item>
               <div class="flex gap-8">
                 <div class="text-gray-500 text-sm">
-                  <div class="w-[320px] h-[200px]">
-                    <component :is="boxLayout" v-model:activeBox="activeBox" />
+                  <div
+                    :class="[
+                      'w-[320px] relative',
+                      formData.menuSize === '2500x1686'
+                        ? 'h-[200px]'
+                        : 'h-[100px]',
+                    ]"
+                  >
+                    <div class="absolute w-full h-full">
+                      <component
+                        :is="boxLayout"
+                        v-model:activeBox="activeBox"
+                      />
+                    </div>
+                    <img
+                      :hidden="!layoutImgUrl"
+                      :src="layoutImgUrl"
+                      alt=""
+                      class="h-full w-full"
+                    />
                   </div>
                   <div class="leading-5 mt-3">
                     檔案格式：JPG、JPEG、PNG <br />
                     檔案容量：1MB以下 <br />
-                    圖片尺寸：{{ sizeInfo.x }}px {{ sizeInfo.y }}px
+                    圖片尺寸：{{ sizeInfo.w }}px {{ sizeInfo.h }}px
                   </div>
                   <div class="space-y-2 mt-3">
-                    <el-button class="w-full m-0">上傳圖片</el-button>
+                    <input hidden type="file" @change="handleFileChanged" />
+                    <el-button
+                      class="w-full m-0"
+                      @click="
+                        (e) => e.currentTarget.previousElementSibling.click()
+                      "
+                      >上傳圖片</el-button
+                    >
                     <el-button
                       class="w-full m-0"
                       @click="layoutSelectorVisible = true"

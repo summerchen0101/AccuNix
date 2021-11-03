@@ -71,11 +71,11 @@ body,
 }
 
 .border-box {
-  @apply border border-blue-300
+  @apply border border-blue-300/60
 }
 
 .border-box.active {
-  @apply text-white bg-blue-300
+  @apply text-white bg-blue-300/60
 }
 
 .el-button+.el-button {
