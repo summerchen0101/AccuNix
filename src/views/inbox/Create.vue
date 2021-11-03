@@ -15,9 +15,11 @@ export interface ActionForm {
   tags: OptionsType<number>
 }
 interface IState {
-  keyword: string
+  name: string
   desc: string
-  status: boolean
+  msg: string
+  status: number
+  menuSize: string
   tags: number[]
   boxsAction: Record<number, ActionForm>
 }
@@ -48,9 +50,11 @@ export default defineComponent({
       activePage.value = 'Line'
     })
     const formData = reactive<IState>({
-      keyword: '',
+      name: '',
       desc: '',
-      status: true,
+      msg: '點開選單',
+      status: 1,
+      menuSize: '2500x1686',
       tags: [],
       boxsAction: { 1: { type: '', value: '', tags: [] } },
     })
@@ -122,24 +126,24 @@ export default defineComponent({
               label-width="80px"
             >
               <el-form-item label="主選單名稱" required>
-                <el-input v-model="formData.keyword"></el-input>
+                <el-input v-model="formData.name"></el-input>
               </el-form-item>
               <el-form-item label="主選單說明">
                 <el-input v-model="formData.desc"></el-input>
               </el-form-item>
               <el-form-item label="訊息欄文字">
-                <el-input v-model="formData.desc"></el-input>
+                <el-input v-model="formData.msg"></el-input>
               </el-form-item>
-              <el-form-item label="主選單顯示 展開/隱藏">
-                <el-radio-group>
-                  <el-radio label="預設展開選單"></el-radio>
-                  <el-radio label="預設隱藏選單"></el-radio>
+              <el-form-item label="主選單顯示">
+                <el-radio-group v-model="formData.status">
+                  <el-radio :label="1">預設展開選單</el-radio>
+                  <el-radio :label="2">預設隱藏選單</el-radio>
                 </el-radio-group>
               </el-form-item>
               <el-form-item label="主選單尺寸">
-                <el-radio-group>
-                  <el-radio label="2500x1686 大型"></el-radio>
-                  <el-radio label="2500x843 小型"></el-radio>
+                <el-radio-group v-model="formData.menuSize">
+                  <el-radio label="2500x1686">2500x1686 大型</el-radio>
+                  <el-radio label="2500x843">2500x843 小型</el-radio>
                 </el-radio-group>
               </el-form-item>
               <div class="flex gap-8">
@@ -161,7 +165,7 @@ export default defineComponent({
                     >
                   </div>
                 </div>
-                <div class="">
+                <div>
                   <el-form-item :label="`按鈕${activeBox}動作設定`">
                     <el-select
                       v-model="formData.boxsAction[activeBox].type"
@@ -181,6 +185,7 @@ export default defineComponent({
                       v-model:form-data="formData.boxsAction[activeBox]"
                     />
                   </el-form-item>
+                  <el-button class="mt-5" type="primary">套用設定</el-button>
                 </div>
               </div>
             </el-form>
