@@ -268,7 +268,52 @@ export default defineComponent({
                 mx-auto
               "
             >
-              <div class="overflow-y-auto overflow-x-hidden h-full"></div>
+              <div
+                class="
+                  overflow-y-auto overflow-x-hidden
+                  h-full
+                  flex flex-col
+                  justify-end
+                "
+              >
+                <div
+                  class="
+                    h-40
+                    bg-gray-100
+                    flex
+                    justify-center
+                    items-center
+                    relative
+                  "
+                  :class="
+                    formData.menuSize === '2500x1686' ? 'h-[160px]' : 'h-[80px]'
+                  "
+                >
+                  <i
+                    class="far fa-image text-gray-300"
+                    :class="
+                      formData.menuSize === '2500x1686' ? 'fa-9x' : 'fa-5x'
+                    "
+                  ></i>
+                  <img
+                    :hidden="!layoutImgUrl"
+                    :src="layoutImgUrl"
+                    alt=""
+                    class="h-full w-full absolute left-0"
+                  />
+                </div>
+                <div
+                  class="
+                    bg-gray-200
+                    text-gray-500 text-center
+                    py-1.5
+                    cursor-default
+                    text-sm
+                  "
+                >
+                  {{ formData.msg }}
+                </div>
+              </div>
             </div>
           </div>
         </div>
