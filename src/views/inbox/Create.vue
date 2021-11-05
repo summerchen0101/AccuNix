@@ -276,13 +276,9 @@ export default defineComponent({
                 "
               >
                 <div
-                  class="
-                    bg-gray-100
-                    h-[178.03px]
-                    flex
-                    justify-center
-                    items-center
-                    relative
+                  class="bg-gray-100 flex justify-center items-center relative"
+                  :class="
+                    formData.menuSize === '2500x1686' ? 'h-[178px]' : 'h-[89px]'
                   "
                 >
                   <i

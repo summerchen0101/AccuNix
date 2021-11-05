@@ -45,7 +45,7 @@ export default defineComponent({
       <div
         v-for="(t, i) in layouts.slice(0, 12)"
         :key="t"
-        class="w-[153.5px] h-28 p-3 relative"
+        class="w-[153.5px] h-[112px] p-3 relative"
         :class="{
           'bg-yellow-100': t === localSelected,
         }"
@@ -57,11 +57,11 @@ export default defineComponent({
         <InboxLayout is-demo :height="86" :width="127.51" :layout="t" />
       </div>
     </div>
-    <div v-else class="grid grid-cols-3 gap-6">
+    <div v-else class="grid grid-cols-4 gap-6">
       <div
         v-for="(t, i) in layouts.slice(12, layouts.length)"
         :key="t"
-        class="w-full h-24 p-3 relative"
+        class="w-[153.5px] h-[67px] p-3 relative"
         :class="{
           'bg-yellow-100': t === localSelected,
         }"
@@ -70,7 +70,7 @@ export default defineComponent({
         <div class="grid-box-num">
           {{ i + 1 }}
         </div>
-        <component :is="`Layout${t}`" is-demo />
+        <InboxLayout is-demo :height="43" :width="127.51" :layout="t" />
       </div>
     </div>
     <template #footer>

@@ -151,6 +151,24 @@ function toLayoutBoxs({
       { x: w / 3, y: (h / 7) * 4, height: (h / 7) * 3, width: w / 3 },
       { x: (w / 3) * 2, y: (h / 7) * 4, height: (h / 7) * 3, width: w / 3 },
     ],
+    13: [
+      { x: 0, y: 0, height: h, width: w / 3 },
+      { x: w / 3, y: 0, height: h, width: w / 3 },
+      { x: (w / 3) * 2, y: 0, height: h, width: w / 3 },
+    ],
+    14: [
+      { x: 0, y: 0, height: h, width: (w / 3) * 2 },
+      { x: (w / 3) * 2, y: 0, height: h, width: w / 3 },
+    ],
+    15: [
+      { x: 0, y: 0, height: h, width: w / 3 },
+      { x: w / 3, y: 0, height: h, width: (w / 3) * 2 },
+    ],
+    16: [
+      { x: 0, y: 0, height: h, width: w / 2 },
+      { x: w / 2, y: 0, height: h, width: w / 2 },
+    ],
+    17: [{ x: 0, y: 0, height: h, width: w }],
   }
 
   return _map[layout]
