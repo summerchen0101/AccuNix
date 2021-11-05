@@ -1,6 +1,6 @@
 <script lang="ts">
 import { defineComponent, ref, watchEffect } from 'vue'
-import boxLayouts from '@/components/inbox/gridbox'
+import InboxLayout from '../InboxLayout.vue'
 export default defineComponent({
   props: {
     visible: Boolean,
@@ -8,7 +8,7 @@ export default defineComponent({
     size: String,
   },
   components: {
-    ...boxLayouts,
+    InboxLayout,
   },
   emits: ['update:visible', 'update:selected'],
   setup(props, { emit }) {
@@ -45,7 +45,7 @@ export default defineComponent({
       <div
         v-for="(t, i) in layouts.slice(0, 12)"
         :key="t"
-        class="w-full h-28 p-3 relative"
+        class="w-[153.5px] h-28 p-3 relative"
         :class="{
           'bg-yellow-100': t === localSelected,
         }"
@@ -54,7 +54,7 @@ export default defineComponent({
         <div class="grid-box-num">
           {{ i + 1 }}
         </div>
-        <component :is="`Layout${t}`" is-demo />
+        <InboxLayout is-demo :height="86" :width="127.51" :layout="t" />
       </div>
     </div>
     <div v-else class="grid grid-cols-3 gap-6">

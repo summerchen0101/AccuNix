@@ -1,6 +1,5 @@
 <script lang="ts">
 import actionForms from '@/components/inbox/form'
-import boxLayouts from '@/components/inbox/gridbox'
 import LayoutSelectorPopup from '@/components/inbox/popups/LayoutSelectorPopup.vue'
 import Layout from '@/components/Layout/Layout.vue'
 import PageHeader from '@/components/Layout/PageHeader.vue'
@@ -11,6 +10,7 @@ import useImgUpload from '@/service/useImgUpload'
 import { OptionsType } from '@/types'
 import { getImageInfo } from '@/utils'
 import { computed, defineComponent, onMounted, reactive, ref, watch } from 'vue'
+import InboxLayout from '@/components/inbox/InboxLayout.vue'
 // import { MsgBtnFields } from '@/components/types'
 
 export interface ActionForm {
@@ -33,8 +33,8 @@ export default defineComponent({
     Layout,
     PageHeader,
     LayoutSelectorPopup,
-    ...boxLayouts,
     ...actionForms,
+    InboxLayout,
   },
   setup() {
     const { activePage } = useLayoutState()
@@ -53,16 +53,10 @@ export default defineComponent({
 
     const { doUpload, isLoading: isUploadLoading } = useImgUpload()
 
-    const sizeInfo = computed(() => {
-      const _size = formData.menuSize.split('x')
-      return { w: +_size[0], h: +_size[1] }
-    })
-
-    const boxLayout = computed(() => `Layout${selectedLayout.value}`)
-
     onMounted(() => {
       activePage.value = 'Line'
     })
+
     const formData = reactive<IState>({
       name: '',
       desc: '',
@@ -71,6 +65,11 @@ export default defineComponent({
       menuSize: '2500x1686',
       tags: [],
       boxsAction: { 1: { type: '', value: '', tags: [] } },
+    })
+
+    const sizeInfo = computed(() => {
+      const _size = formData.menuSize.split('x')
+      return { w: +_size[0], h: +_size[1] }
     })
 
     const actionTypes: OptionsType<string> = [
@@ -137,7 +136,6 @@ export default defineComponent({
       activeBox,
       selectedLayout,
       layoutSelectorVisible,
-      boxLayout,
       initActionForm,
       sizeInfo,
       handleFileChanged,
@@ -190,16 +188,17 @@ export default defineComponent({
               <div class="flex gap-8">
                 <div class="text-gray-500 text-sm">
                   <div
-                    :class="[
-                      'w-[320px] relative',
-                      formData.menuSize === '2500x1686'
-                        ? 'h-[200px]'
-                        : 'h-[100px]',
-                    ]"
+                    class="relative"
+                    :style="{
+                      height: sizeInfo.h / 7 + 'px',
+                      width: sizeInfo.w / 7 + 'px',
+                    }"
                   >
                     <div class="absolute w-full h-full">
-                      <component
-                        :is="boxLayout"
+                      <InboxLayout
+                        :height="sizeInfo.h / 7"
+                        :width="sizeInfo.w / 7"
+                        :layout="selectedLayout"
                         v-model:activeBox="activeBox"
                       />
                     </div>
@@ -278,15 +277,12 @@ export default defineComponent({
               >
                 <div
                   class="
-                    h-40
                     bg-gray-100
+                    h-[178.03px]
                     flex
                     justify-center
                     items-center
                     relative
-                  "
-                  :class="
-                    formData.menuSize === '2500x1686' ? 'h-[160px]' : 'h-[80px]'
                   "
                 >
                   <i
