@@ -25,27 +25,21 @@ export default defineComponent({
 </script>
 
 <template>
-  <el-form
-    :model="formData"
-    ref="form"
-    label-position="top"
-    class="mt-3 space-y-3"
-  >
-    <el-form-item required>
-      <el-select
-        :modelValue="formData.value"
-        @update:modelValue="
-          (val) => $emit('update:formData', { ...formData, value: val })
-        "
-        placeholder="選擇要分享的機器人"
-        ><el-option
-          v-for="t in friends"
-          :key="t.value"
-          :label="t.label"
-          :value="t.value"
-        >
-        </el-option
-      ></el-select>
-    </el-form-item>
-  </el-form>
+  <el-form-item required>
+    <el-select
+      :modelValue="formData.value"
+      @update:modelValue="
+        (val) => $emit('update:formData', { ...formData, value: val })
+      "
+      class="w-full"
+      placeholder="選擇要分享的機器人"
+      ><el-option
+        v-for="t in friends"
+        :key="t.value"
+        :label="t.label"
+        :value="t.value"
+      >
+      </el-option
+    ></el-select>
+  </el-form-item>
 </template>

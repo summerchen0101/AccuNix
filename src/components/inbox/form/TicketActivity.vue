@@ -8,8 +8,8 @@ export default defineComponent({
     formData: {
       type: Object as PropType<ActionForm>,
       default: () => ({
-        value: '',
-        tags: [],
+        type: 'coupon',
+        couponGuid: '',
       }),
     },
   },
@@ -25,27 +25,20 @@ export default defineComponent({
 </script>
 
 <template>
-  <el-form
-    :model="formData"
-    ref="form"
-    label-position="top"
-    class="mt-3 space-y-3"
-  >
-    <el-form-item required>
-      <el-select
-        :modelValue="formData.value"
-        @update:modelValue="
-          (val) => $emit('update:formData', { ...formData, value: val })
-        "
-        placeholder="選擇票券活動"
-        ><el-option
-          v-for="t in friends"
-          :key="t.value"
-          :label="t.label"
-          :value="t.value"
-        >
-        </el-option
-      ></el-select>
-    </el-form-item>
-  </el-form>
+  <el-form-item required>
+    <el-select
+      :modelValue="formData.couponGuid"
+      @update:modelValue="
+        (val) => $emit('update:formData', { ...formData, value: val })
+      "
+      placeholder="選擇票券活動"
+      ><el-option
+        v-for="t in friends"
+        :key="t.value"
+        :label="t.label"
+        :value="t.value"
+      >
+      </el-option
+    ></el-select>
+  </el-form-item>
 </template>

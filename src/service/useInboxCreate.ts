@@ -4,19 +4,6 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useLineBotState } from './../providers/lineBotProvider'
 
-export interface InboxCreateReq {
-  name: string
-  selected: boolean
-  chatBarText: string
-  size: Size
-  areas: Area[]
-}
-
-export interface Area {
-  action: Action
-  bounds: Bounds
-}
-
 export interface Action {
   tags?: string[]
   type: string
@@ -40,20 +27,41 @@ export interface Size {
   height: number
 }
 
+export interface Area {
+  action: Action
+  bounds: Bounds
+}
+
+export interface Data {
+  name: string
+  selected: boolean
+  chatBarText: string
+  size: Size
+  areas: Area[]
+}
+
+export interface InboxCreateReq {
+  name: string
+  description: string
+  image_url: string
+  image_file_id: number
+  data: Data
+}
+
 function useInboxCreate() {
   const router = useRouter()
   const apiErrHandler = useApiErrHandler()
   const { lineBotGuid } = useLineBotState()
   const isLoading = ref(false)
   const isError = ref(false)
-  const doCreate = async (req: InboxCreateReq) => {
+  const doCreate = async (data: InboxCreateReq) => {
     isLoading.value = true
     isError.value = false
     try {
       const res = await useRequest({
         method: 'post',
         url: `/LINEBot/${lineBotGuid.value}/Richmenu/store`,
-        config: { params: req },
+        data,
       })
     } catch (err) {
       apiErrHandler(err)

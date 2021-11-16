@@ -8,7 +8,9 @@ export default defineComponent({
     formData: {
       type: Object as PropType<ActionForm>,
       default: () => ({
-        value: '',
+        type: 'uri',
+        uri: '',
+        original: false,
         tags: [],
       }),
     },
@@ -25,40 +27,43 @@ export default defineComponent({
 </script>
 
 <template>
-  <el-form
-    :model="formData"
-    ref="form"
-    label-position="top"
-    class="mt-3 space-y-3"
-  >
-    <el-form-item label="連結" required>
-      <el-input
-        :modelValue="formData.value"
-        @update:modelValue="
-          (val) => $emit('update:formData', { ...formData, value: val })
-        "
-      ></el-input>
-    </el-form-item>
-    <el-form-item label="標籤設定">
-      <el-select
-        :modelValue="formData.tags"
-        @update:modelValue="
-          (val) => $emit('update:formData', { ...formData, tags: val })
-        "
-        multiple
+  <el-form-item required class="mb-0">
+    <el-checkbox
+      label="取消跳轉頁"
+      :modelValue="formData.original"
+      @update:modelValue="
+        (val) => $emit('update:formData', { ...formData, original: val })
+      "
+    ></el-checkbox>
+  </el-form-item>
+  <el-form-item label="連結" required>
+    <el-input
+      :modelValue="formData.uri"
+      @update:modelValue="
+        (val) => $emit('update:formData', { ...formData, uri: val })
+      "
+    ></el-input>
+  </el-form-item>
+  <el-form-item label="標籤設定">
+    <el-select
+      :modelValue="formData.tags"
+      @update:modelValue="
+        (val) => $emit('update:formData', { ...formData, tags: val })
+      "
+      class="w-full"
+      multiple
+    >
+      <el-option
+        v-for="tag in tags"
+        :key="tag.value"
+        :label="tag.label"
+        :value="tag.value"
       >
-        <el-option
-          v-for="tag in tags"
-          :key="tag.value"
-          :label="tag.label"
-          :value="tag.value"
-        >
-        </el-option
-      ></el-select>
-      <div class="text-xs text-blue-400 mt-2 leading-4">
-        <div class="">＊標籤設定最多 3 個，目前額度： 0/3</div>
-        <div class="">＊標籤不能使用以下特殊符號：¥[]~' "/\#?,*+及空白</div>
-      </div>
-    </el-form-item>
-  </el-form>
+      </el-option
+    ></el-select>
+    <div class="text-xs text-blue-400 mt-2 leading-4">
+      <div class="">＊標籤設定最多 3 個，目前額度： 0/3</div>
+      <div class="">＊標籤不能使用以下特殊符號：¥[]~' "/\#?,*+及空白</div>
+    </div>
+  </el-form-item>
 </template>

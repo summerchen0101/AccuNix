@@ -31,7 +31,7 @@ interface BoxProps {
   height: number
 }
 
-function toLayoutBoxs({
+export function toLayoutBoxs({
   h,
   w,
   layout,
