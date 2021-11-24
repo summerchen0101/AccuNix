@@ -2,7 +2,7 @@ import { useApiErrHandler } from '@/hooks/useApiErrHandler'
 import useRequest from '@/hooks/useRequest'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { useLineBotState } from './../providers/lineBotProvider'
+import { useGlobalState } from '../providers/globalProvider'
 
 export interface LifeCycleOverviewRes {
   data: Data
@@ -26,7 +26,7 @@ export interface LifeCycle {
 function useLifeCycleOverview() {
   const router = useRouter()
   const apiErrHandler = useApiErrHandler()
-  const { lineBotGuid } = useLineBotState()
+  const { lineBotGuid } = useGlobalState()
   const isLoading = ref(false)
   const isError = ref(false)
   const data = ref<LifeCycleOverviewRes['data']>(null)

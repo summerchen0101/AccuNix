@@ -13,7 +13,7 @@ export const menuList: Menu[] = [
     path: null,
     icon: 'fa-comments',
     subs: [
-      { label: 'Line', path: '/line/setting', code: 'Line' },
+      { label: 'Line', path: '/line', code: 'Line' },
       { label: 'Facebook', path: '/facebook', code: 'Facebook' },
     ],
   },

@@ -2,7 +2,7 @@ import { useApiErrHandler } from '@/hooks/useApiErrHandler'
 import useRequest from '@/hooks/useRequest'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { useLineBotState } from './../providers/lineBotProvider'
+import { useGlobalState } from '../providers/globalProvider'
 
 export interface Keyword {
   name: string
@@ -20,7 +20,7 @@ export interface KeywordOverviewRes {
 function useKeywordList() {
   const router = useRouter()
   const apiErrHandler = useApiErrHandler()
-  const { lineBotGuid } = useLineBotState()
+  const { lineBotGuid } = useGlobalState()
   const isLoading = ref(false)
   const isError = ref(false)
   const list = ref<KeywordOverviewRes['data']>([])

@@ -98,3 +98,16 @@ body,
     items-center
     rounded-full
 }
+
+.ctrl-btn {
+  @apply bg-blue-500
+  text-white
+  hover:bg-blue-400
+  w-9
+  h-9
+  rounded-sm
+  flex
+  items-center
+  justify-center
+  cursor-pointer
+}

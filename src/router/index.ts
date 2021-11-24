@@ -12,19 +12,40 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/Login.vue'),
   },
   {
-    path: '/line/chart',
-    name: 'LineChart',
-    component: () => import('@/views/LineChart.vue'),
-  },
-  {
-    path: '/line/setting',
-    name: 'LineSetting',
-    component: () => import('@/views/LineSetting.vue'),
+    path: '/line',
+    name: 'Line',
+    component: () => import('@/views/line/Index.vue'),
+    redirect: { name: 'LineChart' },
+    children: [
+      {
+        path: '/line/chart',
+        name: 'LineChart',
+        component: () => import('@/views/line/Charts.vue'),
+      },
+      {
+        path: '/line/robot',
+        name: 'LineRobot',
+        component: () => import('@/views/line/Robot.vue'),
+      },
+    ],
   },
   {
     path: '/facebook',
     name: 'Facebook',
-    component: () => import('@/views/Facebook.vue'),
+    component: () => import('@/views/fb/Index.vue'),
+    redirect: { name: 'FbChart' },
+    children: [
+      {
+        path: '/facebook/chart',
+        name: 'FbChart',
+        component: () => import('@/views/fb/Charts.vue'),
+      },
+      {
+        path: '/facebook/robot',
+        name: 'FbRobot',
+        component: () => import('@/views/fb/Robot.vue'),
+      },
+    ],
   },
   {
     path: '/keywords/list',

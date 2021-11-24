@@ -5,7 +5,7 @@ import Layout from '@/components/Layout/Layout.vue'
 import PageHeader from '@/components/Layout/PageHeader.vue'
 import useAlert from '@/hooks/useAlert'
 import { useLayoutState } from '@/providers/layoutProvider'
-import { useLineBotState } from '@/providers/lineBotProvider'
+import { useGlobalState } from '@/providers/globalProvider'
 import useImgUpload from '@/service/useImgUpload'
 import { OptionsType } from '@/types'
 import { getImageInfo } from '@/utils'
@@ -55,7 +55,7 @@ export default defineComponent({
     const layoutImgSrc = ref('')
     const imgFile = ref<File>()
     const alert = useAlert()
-    const { lineBotGuid, orgGuid } = useLineBotState()
+    const { lineBotGuid, orgGuid } = useGlobalState()
     const layoutSelectorVisible = ref(false)
     const activeBox = ref<number>(1)
     const selectedLayout = ref<number>(1)

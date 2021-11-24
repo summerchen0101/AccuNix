@@ -1,6 +1,6 @@
 import { useApiErrHandler } from '@/hooks/useApiErrHandler'
 import useRequest from '@/hooks/useRequest'
-import { useLineBotState } from '@/providers/lineBotProvider'
+import { useGlobalState } from '@/providers/globalProvider'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
@@ -16,7 +16,7 @@ export interface HoursOverviewRes {
 function useHoursOverview() {
   const router = useRouter()
   const apiErrHandler = useApiErrHandler()
-  const { lineBotGuid } = useLineBotState()
+  const { lineBotGuid } = useGlobalState()
   const isLoading = ref(false)
   const isError = ref(false)
   const list = ref<HoursOverviewRes['data']>([])

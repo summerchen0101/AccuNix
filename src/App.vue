@@ -1,12 +1,12 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { useLayoutProvider } from './providers/layoutProvider'
-import { useLineBotProvider } from './providers/lineBotProvider'
+import { useGlobalProvider } from './providers/globalProvider'
 
 export default defineComponent({
   setup() {
     useLayoutProvider()
-    useLineBotProvider()
+    useGlobalProvider()
   },
 })
 </script>
