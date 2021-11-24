@@ -1,4 +1,4 @@
-<script lang="tsx">
+<script lang="ts">
 import { OptionType } from '@/types'
 import { defineComponent, PropType } from 'vue'
 
@@ -9,19 +9,20 @@ export default defineComponent({
     options: Object as PropType<OptionType<number | string>[]>,
     onChange: Function as PropType<(value: number | string) => void>,
   },
-  setup(props) {
-    return () => (
-      <div class="flex space-x-2">
-        {props.options?.map((t) => (
-          <div
-            class={['tab', props.value === t.value && 'active'].join(' ')}
-            onClick={() => props.onChange?.(t.value)}
-          >
-            {t.label}
-          </div>
-        ))}
-      </div>
-    )
-  },
+  emits: ['change'],
 })
 </script>
+
+<template>
+  <div class="flex space-x-2">
+    <div
+      v-for="(opt, i) in options"
+      :key="i"
+      class="tab"
+      :class="value === opt.value && 'active'"
+      @click="() => $emit('change', opt.value)"
+    >
+      {{ opt.label }}
+    </div>
+  </div>
+</template>

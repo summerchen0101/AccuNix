@@ -14,6 +14,8 @@ import InboxLayout, { toLayoutBoxs } from '@/components/inbox/InboxLayout.vue'
 import useInboxCreate, { InboxCreateReq } from '@/service/useInboxCreate'
 import LoadingCover from '@/components/LoadingCover.vue'
 import { ImgUploadRes } from '@/components/types'
+import { RouteProps } from '@/components/Breadcrumb.vue'
+import Breadcrumb from '../../components/Breadcrumb.vue'
 // import { MsgBtnFields } from '@/components/types'
 
 export interface ActionForm {
@@ -46,6 +48,7 @@ export default defineComponent({
     ...actionForms,
     InboxLayout,
     LoadingCover,
+    Breadcrumb,
   },
   setup() {
     const { activePage } = useLayoutState()
@@ -293,7 +296,15 @@ export default defineComponent({
       },
     )
 
+    const breadcrumb: RouteProps[] = [
+      { name: '聊天機器人' },
+      { name: 'LINE' },
+      { name: '主選單列表', path: '/inbox/list' },
+      { name: '新增主選單' },
+    ]
+
     return {
+      breadcrumb,
       actionTypes,
       data,
       onSubmit,
@@ -313,7 +324,9 @@ export default defineComponent({
 
 <template>
   <Layout>
-    <PageHeader />
+    <PageHeader>
+      <Breadcrumb :routes="breadcrumb" />
+    </PageHeader>
     <div class="p-3 mt-10 h-[calc(100%-40px)]">
       <div class="bg-white rounded-md h-full p-4 overflow-y-auto">
         <div class="flex justify-between mb-7">

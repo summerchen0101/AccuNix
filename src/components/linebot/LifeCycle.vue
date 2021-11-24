@@ -1,22 +1,18 @@
-<script lang="tsx">
+<script lang="ts">
 import { defineComponent, ref } from 'vue'
-import LifeCyclePeriodsChartsVue from './LifeCyclePeriodsCharts.vue'
-import LifeCycleUserChartsVue from './LifeCycleUserCharts.vue'
+import LifeCycleUserCharts from './LifeCycleUserCharts.vue'
+import LifeCyclePeriodsCharts from './LifeCyclePeriodsCharts.vue'
 
 export default defineComponent({
-  name: 'LinebotLifeCycle',
   setup() {
     const selected = ref(1)
-
-    return () => (
-      <>
-        {selected.value === 1 ? (
-          <LifeCycleUserChartsVue v-model={[selected.value, 'tab']} />
-        ) : (
-          <LifeCyclePeriodsChartsVue v-model={[selected.value, 'tab']} />
-        )}
-      </>
-    )
+    return { selected }
   },
+  components: { LifeCycleUserCharts, LifeCyclePeriodsCharts },
 })
 </script>
+
+<template>
+  <LifeCycleUserCharts v-if="selected === 1" v-model:tab="selected" />
+  <LifeCyclePeriodsCharts v-else v-model:tab="selected" />
+</template>

@@ -13,7 +13,7 @@
       z-10
     "
   >
-    <Breadcrumb />
+    <slot></slot>
   </div>
 </template>
 
@@ -23,9 +23,6 @@ import { defineComponent } from 'vue'
 
 export default defineComponent({
   name: 'PageHeader',
-  components: {
-    Breadcrumb,
-  },
   setup(props) {
     //
   },

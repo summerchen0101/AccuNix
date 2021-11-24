@@ -1,11 +1,11 @@
-<script lang="tsx">
-import SectionPanel from '@/components/SectionPanel.vue'
-import Spinner from '@/components/Spinner.vue'
+<script lang="ts">
 import useLifeCycleTrand, {
   LifeCycleTrandReq,
 } from '@/service/useLifeCycleTrend'
 import { format, subDays } from 'date-fns'
 import { computed, defineComponent, onMounted, ref } from 'vue'
+import SectionPanel from '../SectionPanel.vue'
+import Spinner from '../Spinner.vue'
 
 export default defineComponent({
   name: 'LifeCyclePeriodsCharts',
@@ -17,7 +17,6 @@ export default defineComponent({
     const startAt = ref(subDays(new Date(), 8))
     const endAt = ref(subDays(new Date(), 1))
     const { fetchData, isLoading, data } = useLifeCycleTrand()
-
     const onSearch = () => {
       const search: LifeCycleTrandReq = {
         startAt: startAt.value
@@ -27,16 +26,13 @@ export default defineComponent({
       }
       fetchData(search)
     }
-
     onMounted(() => {
       onSearch()
     })
-
-    const tab = computed({
+    const localTab = computed({
       get: () => props.tab,
       set: (val) => emit('update:tab', val),
     })
-
     const chartOptions = computed(() => ({
       chart: {
         height: 350,
@@ -72,7 +68,6 @@ export default defineComponent({
         categories: data.value.map((t) => t.date),
       },
     }))
-
     const series = computed(() => [
       {
         name: '新用戶',
@@ -95,53 +90,56 @@ export default defineComponent({
         data: data.value.map((t) => t[5]),
       },
     ])
-
-    return () => (
-      <SectionPanel class="lg:col-span-2" title="用戶生命週期">
-        {{
-          default: () => [
-            isLoading.value ? (
-              <Spinner />
-            ) : (
-              <div class="mt-3">
-                <div class="flex space-x-2 mb-3">
-                  <el-date-picker
-                    type="date"
-                    size="small"
-                    v-model={startAt.value}
-                    placeholder="開始日期"
-                  ></el-date-picker>
-                  <span>~</span>
-                  <el-date-picker
-                    type="date"
-                    size="small"
-                    v-model={endAt.value}
-                    placeholder="結束日期"
-                  ></el-date-picker>
-                  <el-button type="primary" size="small" onClick={onSearch}>
-                    查詢
-                  </el-button>
-                </div>
-                <div class="h-[380px]">
-                  <apexchart
-                    type="line"
-                    options={chartOptions.value}
-                    series={series.value}
-                    height="100%"
-                  ></apexchart>
-                </div>
-              </div>
-            ),
-          ],
-          plus: () => [
-            <el-radio-group class="mb-3" v-model={tab.value}>
-              <el-radio label={1}>用戶數據</el-radio>
-              <el-radio label={2}>區間數據</el-radio>
-            </el-radio-group>,
-          ],
-        }}
-      </SectionPanel>
-    )
+    return {
+      isLoading,
+      series,
+      chartOptions,
+      localTab,
+      startAt,
+      endAt,
+      onSearch,
+    }
   },
+  components: { SectionPanel, Spinner },
 })
 </script>
+
+<template>
+  <SectionPanel class="lg:col-span-2" title="用戶生命週期">
+    <Spinner v-if="isLoading" />
+    <div v-else class="mt-3">
+      <div class="flex space-x-2 mb-3">
+        <el-date-picker
+          type="date"
+          size="small"
+          v-model="startAt"
+          placeholder="開始日期"
+        ></el-date-picker>
+        <span>~</span>
+        <el-date-picker
+          type="date"
+          size="small"
+          v-model="endAt"
+          placeholder="結束日期"
+        ></el-date-picker>
+        <el-button type="primary" size="small" @click="onSearch">
+          查詢
+        </el-button>
+      </div>
+      <div class="h-[380px]">
+        <apexchart
+          type="line"
+          :options="chartOptions"
+          :series="series"
+          height="100%"
+        ></apexchart>
+      </div>
+    </div>
+    <template v-slot:plus>
+      <el-radio-group class="mb-3" v-model="localTab">
+        <el-radio :label="1">用戶數據</el-radio>
+        <el-radio :label="2">區間數據</el-radio>
+      </el-radio-group>
+    </template>
+  </SectionPanel>
+</template>

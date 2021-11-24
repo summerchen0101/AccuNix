@@ -7,6 +7,7 @@ import { useLayoutState } from '@/providers/layoutProvider'
 import useInboxList, { InboxListReq } from '@/service/useInboxList'
 import { defineComponent, onMounted, reactive } from 'vue'
 import { useRouter } from 'vue-router'
+import Breadcrumb, { RouteProps } from '@/components/Breadcrumb.vue'
 
 export default defineComponent({
   name: 'InboxList',
@@ -14,6 +15,7 @@ export default defineComponent({
     Layout,
     PageHeader,
     PageIconBtn,
+    Breadcrumb,
   },
   setup() {
     const router = useRouter()
@@ -34,14 +36,30 @@ export default defineComponent({
       activePage.value = 'Line'
       fetchData(req)
     })
-    return { req, isLoading, list, fetchData, meta, onPageChange, onSortChange }
+    const breadcrumb: RouteProps[] = [
+      { name: '聊天機器人' },
+      { name: 'LINE' },
+      { name: '主選單列表' },
+    ]
+    return {
+      breadcrumb,
+      req,
+      isLoading,
+      list,
+      fetchData,
+      meta,
+      onPageChange,
+      onSortChange,
+    }
   },
 })
 </script>
 
 <template>
   <Layout>
-    <PageHeader />
+    <PageHeader>
+      <Breadcrumb :routes="breadcrumb" />
+    </PageHeader>
     <div class="p-3 mt-10 h-[calc(100%-40px)]">
       <div class="bg-white rounded-md h-full p-4">
         <div class="flex justify-between mb-3">

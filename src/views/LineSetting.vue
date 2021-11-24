@@ -6,6 +6,7 @@ import LinebotCtrl from '@/components/LinebotCtrl.vue'
 import { useLayoutState } from '@/providers/layoutProvider'
 import { defineComponent, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
+import Breadcrumb, { RouteProps } from '@/components/Breadcrumb.vue'
 
 export default defineComponent({
   name: 'LineSetting',
@@ -14,6 +15,7 @@ export default defineComponent({
     CardPanel,
     Layout,
     LinebotCtrl,
+    Breadcrumb,
   },
   setup() {
     const router = useRouter()
@@ -22,14 +24,17 @@ export default defineComponent({
     onMounted(() => {
       activePage.value = 'Line'
     })
-    return { selected }
+    const breadcrumb: RouteProps[] = [{ name: '聊天機器人' }, { name: 'LINE' }]
+    return { selected, breadcrumb }
   },
 })
 </script>
 
 <template>
   <Layout>
-    <PageHeader />
+    <PageHeader>
+      <Breadcrumb :routes="breadcrumb" />
+    </PageHeader>
     <div class="p-3 mt-10">
       <LinebotCtrl />
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
