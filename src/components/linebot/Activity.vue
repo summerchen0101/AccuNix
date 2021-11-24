@@ -2,9 +2,11 @@
 import useHoursOverview from '@/service/useHoursOverview'
 import { computed, defineComponent, onMounted } from 'vue'
 import SectionPanel from '../SectionPanel.vue'
+import Spinner from '../Spinner.vue'
 export default defineComponent({
   components: {
     SectionPanel,
+    Spinner,
   },
   setup() {
     const { fetchData, isLoading, list } = useHoursOverview()

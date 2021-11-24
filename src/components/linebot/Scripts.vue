@@ -3,10 +3,12 @@ import useScriptOverview from '@/service/useScriptOverview'
 import { format, subDays } from 'date-fns'
 import { defineComponent, onMounted, ref } from 'vue'
 import SectionPanel from '../SectionPanel.vue'
+import Spinner from '../Spinner.vue'
 
 export default defineComponent({
   components: {
     SectionPanel,
+    Spinner,
   },
   setup() {
     const startAt = ref(subDays(new Date(), 8))

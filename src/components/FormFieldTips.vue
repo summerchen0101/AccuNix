@@ -1,4 +1,4 @@
-<script lang="tsx">
+<script lang="ts">
 import { defineComponent } from 'vue'
 
 export default defineComponent({
@@ -10,14 +10,16 @@ export default defineComponent({
     content: String,
   },
   setup(props, { slots }) {
-    return () => (
-      <div class="flex space-x-2 items-center text-gray-500 leading-7">
-        <i class={props.iconClass}></i>
-        <div>{props.content}</div>
-      </div>
-    )
+    return {}
   },
 })
 </script>
+
+<template>
+  <div class="flex space-x-2 items-center text-gray-500 leading-7">
+    <i :class="iconClass"></i>
+    <div>{{ content }}</div>
+  </div>
+</template>
 
 <style scoped></style>

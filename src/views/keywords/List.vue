@@ -1,10 +1,9 @@
-<script lang="tsx">
+<script lang="ts">
+import { useLayoutState } from '@/providers/layoutProvider'
+import { defineComponent, onMounted, reactive, ref } from 'vue'
+import { useRouter } from 'vue-router'
 import Layout from '@/components/Layout/Layout.vue'
 import PageHeader from '@/components/Layout/PageHeader.vue'
-import PageIconBtn from '@/components/PageIconBtn.vue'
-import { useLayoutState } from '@/providers/layoutProvider'
-import { defineComponent, reactive, ref, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
 
 interface Columns {
   keyword: string
@@ -37,6 +36,7 @@ export default defineComponent({
     })
     return { keyword, tableData, activeTab }
   },
+  components: { Layout, PageHeader },
 })
 </script>
 
@@ -79,7 +79,7 @@ export default defineComponent({
                   </template>
                 </el-input>
               </div>
-              <el-table data="{tableData}" stripe class="w-100">
+              <el-table :data="tableData" stripe class="w-100">
                 <el-table-column
                   prop="keyword"
                   label="關鍵字"
@@ -101,7 +101,7 @@ export default defineComponent({
                   prop="status"
                   label="啟用狀態"
                 ></el-table-column>
-                <el-table-column label="操作" width="{150}">
+                <el-table-column label="操作" :width="150">
                   <div class="flex space-x-2">
                     <PageIconBtn iconClass="fas fa-edit" />
                     <PageIconBtn color="red" iconClass="fas fa-trash-alt" />
@@ -110,14 +110,14 @@ export default defineComponent({
               </el-table>
             </el-tab-pane>
             <el-tab-pane label="垃圾桶" name="second">
-              <el-table data="{tableData}" stripe class="w-100">
+              <el-table :data="tableData" stripe class="w-100">
                 <el-table-column
                   prop="keyword"
                   label="關鍵字"
                 ></el-table-column>
                 <el-table-column prop="desc" label="說明"></el-table-column>
 
-                <el-table-column label="操作" width="{150}">
+                <el-table-column label="操作" :width="150">
                   <div class="flex space-x-2">
                     <PageIconBtn iconClass="fas fa-reply" />
                   </div>

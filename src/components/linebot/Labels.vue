@@ -2,9 +2,11 @@
 import useTagOverview from '@/service/useTagOverview'
 import { defineComponent, onMounted, ref } from 'vue'
 import SectionPanel from '../SectionPanel.vue'
+import Spinner from '../Spinner.vue'
 export default defineComponent({
   components: {
     SectionPanel,
+    Spinner,
   },
   setup() {
     const selected = ref(1)

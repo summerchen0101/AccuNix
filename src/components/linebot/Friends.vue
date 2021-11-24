@@ -1,18 +1,18 @@
-<script lang="tsx">
-import PageHeader from '@/components/Layout/PageHeader.vue'
+<script lang="ts">
 import SectionPanel from '@/components/SectionPanel.vue'
-import { computed, defineComponent, onMounted, reactive, ref } from 'vue'
+import Spinner from '@/components/Spinner.vue'
 import { format, subDays } from 'date-fns'
+import { computed, defineComponent, onMounted, ref } from 'vue'
 import useFriendTrand, {
   FriendTrand,
   FriendTrandReq,
 } from '../../service/useFriendTrend'
-import Spinner from '@/components/Spinner.vue'
 
 export default defineComponent({
   name: 'LinebotFriends',
   components: {
-    PageHeader,
+    Spinner,
+    SectionPanel,
   },
   setup() {
     const startAt = ref(subDays(new Date(), 8))
@@ -75,51 +75,58 @@ export default defineComponent({
         data: data.value.map((t) => t[selected.value]),
       },
     ])
-    return () => (
-      <SectionPanel title="好友總人數分析">
-        {{
-          default: () => [
-            isLoading.value ? (
-              <Spinner />
-            ) : (
-              <div class="mt-3">
-                <div class="flex space-x-2 mb-3">
-                  <el-date-picker
-                    type="date"
-                    size="small"
-                    v-model={startAt.value}
-                    placeholder="開始日期"
-                  ></el-date-picker>
-                  <span>~</span>
-                  <el-date-picker
-                    type="date"
-                    size="small"
-                    v-model={endAt.value}
-                    placeholder="結束日期"
-                  ></el-date-picker>
-                  <el-button type="primary" size="small" onClick={onSearch}>
-                    查詢
-                  </el-button>
-                </div>
-                <el-radio-group class="mb-3" v-model={selected.value}>
-                  {Object.entries(dataMap).map(([value, label]) => (
-                    <el-radio label={value}>{label}</el-radio>
-                  ))}
-                </el-radio-group>
-                <div class="h-[250px]">
-                  <apexchart
-                    type="line"
-                    options={chartOptions.value}
-                    series={series.value}
-                    height="100%"
-                  ></apexchart>
-                </div>
-              </div>
-            ),
-          ],
-        }}
-      </SectionPanel>
-    )
+    return {
+      series,
+      isLoading,
+      chartOptions,
+      selected,
+      startAt,
+      endAt,
+      dataMap,
+      onSearch,
+    }
   },
 })
 </script>
+
+<template>
+  <SectionPanel title="好友總人數分析">
+    <Spinner v-if="isLoading" />
+    <div v-else class="mt-3">
+      <div class="flex space-x-2 mb-3">
+        <el-date-picker
+          type="date"
+          size="small"
+          v-model="startAt"
+          placeholder="開始日期"
+        ></el-date-picker>
+        <span>~</span>
+        <el-date-picker
+          type="date"
+          size="small"
+          v-model="endAt"
+          placeholder="結束日期"
+        ></el-date-picker>
+        <el-button type="primary" size="small" @click="onSearch">
+          查詢
+        </el-button>
+      </div>
+      <el-radio-group class="mb-3" v-model="selected">
+        <el-radio
+          v-for="[value, label] in Object.entries(dataMap)"
+          :key="value"
+          :label="value"
+          >{{ label }}</el-radio
+        >
+      </el-radio-group>
+      <div class="h-[250px]">
+        <apexchart
+          type="line"
+          :options="chartOptions"
+          :series="series"
+          height="100%"
+        ></apexchart>
+      </div>
+    </div>
+  </SectionPanel>
+</template>

@@ -2,13 +2,14 @@
 import useKeywordTrand from '@/service/useKeywordTrend'
 import { format, subDays } from 'date-fns'
 import { defineComponent, onMounted, ref } from 'vue'
+import SectionPanel from '../SectionPanel.vue'
+import Spinner from '../Spinner.vue'
 
 export default defineComponent({
   setup() {
     const startAt = ref(subDays(new Date(), 8))
     const endAt = ref(subDays(new Date(), 1))
     const { list, fetchData, isLoading } = useKeywordTrand()
-
     const onSearch = () => {
       const search = {
         startAt: startAt.value
@@ -18,12 +19,12 @@ export default defineComponent({
       }
       fetchData(search)
     }
-
     onMounted(() => {
       onSearch()
     })
     return { startAt, endAt, list, isLoading, onSearch }
   },
+  components: { SectionPanel, Spinner },
 })
 </script>
 

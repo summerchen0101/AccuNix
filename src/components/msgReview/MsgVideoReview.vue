@@ -1,4 +1,4 @@
-<script lang="tsx">
+<script lang="ts">
 import { defineComponent, PropType, toRefs } from 'vue'
 import { MsgVideoFields } from '../types'
 
