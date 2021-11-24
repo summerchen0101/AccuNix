@@ -27,7 +27,7 @@ export default defineComponent({
 <template>
   <el-form-item required>
     <el-select
-      :modelValue="formData.value"
+      :modelValue="formData"
       @update:modelValue="
         (val) => $emit('update:formData', { ...formData, value: val })
       "

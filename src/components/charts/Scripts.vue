@@ -1,15 +1,27 @@
 <script lang="ts">
-import useKeywordTrand from '@/service/useKeywordTrend'
+import { BotType } from '@/lib/enum'
+import useScriptOverview from '@/service/useScriptOverview'
 import { format, subDays } from 'date-fns'
-import { defineComponent, onMounted, ref } from 'vue'
+import { defineComponent, onMounted, ref, PropType } from 'vue'
 import SectionPanel from '../SectionPanel.vue'
 import Spinner from '../Spinner.vue'
 
 export default defineComponent({
-  setup() {
+  props: {
+    type: {
+      type: String as PropType<BotType>,
+      required: true,
+    },
+  },
+  components: {
+    SectionPanel,
+    Spinner,
+  },
+  setup(props) {
     const startAt = ref(subDays(new Date(), 8))
     const endAt = ref(subDays(new Date(), 1))
-    const { list, fetchData, isLoading } = useKeywordTrand()
+    const { list, fetchData, isLoading } = useScriptOverview(props.type)
+
     const onSearch = () => {
       const search = {
         startAt: startAt.value
@@ -19,17 +31,18 @@ export default defineComponent({
       }
       fetchData(search)
     }
+
     onMounted(() => {
       onSearch()
     })
+
     return { startAt, endAt, list, isLoading, onSearch }
   },
-  components: { SectionPanel, Spinner },
 })
 </script>
 
 <template>
-  <SectionPanel title="關鍵字趨勢">
+  <SectionPanel title="觸發腳本與完成率">
     <template v-slot:default>
       <div class="mt-3 min-h-[300px]">
         <div class="flex space-x-2 mb-3">
@@ -59,20 +72,13 @@ export default defineComponent({
             size="small"
             max-height="250"
           >
-            <el-table-column prop="keyword" label="關鍵字"></el-table-column>
-            <el-table-column label="整體佔比" align="center">
+            <el-table-column prop="name" label="腳本名稱"></el-table-column>
+            <el-table-column prop="total" label="開啟次數"></el-table-column>
+            <el-table-column label="腳本完成率" align="center">
               <template #default="props">
-                <span>{{ props.row.overall }}%</span>
+                <span>{{ props.row.finish }}%</span>
               </template>
             </el-table-column>
-            <el-table-column
-              prop="compared"
-              label="與上區段對比"
-            ></el-table-column>
-            <el-table-column
-              prop="totalActiveCount"
-              label="觸發次數"
-            ></el-table-column>
           </el-table>
         </template>
       </div>

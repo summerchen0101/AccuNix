@@ -1,8 +1,8 @@
 import { useApiErrHandler } from '@/hooks/useApiErrHandler'
 import useRequest from '@/hooks/useRequest'
+import { BotType } from '@/lib/enum'
 import { useGlobalState } from '@/providers/globalProvider'
 import { ref } from 'vue'
-import { useRouter } from 'vue-router'
 
 export interface HourData {
   users: number
@@ -13,20 +13,23 @@ export interface HoursOverviewRes {
   message?: string
 }
 
-function useHoursOverview() {
-  const router = useRouter()
+function useHoursOverview(type: BotType) {
   const apiErrHandler = useApiErrHandler()
-  const { lineBotGuid } = useGlobalState()
+  const { lineBotGuid, fbBotGuid } = useGlobalState()
   const isLoading = ref(false)
   const isError = ref(false)
   const list = ref<HoursOverviewRes['data']>([])
+  const apiPathMap: Record<BotType, string> = {
+    line: `LINEBot/${lineBotGuid.value}`,
+    fb: `FBMessengerBot/${fbBotGuid.value}`,
+  }
   const fetchData = async () => {
     isLoading.value = true
     isError.value = false
     try {
       const res = await useRequest<HoursOverviewRes>({
         method: 'get',
-        url: `LINEBot/${lineBotGuid.value}/Dashboard/freqhour-overview`,
+        url: `${apiPathMap[type]}/Dashboard/freqhour-overview`,
       })
       list.value = res.data
     } catch (err) {

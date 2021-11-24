@@ -11,3 +11,8 @@ export enum OrderType {
   descending = 'desc',
   ascending = 'asc',
 }
+
+export enum BotType {
+  FB = 'fb',
+  LINE = 'line',
+}

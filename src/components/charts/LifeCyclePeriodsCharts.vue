@@ -1,20 +1,28 @@
 <script lang="ts">
+import { BotType } from '@/lib/enum'
+import useLifeCycleTrand, {
+  LifeCycleTrandReq,
+} from '@/service/useLifeCycleTrend'
 import { format, subDays } from 'date-fns'
-import { computed, defineComponent, onMounted, ref } from 'vue'
-import useMessageTrand, {
-  MessageTrand,
-  MessageTrandReq,
-} from '../../service/useMessageTrend'
+import { computed, defineComponent, onMounted, ref, PropType } from 'vue'
 import SectionPanel from '../SectionPanel.vue'
 import Spinner from '../Spinner.vue'
 
 export default defineComponent({
-  setup() {
+  props: {
+    type: {
+      type: String as PropType<BotType>,
+      required: true,
+    },
+    tab: Number,
+  },
+  emits: ['update:tab'],
+  setup(props, { emit }) {
     const startAt = ref(subDays(new Date(), 8))
     const endAt = ref(subDays(new Date(), 1))
-    const { fetchData, isLoading, data } = useMessageTrand()
+    const { fetchData, isLoading, data } = useLifeCycleTrand(props.type)
     const onSearch = () => {
-      const search: MessageTrandReq = {
+      const search: LifeCycleTrandReq = {
         startAt: startAt.value
           ? format(startAt.value, 'yyyy-MM-dd')
           : undefined,
@@ -25,53 +33,74 @@ export default defineComponent({
     onMounted(() => {
       onSearch()
     })
-    const dataMap: Partial<Record<keyof MessageTrand, string>> = {
-      reply: '自動回應',
-      push: '主動推播',
-    }
-    const selected = ref<keyof MessageTrand>('reply')
+    const localTab = computed({
+      get: () => props.tab,
+      set: (val) => emit('update:tab', val),
+    })
     const chartOptions = computed(() => ({
       chart: {
+        height: 350,
+        width: 500,
+        type: 'line',
+        dropShadow: {
+          enabled: true,
+          color: '#000',
+          top: 18,
+          left: 7,
+          blur: 10,
+          opacity: 0.2,
+        },
         toolbar: {
           show: false,
         },
-        height: 350,
-        type: 'line',
-        zoom: {
-          enabled: false,
-        },
       },
+      colors: ['#3366FF', '#9AE214', '#33C9F7', '#FFB03A', '#FF7B6F'],
       dataLabels: {
-        enabled: false,
+        enabled: true,
       },
       stroke: {
-        curve: 'straight',
-        width: 2,
+        curve: 'smooth',
       },
       grid: {
+        borderColor: '#e7e7e7',
         row: {
           colors: ['#f3f3f3', 'transparent'],
           opacity: 0.5,
         },
       },
       xaxis: {
-        categories: data.value.map((t) => format(new Date(t.date), 'M-dd')),
+        categories: data.value.map((t) => t.date),
       },
     }))
     const series = computed(() => [
       {
-        name: dataMap[selected.value],
-        data: data.value.map((t) => t[selected.value]),
+        name: '新用戶',
+        data: data.value.map((t) => t[1]),
+      },
+      {
+        name: '無回應',
+        data: data.value.map((t) => t[2]),
+      },
+      {
+        name: '積極',
+        data: data.value.map((t) => t[3]),
+      },
+      {
+        name: '消極',
+        data: data.value.map((t) => t[4]),
+      },
+      {
+        name: '沈睡',
+        data: data.value.map((t) => t[5]),
       },
     ])
     return {
       isLoading,
-      startAt,
-      endAt,
-      selected,
       series,
       chartOptions,
-      dataMap,
+      localTab,
+      startAt,
+      endAt,
       onSearch,
     }
   },
@@ -80,7 +109,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <SectionPanel title="訊息使用狀況">
+  <SectionPanel class="lg:col-span-2" title="用戶生命週期">
     <Spinner v-if="isLoading" />
     <div v-else class="mt-3">
       <div class="flex space-x-2 mb-3">
@@ -101,15 +130,7 @@ export default defineComponent({
           查詢
         </el-button>
       </div>
-      <el-radio-group class="mb-3" v-model="selected">
-        <el-radio
-          v-for="[value, label] in Object.entries(dataMap)"
-          :key="value"
-          :label="value"
-          >{{ label }}</el-radio
-        >
-      </el-radio-group>
-      <div class="h-[250px]">
+      <div class="h-[380px]">
         <apexchart
           type="line"
           :options="chartOptions"
@@ -118,5 +139,11 @@ export default defineComponent({
         ></apexchart>
       </div>
     </div>
+    <template v-slot:plus>
+      <el-radio-group class="mb-3" v-model="localTab">
+        <el-radio :label="1">用戶數據</el-radio>
+        <el-radio :label="2">區間數據</el-radio>
+      </el-radio-group>
+    </template>
   </SectionPanel>
 </template>

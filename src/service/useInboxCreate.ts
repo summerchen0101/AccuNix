@@ -2,7 +2,7 @@ import { useApiErrHandler } from '@/hooks/useApiErrHandler'
 import useRequest from '@/hooks/useRequest'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { useGlobalState } from ''../providers/globalProvider'
+import { useGlobalState } from '../providers/globalProvider'
 
 export interface Action {
   tags?: string[]

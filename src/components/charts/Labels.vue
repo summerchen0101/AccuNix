@@ -1,17 +1,24 @@
 <script lang="ts">
+import { BotType } from '@/lib/enum'
 import useTagOverview from '@/service/useTagOverview'
-import { defineComponent, onMounted, ref } from 'vue'
+import { defineComponent, onMounted, ref, PropType } from 'vue'
 import SectionPanel from '../SectionPanel.vue'
 import Spinner from '../Spinner.vue'
 export default defineComponent({
+  props: {
+    type: {
+      type: String as PropType<BotType>,
+      required: true,
+    },
+  },
   components: {
     SectionPanel,
     Spinner,
   },
-  setup() {
+  setup(props) {
     const selected = ref(1)
     const limit = ref(10)
-    const { list, fetchData, isLoading } = useTagOverview()
+    const { list, fetchData, isLoading } = useTagOverview(props.type)
     onMounted(() => {
       fetchData()
     })

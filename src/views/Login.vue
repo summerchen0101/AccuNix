@@ -2,6 +2,7 @@
 import useLogin from '@/service/useLogin'
 import { defineComponent, reactive } from 'vue'
 import { useRouter } from 'vue-router'
+import logo from '@/assets/logo.png'
 
 export default defineComponent({
   name: 'LoginPage',

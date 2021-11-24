@@ -1,23 +1,29 @@
 <script lang="ts">
 import SectionPanel from '@/components/SectionPanel.vue'
 import Spinner from '@/components/Spinner.vue'
+import { BotType } from '@/lib/enum'
 import { format, subDays } from 'date-fns'
-import { computed, defineComponent, onMounted, ref } from 'vue'
+import { computed, defineComponent, onMounted, ref, PropType } from 'vue'
 import useFriendTrand, {
   FriendTrand,
   FriendTrandReq,
 } from '../../service/useFriendTrend'
 
 export default defineComponent({
-  name: 'LinebotFriends',
+  props: {
+    type: {
+      type: String as PropType<BotType>,
+      required: true,
+    },
+  },
   components: {
     Spinner,
     SectionPanel,
   },
-  setup() {
+  setup(props) {
     const startAt = ref(subDays(new Date(), 8))
     const endAt = ref(subDays(new Date(), 1))
-    const { fetchData, isLoading, data } = useFriendTrand()
+    const { fetchData, isLoading, data } = useFriendTrand(props.type)
 
     const onSearch = () => {
       const search: FriendTrandReq = {
