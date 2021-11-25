@@ -18,8 +18,8 @@ export function useApiErrHandler() {
         msg = httpStatus[error.response.status] as string
         console.log(msg)
       }
-      if (error.response.status === 401) {
-        router.push({ path: '/login', query: { from: route.fullPath } })
+      if (error.response.status === 401 && route.name !== 'Login') {
+        router.push({ name: 'Login', query: { from: route.fullPath } })
         store.session.set('token', '')
         msg = '請重新登入'
       }

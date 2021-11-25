@@ -1,13 +1,14 @@
 <script lang="ts">
 import useLogin from '@/service/useLogin'
 import { defineComponent, reactive } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import logo from '@/assets/logo.png'
 
 export default defineComponent({
   name: 'LoginPage',
   setup() {
     const router = useRouter()
+    const route = useRoute()
     const loginForm = reactive({
       username: 'accunix@test',
       password: '50085008',
@@ -20,7 +21,7 @@ export default defineComponent({
         redirectUrl: 'https://www.google.com',
       })
       if (res?.auth) {
-        router.push({ name: 'Home' })
+        router.push((route.query.from as string) || '/')
       }
     }
     return { handleSubmit, loginForm, isLoading, logo }
