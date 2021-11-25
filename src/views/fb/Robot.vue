@@ -32,7 +32,7 @@ export default defineComponent({
         <div>加入好友： 1</div>
         <div>封鎖好友： 0</div>
         <div class="flex-1"></div>
-        <a href="#" class="text-blue-500"> 下載好友資訊 </a>
+        <a href="#" class="text-primary-500"> 下載好友資訊 </a>
       </div>
       <div class="flex space-x-5 py-3">
         <div>Webhook 狀態 : 啟用中</div>
@@ -41,7 +41,7 @@ export default defineComponent({
       <div class="flex space-x-5 py-3">
         <div>備註</div>
         <div class="flex-1"></div>
-        <a href="#" class="text-blue-500"> 編輯 </a>
+        <a href="#" class="text-primary-500"> 編輯 </a>
       </div>
     </div>
     <CardPanel

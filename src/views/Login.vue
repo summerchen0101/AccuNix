@@ -94,8 +94,8 @@ export default defineComponent({
           <button
             v-else
             class="
-              bg-blue-500
-              hover:bg-blue-700
+              bg-primary-500
+              hover:bg-primary-700
               text-white
               font-bold
               py-2
@@ -113,8 +113,8 @@ export default defineComponent({
               inline-block
               align-baseline
               font-bold
-              text-sm text-blue-500
-              hover:text-blue-800
+              text-sm text-primary-500
+              hover:text-primary-800
             "
             href="#"
           >

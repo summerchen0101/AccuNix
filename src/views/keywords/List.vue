@@ -54,10 +54,10 @@ export default defineComponent({
             class="
               py-2
               px-4
-              bg-blue-500
+              bg-primary-500
               text-white text-sm
               cursor-pointer
-              hover:bg-blue-400
+              hover:bg-primary-400
               rounded-md
             "
             @click="() => $router.push({ name: 'KeywordCreate' })"

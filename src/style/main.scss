@@ -9,7 +9,7 @@ body,
   @apply w-8 h-8 flex justify-center items-center cursor-pointer rounded-full;
 }
 .round-btn-blue {
-  @apply bg-blue-500 text-white hover:bg-blue-600;
+  @apply bg-primary-500 text-white hover:bg-primary-600;
 }
 .round-btn-static {
   @apply hover:bg-gray-100 text-gray-500;
@@ -34,7 +34,7 @@ body,
 .tab {
   @apply w-32 h-9 flex items-center justify-center bg-gray-200 text-gray-500 rounded-full cursor-pointer;
   &.active {
-    @apply bg-blue-500 text-white
+    @apply bg-primary-500 text-white
   }
 }
 
@@ -71,11 +71,11 @@ body,
 }
 
 .border-box {
-  @apply border border-blue-300/60
+  @apply border border-primary-300/60
 }
 
 .border-box.active {
-  @apply text-white bg-blue-300/60
+  @apply text-white bg-primary-300/60
 }
 
 .el-button+.el-button {
@@ -89,7 +89,7 @@ body,
     left-0
     -ml-2
     -mt-2
-    bg-yellow-500
+    bg-secondary-500
     text-white
     w-5
     h-5
@@ -100,9 +100,9 @@ body,
 }
 
 .ctrl-btn {
-  @apply bg-blue-500
+  @apply bg-primary-500
   text-white
-  hover:bg-blue-400
+  hover:bg-primary-400
   w-9
   h-9
   rounded-sm

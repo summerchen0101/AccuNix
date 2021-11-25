@@ -1,7 +1,7 @@
 <template>
   <div
     class="
-      bg-blue-400
+      bg-primary-600
       text-white
       flex flex-col
       transition-all

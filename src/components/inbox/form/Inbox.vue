@@ -64,7 +64,7 @@ export default defineComponent({
       >
       </el-option
     ></el-select>
-    <div class="text-xs text-blue-400 mt-2">
+    <div class="text-xs text-primary-400 mt-2">
       <div class="">＊標籤設定最多 3 個，目前額度： 0/3</div>
       <div class="">＊標籤不能使用以下特殊符號：¥[]~' "/\#?,*+及空白</div>
     </div>

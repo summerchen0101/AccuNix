@@ -4,7 +4,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'Home',
-    redirect: { name: 'LineSetting' },
+    redirect: { name: 'LineRobot' },
   },
   {
     path: '/login',

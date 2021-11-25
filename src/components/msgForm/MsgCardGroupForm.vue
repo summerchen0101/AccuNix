@@ -107,12 +107,12 @@ export default defineComponent({
         type="button"
         @click="handleCardCreate"
         class="
-          bg-blue-400
+          bg-primary-400
           py-1
           px-2
           rounded
           text-sm text-white
-          hover:bg-blue-400/80
+          hover:bg-primary-400/80
         "
       >
         <i class="fas fa-plus"></i> 增加圖卡

@@ -30,7 +30,7 @@ export default defineComponent({
   >
     <div class="flex flex-col justify-center space-y-2">
       <span class="text-2xl text-gray-600">{{ count }}人</span>
-      <span class="text-blue-500">占比{{ percentage }}%</span>
+      <span class="text-primary-500">占比{{ percentage }}%</span>
     </div>
   </el-progress>
 </template>

@@ -47,7 +47,7 @@ export default defineComponent({
         :key="t"
         class="w-[153.5px] h-[112px] p-3 relative"
         :class="{
-          'bg-yellow-100': t === localSelected,
+          'bg-secondary-100': t === localSelected,
         }"
         @click="localSelected = t"
       >
@@ -63,7 +63,7 @@ export default defineComponent({
         :key="t"
         class="w-[153.5px] h-[67px] p-3 relative"
         :class="{
-          'bg-yellow-100': t === localSelected,
+          'bg-secondary-100': t === localSelected,
         }"
         @click="localSelected = t"
       >
