@@ -1,9 +1,11 @@
+import { LoginInfoRes } from './../service/useLoginInfo'
 import { inject, provide, ref } from 'vue'
 
 const state = {
   orgGuid: ref('5db11c59'),
   lineBotGuid: ref('5db13bab'),
   fbBotGuid: ref('5db2af62'),
+  loginInfo: ref<LoginInfoRes>(),
 }
 
 export const useGlobalProvider = function () {

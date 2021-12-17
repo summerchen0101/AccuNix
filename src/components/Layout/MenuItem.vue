@@ -1,5 +1,5 @@
 <template>
-  <li>
+  <li class="border-t border-white/10">
     <template v-if="menu.subs">
       <a
         href="#"
@@ -7,7 +7,7 @@
         @click="isSubOpen = !isSubOpen"
       >
         <div class="flex-1">
-          <i class="fas w-10" :class="menu.icon"></i>
+          <i class="w-10" :class="menu.icon"></i>
           <span class="transition-all text-base">{{ menu.label }}</span>
         </div>
         <i class="el-icon-arrow-down"></i>
@@ -25,7 +25,7 @@
       :class="isActive && 'bg-warning-500 text-gray-600 font-semibold'"
       :to="menu.path"
     >
-      <i class="fas w-10" :class="menu.icon"></i>
+      <i class="w-10" :class="menu.icon"></i>
       <span class="transition-all text-base">{{ menu.label }}</span>
     </router-link>
   </li>

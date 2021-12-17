@@ -2,7 +2,7 @@
   "name": "vite-nix",
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --mode dev",
     "dev:dev": "vite --mode dev",
     "dev:test": "vite --mode test",
     "dev:prod": "vite --mode prod",

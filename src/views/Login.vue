@@ -3,14 +3,16 @@ import useLogin from '@/service/useLogin'
 import { defineComponent, reactive } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import logo from '@/assets/logo.png'
+import { useGlobalState } from '@/providers/globalProvider'
 
 export default defineComponent({
   name: 'LoginPage',
   setup() {
     const router = useRouter()
     const route = useRoute()
+    const { orgGuid } = useGlobalState()
     const loginForm = reactive({
-      username: 'accunix@test',
+      username: 'accunix@develop',
       password: '50085008',
     })
     const { doLogin, isLoading } = useLogin()
@@ -20,7 +22,8 @@ export default defineComponent({
         app: 'accunix',
         redirectUrl: 'https://www.google.com',
       })
-      if (res?.auth) {
+      if (res?.id) {
+        orgGuid.value = res.organization.GUID
         router.push((route.query.from as string) || '/')
       }
     }

@@ -23,7 +23,8 @@
 import Header from '@/components/Layout/Header.vue'
 import Sidebar from '@/components/Layout/Sidebar.vue'
 import { useLayoutState } from '@/providers/layoutProvider'
-import { defineComponent } from 'vue'
+import useLoginInfo from '@/service/useLoginInfo'
+import { defineComponent, onMounted } from 'vue'
 
 export default defineComponent({
   name: 'Layout',
@@ -33,6 +34,10 @@ export default defineComponent({
   },
   setup(props) {
     const { isMiniSidebar } = useLayoutState()
+    const { fetchData } = useLoginInfo()
+    onMounted(() => {
+      fetchData()
+    })
     return { isMiniSidebar }
   },
 })

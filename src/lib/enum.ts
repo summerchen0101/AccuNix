@@ -16,3 +16,8 @@ export enum BotType {
   FB = 'fb',
   LINE = 'line',
 }
+
+export enum ProductType {
+  LINE = 1,
+  FB = 2,
+}

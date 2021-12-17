@@ -3,21 +3,36 @@
     class="
       bg-primary-600
       text-white
-      flex flex-col
       transition-all
       fixed
       z-20
       hover:w-64
       overflow-x-hidden
-      h-full
-      mt-14
+      h-[calc(100%-3.5rem)]
       sidebar
+      mt-14
     "
     :class="isMiniSidebar ? 'w-0 md:w-12 mini' : 'w-64 md:w-64'"
   >
-    <ul class="w-64">
-      <MenuItem v-for="m in menuList" :key="m.label" :menu="m" />
-    </ul>
+    <div class="w-64 flex flex-col h-full">
+      <div class="p-2">
+        <el-select class="w-full">
+          <el-option
+            v-for="opt in botOpts"
+            :key="opt.value"
+            :label="opt.label"
+            :value="opt.value"
+          >
+          </el-option>
+        </el-select>
+      </div>
+      <ul class="flex-1 bg-black/20">
+        <MenuItem v-for="m in botMenus" :key="m.label" :menu="m" />
+      </ul>
+      <ul>
+        <MenuItem v-for="m in menuList" :key="m.label" :menu="m" />
+      </ul>
+    </div>
   </div>
   <div
     class="
@@ -37,8 +52,10 @@
 <script lang="ts">
 import MenuItem from '@/components/Layout/MenuItem.vue'
 import { useLayoutState } from '@/providers/layoutProvider'
-import { defineComponent } from 'vue'
-import { menuList } from '@/lib/menu'
+import { computed, defineComponent } from 'vue'
+import { menuList, botMenus } from '@/lib/menu'
+import { useGlobalState } from '@/providers/globalProvider'
+import { productTypeMap } from '@/lib/maps'
 
 export default defineComponent({
   name: 'Sidebar',
@@ -47,7 +64,14 @@ export default defineComponent({
   },
   setup(props) {
     const { isMiniSidebar } = useLayoutState()
-    return { isMiniSidebar, menuList }
+    const { loginInfo } = useGlobalState()
+    const botOpts = computed(() =>
+      loginInfo.value?.bots.map((t) => ({
+        label: `${productTypeMap[t.product_type_id]}(${t.GUID})`,
+        value: t.GUID,
+      })),
+    )
+    return { isMiniSidebar, menuList, botMenus, botOpts }
   },
 })
 </script>
