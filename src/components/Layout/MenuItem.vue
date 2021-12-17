@@ -10,7 +10,7 @@
           <i class="w-10" :class="menu.icon"></i>
           <span class="transition-all text-base">{{ menu.label }}</span>
         </div>
-        <i class="el-icon-arrow-down"></i>
+        <i class="el-icon-arrow-up" :class="isSubOpen && 'rotate-180'"></i>
       </a>
       <ul
         class="transition-all max-h-0 overflow-y-hidden bg-white/20"
