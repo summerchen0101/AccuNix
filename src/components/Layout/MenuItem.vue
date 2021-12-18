@@ -1,19 +1,19 @@
 <template>
-  <li class="border-t border-white/10">
+  <li class="border-white/10 text-gray-100">
     <template v-if="menu.subs">
       <a
         href="#"
-        class="px-3.5 h-12 flex items-center menu-item"
+        class="px-3.5 h-10 flex items-center menu-item"
         @click="isSubOpen = !isSubOpen"
       >
         <div class="flex-1">
           <i class="w-10" :class="menu.icon"></i>
-          <span class="transition-all text-base">{{ menu.label }}</span>
+          <span class="transition-all text-sm">{{ menu.label }}</span>
         </div>
         <i class="el-icon-arrow-up" :class="isSubOpen && 'rotate-180'"></i>
       </a>
       <ul
-        class="transition-all max-h-0 overflow-y-hidden bg-gray-600"
+        class="transition-all max-h-0 overflow-y-hidden bg-primary-500"
         :class="isSubOpen && 'show'"
       >
         <MenuItem v-for="m in menu.subs" :key="m.label" :menu="m" />
@@ -21,12 +21,12 @@
     </template>
     <router-link
       v-else-if="menu.path"
-      class="px-3.5 h-12 flex items-center"
+      class="px-3.5 h-10 flex items-center"
       :class="isActive && 'bg-warning-500 text-gray-600 font-semibold'"
       :to="menu.path"
     >
       <i class="w-10" :class="menu.icon"></i>
-      <span class="transition-all text-base">{{ menu.label }}</span>
+      <span class="transition-all text-sm">{{ menu.label }}</span>
     </router-link>
   </li>
 </template>

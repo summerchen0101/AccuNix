@@ -1,7 +1,7 @@
 <template>
   <div class="fixed top-0 w-screen z-30">
     <div class="bg-white flex items-center h-14">
-      <div class="w-64 p-3">
+      <div class="w-52 p-3">
         <img class="w-36 h-auto" src="@/assets/logo.png" alt="" />
       </div>
       <div class="flex-1 flex items-center justify-end h-full">
@@ -64,9 +64,19 @@
         </div>
       </div>
     </div>
-    <div class="h-10 bg-primary-500 text-white flex items-center">
+    <div
+      class="
+        h-10
+        bg-gradient-to-r
+        from-primary-500
+        to-primary-600
+        text-white
+        flex
+        items-center
+      "
+    >
       <div
-        class="sm:w-64 flex items-center justify-between px-4 text-primary-100"
+        class="sm:w-52 flex items-center justify-between px-4 text-primary-100"
       >
         <span :hidden="isMiniSidebar" class="text-sm hidden sm:inline-block"
           >功能選單</span

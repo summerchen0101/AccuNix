@@ -2,21 +2,20 @@
   <div class="fixed h-full pt-24 z-10">
     <div
       class="
-        bg-primary-600
-        text-white
+        bg-primary-500
         transition-all
         relative
         z-20
-        hover:w-64
+        hover:w-52
         sidebar
         h-full
         overflow-x-hidden
       "
-      :class="isMiniSidebar ? 'w-0 md:w-12 mini' : 'w-64 md:w-64'"
+      :class="isMiniSidebar ? 'w-0 md:w-12 mini' : 'w-52 md:w-52'"
     >
-      <div class="w-64 flex flex-col h-full">
+      <div class="w-52 flex flex-col h-full">
         <div class="p-2">
-          <el-select class="w-full">
+          <el-select class="w-full" size="small">
             <el-option
               v-for="opt in botOpts"
               :key="opt.value"
@@ -29,7 +28,7 @@
         <ul class="flex-1">
           <MenuItem v-for="m in botMenus" :key="m.label" :menu="m" />
         </ul>
-        <ul class="bg-primary-500">
+        <ul class="bg-primary-600">
           <MenuItem v-for="m in menuList" :key="m.label" :menu="m" />
         </ul>
       </div>

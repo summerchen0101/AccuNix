@@ -48,7 +48,7 @@ export default defineComponent({
         />
         <div class="flex-1"></div>
         <div class="flex space-x-3 w-full sm:w-auto mt-3 sm:mt-0">
-          <el-select class="flex-1 sm:w-64" v-model="lineBotGuid">
+          <el-select class="flex-1 sm:w-52" v-model="lineBotGuid">
             <el-option :label="lineBotGuid" :value="lineBotGuid" />
           </el-select>
           <div class="ctrl-btn">

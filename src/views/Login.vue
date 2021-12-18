@@ -35,7 +35,7 @@ export default defineComponent({
 <template>
   <div class="w-full h-full bg-gray-100 flex justify-center items-center">
     <div class="w-full max-w-xs">
-      <img class="mx-auto w-56 mb-10" :src="logo" alt="" />
+      <img class="mx-auto w-52 mb-10" :src="logo" alt="" />
       <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
         <div class="mb-4">
           <label

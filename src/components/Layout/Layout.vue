@@ -12,7 +12,7 @@
         h-full
         overflow-y-hidden
       "
-      :class="isMiniSidebar ? 'md:ml-12' : 'md:ml-64'"
+      :class="isMiniSidebar ? 'md:ml-12' : 'md:ml-52'"
     >
       <div class="bg-gray-100 flex-1 overflow-y-auto static"><slot></slot></div>
     </div>
