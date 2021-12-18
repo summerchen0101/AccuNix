@@ -13,7 +13,7 @@
         <i class="el-icon-arrow-up" :class="isSubOpen && 'rotate-180'"></i>
       </a>
       <ul
-        class="transition-all max-h-0 overflow-y-hidden bg-white/20"
+        class="transition-all max-h-0 overflow-y-hidden bg-gray-600"
         :class="isSubOpen && 'show'"
       >
         <MenuItem v-for="m in menu.subs" :key="m.label" :menu="m" />

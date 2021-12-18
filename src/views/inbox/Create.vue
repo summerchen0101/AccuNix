@@ -1,21 +1,19 @@
 <script lang="ts">
+import { RouteProps } from '@/components/Breadcrumb.vue'
 import actionForms from '@/components/inbox/form'
+import InboxLayout, { toLayoutBoxs } from '@/components/inbox/InboxLayout.vue'
 import LayoutSelectorPopup from '@/components/inbox/popups/LayoutSelectorPopup.vue'
 import Layout from '@/components/Layout/Layout.vue'
-import PageHeader from '@/components/Layout/PageHeader.vue'
+import LoadingCover from '@/components/LoadingCover.vue'
+import PageIconBtn from '@/components/PageIconBtn.vue'
 import useAlert from '@/hooks/useAlert'
-import { useLayoutState } from '@/providers/layoutProvider'
 import { useGlobalState } from '@/providers/globalProvider'
+import { useLayoutState } from '@/providers/layoutProvider'
 import useImgUpload from '@/service/useImgUpload'
+import useInboxCreate, { InboxCreateReq } from '@/service/useInboxCreate'
 import { OptionsType } from '@/types'
 import { getImageInfo } from '@/utils'
 import { computed, defineComponent, onMounted, reactive, ref, watch } from 'vue'
-import InboxLayout, { toLayoutBoxs } from '@/components/inbox/InboxLayout.vue'
-import useInboxCreate, { InboxCreateReq } from '@/service/useInboxCreate'
-import LoadingCover from '@/components/LoadingCover.vue'
-import { ImgUploadRes } from '@/components/types'
-import { RouteProps } from '@/components/Breadcrumb.vue'
-import Breadcrumb from '../../components/Breadcrumb.vue'
 // import { MsgBtnFields } from '@/components/types'
 
 export interface ActionForm {
@@ -43,12 +41,11 @@ interface IState {
 export default defineComponent({
   components: {
     Layout,
-    PageHeader,
     LayoutSelectorPopup,
     ...actionForms,
     InboxLayout,
     LoadingCover,
-    Breadcrumb,
+    PageIconBtn,
   },
   setup() {
     const { activePage } = useLayoutState()
@@ -324,10 +321,7 @@ export default defineComponent({
 
 <template>
   <Layout>
-    <PageHeader>
-      <Breadcrumb :routes="breadcrumb" />
-    </PageHeader>
-    <div class="p-3 mt-10 h-[calc(100%-40px)]">
+    <div class="p-3 h-full">
       <div class="bg-white rounded-md h-full p-4 overflow-y-auto">
         <div class="flex justify-between mb-7">
           <h3 class="text-gray-700 text-xl">

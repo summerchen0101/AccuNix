@@ -43,7 +43,7 @@ export default defineComponent({
 <template>
   <Layout>
     <PageHeader />
-    <div class="p-3 mt-10 h-[calc(100%-40px)]">
+    <div class="p-3 h-full">
       <div class="bg-white rounded-md h-full p-4">
         <div class="flex justify-between mb-3">
           <h3 class="text-gray-700 text-xl">

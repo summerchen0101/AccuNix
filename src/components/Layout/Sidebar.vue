@@ -1,52 +1,56 @@
 <template>
-  <div
-    class="
-      bg-primary-600
-      text-white
-      transition-all
-      fixed
-      z-20
-      hover:w-64
-      overflow-x-hidden
-      h-[calc(100%-3.5rem)]
-      sidebar
-      mt-14
-    "
-    :class="isMiniSidebar ? 'w-0 md:w-12 mini' : 'w-64 md:w-64'"
-  >
-    <div class="w-64 flex flex-col h-full">
-      <div class="p-2">
-        <el-select class="w-full">
-          <el-option
-            v-for="opt in botOpts"
-            :key="opt.value"
-            :label="opt.label"
-            :value="opt.value"
-          >
-          </el-option>
-        </el-select>
+  <div class="fixed h-full pt-24 z-10">
+    <div
+      class="
+        bg-primary-600
+        text-white
+        transition-all
+        relative
+        z-20
+        hover:w-64
+        sidebar
+        h-full
+        overflow-x-hidden
+      "
+      :class="isMiniSidebar ? 'w-0 md:w-12 mini' : 'w-64 md:w-64'"
+    >
+      <div class="w-64 flex flex-col h-full">
+        <div class="p-2">
+          <el-select class="w-full">
+            <el-option
+              v-for="opt in botOpts"
+              :key="opt.value"
+              :label="opt.label"
+              :value="opt.value"
+            >
+            </el-option>
+          </el-select>
+        </div>
+        <ul class="flex-1">
+          <MenuItem v-for="m in botMenus" :key="m.label" :menu="m" />
+        </ul>
+        <ul class="bg-primary-500">
+          <MenuItem v-for="m in menuList" :key="m.label" :menu="m" />
+        </ul>
       </div>
-      <ul class="flex-1 bg-black/20">
-        <MenuItem v-for="m in botMenus" :key="m.label" :menu="m" />
-      </ul>
-      <ul>
-        <MenuItem v-for="m in menuList" :key="m.label" :menu="m" />
-      </ul>
     </div>
+    <!-- sidebar cover背景 -->
+    <div
+      class="
+        fixed
+        h-full
+        w-full
+        top-0
+        left-0
+        bg-black/20
+        transition-all
+        md:hidden
+        z-0
+      "
+      :class="isMiniSidebar ? 'opacity-0 invisible' : 'opacity-100 visible'"
+      @click="isMiniSidebar = !isMiniSidebar"
+    ></div>
   </div>
-  <div
-    class="
-      fixed
-      h-full
-      w-full
-      bg-black bg-opacity-20
-      z-10
-      transition-all
-      md:hidden
-    "
-    :class="isMiniSidebar ? 'opacity-0 invisible' : 'opacity-100 visible'"
-    @click="isMiniSidebar = !isMiniSidebar"
-  ></div>
 </template>
 
 <script lang="ts">

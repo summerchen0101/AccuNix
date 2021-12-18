@@ -111,3 +111,10 @@ body,
   justify-center
   cursor-pointer
 }
+
+.breadcrumb > li {
+  @apply hidden sm:inline-block last-of-type:inline-block after:content-['/'] last-of-type:after:content-[''];
+  &::after {
+    @apply inline-block px-2.5 text-primary-400;
+  }
+}

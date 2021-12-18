@@ -1,72 +1,84 @@
 <template>
-  <div class="bg-white flex items-center h-14 fixed top-0 w-screen z-20">
-    <div class="w-64 p-3">
-      <img class="w-36 h-auto" src="@/assets/logo.png" alt="" />
-    </div>
-    <div class="flex-1 flex items-center justify-end h-full">
-      <i
-        class="round-btn round-btn-static text-gray-400 fas fa-bars"
-        @click="isMiniSidebar = !isMiniSidebar"
-      >
-      </i>
-      <div class="flex-1"></div>
-      <div
-        class="
-          flex
-          items-center
-          justify-center
-          border-l
-          h-full
-          cursor-pointer
-          relative
-          group
-          w-52
-        "
-      >
-        <span class="el-avatar el-avatar--circle"
-          ><img src="https://blb.accubot.com.tw/uploads/!logged-user.jpg"
-        /></span>
-        <div class="text-center w-28">
-          <div class="">Accunix</div>
-          <div class="text-gray-500 text-sm">maintainer</div>
-        </div>
-        <i class="el-icon-arrow-down"></i>
-        <div class="pt-14 invisible absolute top-0 right-0 group-hover:visible">
+  <div class="fixed top-0 w-screen z-30">
+    <div class="bg-white flex items-center h-14">
+      <div class="w-64 p-3">
+        <img class="w-36 h-auto" src="@/assets/logo.png" alt="" />
+      </div>
+      <div class="flex-1 flex items-center justify-end h-full">
+        <div
+          class="
+            flex
+            items-center
+            justify-center
+            border-l
+            h-full
+            cursor-pointer
+            relative
+            group
+            w-40
+            sm:w-52
+          "
+        >
+          <span class="el-avatar el-avatar--circle hidden sm:block"
+            ><img src="https://blb.accubot.com.tw/uploads/!logged-user.jpg"
+          /></span>
+          <div class="text-center w-28">
+            <div class="">Accunix</div>
+            <div class="text-gray-500 text-sm">maintainer</div>
+          </div>
+          <i class="el-icon-arrow-down"></i>
           <div
-            class="
-              border
-              bg-white
-              h-32
-              w-52
-              transition-all
-              scale-y-0
-              group-hover:scale-y-100
-              origin-top
-              text-gray-400 text-sm
-              flex flex-col
-              gap-4
-              p-4
-            "
+            class="pt-14 invisible absolute top-0 right-0 group-hover:visible"
           >
-            <div class="hover:text-gray-500">
-              <i class="fas fa-user-cog"></i>
-              編輯個人資料
-            </div>
-            <div class="hover:text-gray-500">
-              <i class="fa fa-download"></i>
-              下載紀錄
-            </div>
-            <div class="hover:text-gray-500">
-              <i class="fas fa-power-off"></i>
-              登出
+            <div
+              class="
+                border
+                bg-white
+                h-32
+                w-40
+                sm:w-52
+                transition-all
+                scale-y-0
+                group-hover:scale-y-100
+                origin-top
+                text-gray-400 text-sm
+                flex flex-col
+                gap-4
+                p-4
+              "
+            >
+              <div class="hover:text-gray-500">
+                <i class="fas fa-user-cog mr-1"></i>
+                編輯個人資料
+              </div>
+              <div class="hover:text-gray-500">
+                <i class="fa fa-download mr-1"></i>
+                下載紀錄
+              </div>
+              <div class="hover:text-gray-500" @click="handleLogout">
+                <i class="fas fa-power-off mr-1"></i>
+                登出
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <!-- <i
-        class="fas fa-sign-out-alt round-btn round-btn-static hidden md:flex"
-        @click="handleLogout"
-      ></i> -->
+    </div>
+    <div class="h-10 bg-primary-500 text-white flex items-center">
+      <div
+        class="sm:w-64 flex items-center justify-between px-4 text-primary-100"
+      >
+        <span :hidden="isMiniSidebar" class="text-sm hidden sm:inline-block"
+          >功能選單</span
+        >
+        <i
+          class="fas fa-bars cursor-pointer"
+          @click="isMiniSidebar = !isMiniSidebar"
+        >
+        </i>
+      </div>
+      <div class="flex-1"></div>
+      <div class="px-4"><Breadcrumb /></div>
     </div>
   </div>
 </template>
@@ -77,6 +89,7 @@ import { useLayoutState } from '@/providers/layoutProvider'
 import useLogout from '@/service/useLogout'
 import { defineComponent, PropType } from '@vue/runtime-core'
 import { useRouter } from 'vue-router'
+import Breadcrumb from '../Breadcrumb.vue'
 
 export default defineComponent({
   setup(props) {
@@ -91,6 +104,7 @@ export default defineComponent({
     }
     return { isMiniSidebar, handleLogout }
   },
+  components: { Breadcrumb },
 })
 </script>
 

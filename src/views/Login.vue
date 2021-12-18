@@ -12,7 +12,7 @@ export default defineComponent({
     const route = useRoute()
     const { orgGuid } = useGlobalState()
     const loginForm = reactive({
-      username: 'accunix@develop',
+      username: 'accunix@test',
       password: '50085008',
     })
     const { doLogin, isLoading } = useLogin()
@@ -93,7 +93,8 @@ export default defineComponent({
             type="button"
             disabled
           >
-            Loading...
+            Loading
+            <i class="fas fa-sync-alt animate-spin ml-2"></i>
           </button>
           <button
             v-else

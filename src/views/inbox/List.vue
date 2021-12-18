@@ -1,21 +1,18 @@
 <script lang="ts">
+import { RouteProps } from '@/components/Breadcrumb.vue'
 import Layout from '@/components/Layout/Layout.vue'
-import PageHeader from '@/components/Layout/PageHeader.vue'
 import PageIconBtn from '@/components/PageIconBtn.vue'
 import { orderTypeMap } from '@/lib/maps'
 import { useLayoutState } from '@/providers/layoutProvider'
 import useInboxList, { InboxListReq } from '@/service/useInboxList'
 import { defineComponent, onMounted, reactive } from 'vue'
 import { useRouter } from 'vue-router'
-import Breadcrumb, { RouteProps } from '@/components/Breadcrumb.vue'
 
 export default defineComponent({
   name: 'InboxList',
   components: {
     Layout,
-    PageHeader,
     PageIconBtn,
-    Breadcrumb,
   },
   setup() {
     const router = useRouter()
@@ -57,10 +54,7 @@ export default defineComponent({
 
 <template>
   <Layout>
-    <PageHeader>
-      <Breadcrumb :routes="breadcrumb" />
-    </PageHeader>
-    <div class="p-3 mt-10 h-[calc(100%-40px)]">
+    <div class="p-3 h-full">
       <div class="bg-white rounded-md h-full p-4">
         <div class="flex justify-between mb-3">
           <h3 class="text-gray-700 text-xl">

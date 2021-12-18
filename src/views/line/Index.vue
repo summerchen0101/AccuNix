@@ -1,19 +1,15 @@
 <script lang="ts">
 import { RouteProps } from '@/components/Breadcrumb.vue'
 import Layout from '@/components/Layout/Layout.vue'
-import PageHeader from '@/components/Layout/PageHeader.vue'
+import TabGroup from '@/components/TabGroup.vue'
 import { useGlobalState } from '@/providers/globalProvider'
 import { useLayoutState } from '@/providers/layoutProvider'
 import { OptionType } from '@/types'
 import { defineComponent, onMounted } from 'vue'
-import Breadcrumb from '../../components/Breadcrumb.vue'
-import TabGroup from '@/components/TabGroup.vue'
 
 export default defineComponent({
   components: {
-    PageHeader,
     Layout,
-    Breadcrumb,
     TabGroup,
   },
   setup() {
@@ -38,10 +34,7 @@ export default defineComponent({
 
 <template>
   <Layout>
-    <PageHeader>
-      <Breadcrumb :routes="breadcrumb" />
-    </PageHeader>
-    <div class="p-3 mt-10">
+    <div class="p-3">
       <div class="flex flex-col sm:flex-row items-center mb-3">
         <TabGroup
           :value="$route.name.toString()"
