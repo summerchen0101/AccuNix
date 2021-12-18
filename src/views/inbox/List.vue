@@ -1,12 +1,21 @@
 <script lang="ts">
-import { RouteProps } from '@/components/Breadcrumb.vue'
+import { BreadcrumbItem, useGlobalState } from '@/providers/globalProvider'
 import Layout from '@/components/Layout/Layout.vue'
 import PageIconBtn from '@/components/PageIconBtn.vue'
-import { orderTypeMap } from '@/lib/maps'
+import { orderTypeMap, productTypeMap } from '@/lib/maps'
 import { useLayoutState } from '@/providers/layoutProvider'
 import useInboxList, { InboxListReq } from '@/service/useInboxList'
-import { defineComponent, onMounted, reactive } from 'vue'
+import {
+  computed,
+  defineComponent,
+  onMounted,
+  onUnmounted,
+  reactive,
+  ref,
+  watchEffect,
+} from 'vue'
 import { useRouter } from 'vue-router'
+import useMediaQuery from '@/hooks/useMediaQuery'
 
 export default defineComponent({
   name: 'InboxList',
@@ -17,6 +26,19 @@ export default defineComponent({
   setup() {
     const router = useRouter()
     const { activePage } = useLayoutState()
+    const { breadcrumb, botType, botGuid } = useGlobalState()
+    const { isMatch } = useMediaQuery('(max-width: 600px)')
+    watchEffect(() => {
+      breadcrumb.value = [
+        { name: '機器人管理' },
+        {
+          name: `${productTypeMap[botType.value]}-${botGuid.value}`,
+          mobileShow: true,
+        },
+        { name: '主選單列表', mobileShow: true },
+      ].filter((t) => (isMatch.value ? t.mobileShow : true))
+    })
+
     const { fetchData, isLoading, list, meta } = useInboxList()
     const req = reactive<InboxListReq>({ page: 1 })
     const onPageChange = (page: number) => {
@@ -33,13 +55,8 @@ export default defineComponent({
       activePage.value = 'Line'
       fetchData(req)
     })
-    const breadcrumb: RouteProps[] = [
-      { name: '聊天機器人' },
-      { name: 'LINE' },
-      { name: '主選單列表' },
-    ]
+
     return {
-      breadcrumb,
       req,
       isLoading,
       list,

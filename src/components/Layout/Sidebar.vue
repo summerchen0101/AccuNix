@@ -15,7 +15,7 @@
     >
       <div class="w-52 flex flex-col h-full">
         <div class="p-2">
-          <el-select class="w-full" size="small">
+          <el-select class="w-full" size="small" v-model="botGuidWithType">
             <el-option
               v-for="opt in botOpts"
               :key="opt.value"
@@ -67,14 +67,14 @@ export default defineComponent({
   },
   setup(props) {
     const { isMiniSidebar } = useLayoutState()
-    const { loginInfo } = useGlobalState()
+    const { loginInfo, botGuidWithType } = useGlobalState()
     const botOpts = computed(() =>
       loginInfo.value?.bots.map((t) => ({
         label: `${productTypeMap[t.product_type_id]}(${t.GUID})`,
-        value: t.GUID,
+        value: `${t.product_type_id}_${t.GUID}`,
       })),
     )
-    return { isMiniSidebar, menuList, botMenus, botOpts }
+    return { isMiniSidebar, menuList, botMenus, botOpts, botGuidWithType }
   },
 })
 </script>

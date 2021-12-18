@@ -1,32 +1,22 @@
 <template>
   <ul class="breadcrumb text-sm flex items-center text-primary-100">
-    <li><i class="fas fa-home text-base"></i></li>
-    <li>LINE-51f123abe</li>
-    <li>機器人主選單</li>
+    <!-- <li><i class="fas fa-home text-base"></i></li> -->
+    <li v-for="route in breadcrumb" :key="route.name">
+      <router-link v-if="route.path" :to="{ path: route.path }">{{
+        route.name
+      }}</router-link>
+      <span v-else>{{ route.name }}</span>
+    </li>
   </ul>
-  <!-- <el-breadcrumb separator="/">
-    <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-    <el-breadcrumb-item
-      v-for="(route, i) in routes"
-      :key="i"
-      :to="route.path && { path: route.path }"
-      >{{ route.name }}</el-breadcrumb-item
-    >
-  </el-breadcrumb> -->
 </template>
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
+import { useGlobalState } from '@/providers/globalProvider'
+import { defineComponent } from 'vue'
 
-export interface RouteProps {
-  path?: string
-  name: string
-}
 export default defineComponent({
-  props: {
-    routes: Array as PropType<RouteProps[]>,
-  },
   setup() {
-    //
+    const { breadcrumb } = useGlobalState()
+    return { breadcrumb }
   },
 })
 </script>

@@ -57,7 +57,7 @@ export interface Organization {
 function useLoginInfo() {
   const router = useRouter()
   const apiErrHandler = useApiErrHandler()
-  const { loginInfo } = useGlobalState()
+  const { loginInfo, botGuidWithType } = useGlobalState()
   const isLoading = ref(false)
   const isError = ref(false)
   const data = ref<LoginInfoRes>()
@@ -72,6 +72,8 @@ function useLoginInfo() {
       })
       data.value = res
       loginInfo.value = res
+      const _bot = res.bots[0]
+      botGuidWithType.value = `${_bot.product_type_id}_${_bot?.GUID}`
     } catch (err) {
       apiErrHandler(err)
       isError.value = true

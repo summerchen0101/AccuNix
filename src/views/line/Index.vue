@@ -1,5 +1,5 @@
 <script lang="ts">
-import { RouteProps } from '@/components/Breadcrumb.vue'
+import { BreadcrumbItem } from '@/providers/globalProvider'
 import Layout from '@/components/Layout/Layout.vue'
 import TabGroup from '@/components/TabGroup.vue'
 import { useGlobalState } from '@/providers/globalProvider'
@@ -18,7 +18,7 @@ export default defineComponent({
     onMounted(() => {
       activePage.value = 'Line'
     })
-    const breadcrumb: RouteProps[] = [
+    const breadcrumb: BreadcrumbItem[] = [
       { name: '聊天機器人' },
       { name: 'Line儀表板' },
     ]

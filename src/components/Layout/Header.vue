@@ -58,6 +58,10 @@
               <div class="hover:text-gray-500" @click="handleLogout">
                 <i class="fas fa-power-off mr-1"></i>
                 登出
+                <i
+                  :hidden="!isLogoutLoading"
+                  class="fas fa-sync-alt animate-spin ml-2"
+                ></i>
               </div>
             </div>
           </div>
@@ -105,14 +109,14 @@ export default defineComponent({
   setup(props) {
     const router = useRouter()
     const { isMiniSidebar } = useLayoutState()
-    const { doLogout, isLoading } = useLogout()
+    const { doLogout, isLoading: isLogoutLoading } = useLogout()
     const alert = useAlert()
     const handleLogout = async () => {
       await doLogout()
       alert('登出成功', 'success')
       router.push('/login')
     }
-    return { isMiniSidebar, handleLogout }
+    return { isMiniSidebar, handleLogout, isLogoutLoading }
   },
   components: { Breadcrumb },
 })

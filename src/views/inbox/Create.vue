@@ -1,5 +1,5 @@
 <script lang="ts">
-import { RouteProps } from '@/components/Breadcrumb.vue'
+import { BreadcrumbItem } from '@/providers/globalProvider'
 import actionForms from '@/components/inbox/form'
 import InboxLayout, { toLayoutBoxs } from '@/components/inbox/InboxLayout.vue'
 import LayoutSelectorPopup from '@/components/inbox/popups/LayoutSelectorPopup.vue'
@@ -293,7 +293,7 @@ export default defineComponent({
       },
     )
 
-    const breadcrumb: RouteProps[] = [
+    const breadcrumb: BreadcrumbItem[] = [
       { name: '聊天機器人' },
       { name: 'LINE' },
       { name: '主選單列表', path: '/inbox/list' },
