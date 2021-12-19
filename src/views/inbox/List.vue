@@ -27,7 +27,6 @@ export default defineComponent({
     const router = useRouter()
     const { activePage } = useLayoutState()
     const { breadcrumb, botType, botGuid } = useGlobalState()
-    const { isMatch } = useMediaQuery('(max-width: 600px)')
     watchEffect(() => {
       breadcrumb.value = [
         { name: '機器人管理' },
@@ -36,7 +35,7 @@ export default defineComponent({
           mobileShow: true,
         },
         { name: '主選單列表', mobileShow: true },
-      ].filter((t) => (isMatch.value ? t.mobileShow : true))
+      ]
     })
 
     const { fetchData, isLoading, list, meta } = useInboxList()
