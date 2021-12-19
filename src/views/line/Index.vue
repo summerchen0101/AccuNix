@@ -27,9 +27,9 @@ export default defineComponent({
         .filter((t) => t.product_type_id === botType.value)
         .map((t) => ({
           guid: t.GUID,
-          label: `${productTypeMap[t.product_type_id]}(${t.GUID})`,
+          label: `${t.name}(${t.GUID})`,
           value: `${t.product_type_id}_${t.GUID}`,
-          icon: productIconMap[t.product_type_id],
+          img: t.picture,
         })),
     )
     const tabOptions: OptionType<string>[] = [
@@ -67,15 +67,19 @@ export default defineComponent({
           <!-- <el-select class="flex-1 sm:w-52" v-model="lineBotGuid">
             <el-option :label="lineBotGuid" :value="lineBotGuid" />
           </el-select> -->
-          <el-select class="flex-1 sm:w-52" v-model="botGuidWithType">
+          <el-select class="flex-1 sm:w-72" v-model="botGuidWithType">
             <el-option
               v-for="opt in botOpts"
               :key="opt.value"
               :label="opt.label"
               :value="opt.value"
             >
-              <i class="text-lg mr-1" :class="opt.icon"></i>
-              {{ opt.guid }}
+              <img
+                :src="opt.img"
+                class="rounded-full w-7 h-7 inline-block mr-2"
+                alt=""
+              />
+              {{ opt.label }}
             </el-option>
           </el-select>
           <div class="ctrl-btn">

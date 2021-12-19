@@ -22,8 +22,12 @@
               :label="opt.label"
               :value="opt.value"
             >
-              <i class="text-lg mr-1" :class="opt.icon"></i>
-              {{ opt.guid }}
+              <img
+                :src="opt.img"
+                class="rounded-full w-7 h-7 inline-block mr-2"
+                alt=""
+              />
+              {{ opt.label }}
             </el-option>
           </el-select>
         </div>
@@ -69,24 +73,16 @@ export default defineComponent({
   },
   setup(props) {
     const { isMiniSidebar } = useLayoutState()
-    const { loginInfo, botGuidWithType, botGuid } = useGlobalState()
+    const { loginInfo, botGuidWithType, botType, botInfo } = useGlobalState()
     const botOpts = computed(() =>
       loginInfo.value?.bots.map((t) => ({
         guid: t.GUID,
-        label: `${productTypeMap[t.product_type_id]}(${t.GUID})`,
+        label: `${t.name}`,
         value: `${t.product_type_id}_${t.GUID}`,
-        icon: productIconMap[t.product_type_id],
+        img: t.picture,
       })),
     )
-    // watchEffect(() => {
-    //   perBotMenus.value = loginInfo.value?.bots.find(
-    //     (t) => t.GUID === botGuid.value,
-    //   )
-    //   console.log(perBotMenus.value)
-    // })
-    const botInfo = computed(() => {
-      return loginInfo.value?.bots.find((t) => t.GUID === botGuid.value)
-    })
+
     const perBotMenus = computed(() =>
       botMenus.filter((m) => botInfo.value?.permissions[m.code]?.read),
     )

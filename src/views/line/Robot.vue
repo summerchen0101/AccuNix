@@ -1,5 +1,6 @@
 <script lang="ts">
 import CardPanel from '@/components/CardPanel.vue'
+import { useGlobalState } from '@/providers/globalProvider'
 import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
@@ -7,8 +8,9 @@ export default defineComponent({
     CardPanel,
   },
   setup() {
+    const { botInfo } = useGlobalState()
     const selected = ref(1)
-    return { selected }
+    return { selected, botInfo }
   },
 })
 </script>
@@ -28,18 +30,22 @@ export default defineComponent({
       "
     >
       <div class="flex space-x-5 py-3">
-        <div>標籤額度： 0/500</div>
-        <div>加入好友： 1</div>
-        <div>封鎖好友： 0</div>
+        <div>標籤額度： {{ botInfo?.tagCount }}/{{ botInfo?.tagQuota }}</div>
+        <div>加入好友： {{ botInfo?.followers }}</div>
+        <div>封鎖好友： {{ botInfo?.blocks }}</div>
         <div class="flex-1"></div>
         <a href="#" class="text-primary-500"> 下載好友資訊 </a>
       </div>
       <div class="flex space-x-5 py-3">
-        <div>Webhook 狀態 : 啟用中</div>
-        <div>串接狀態 : 已串接</div>
+        <div>
+          Webhook 狀態 : {{ botInfo?.webhook.active ? '啟用中' : '未啟用' }}
+        </div>
+        <div>
+          串接狀態 : {{ botInfo?.webhook.endpoint ? '已串接' : '未串接' }}
+        </div>
       </div>
       <div class="flex space-x-5 py-3">
-        <div>備註</div>
+        <div>備註： {{ botInfo?.description || '-' }}</div>
         <div class="flex-1"></div>
         <a href="#" class="text-primary-500"> 編輯 </a>
       </div>
