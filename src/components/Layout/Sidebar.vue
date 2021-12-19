@@ -1,12 +1,12 @@
 <template>
-  <div class="fixed h-full pt-24 z-10">
+  <div class="fixed h-full pt-24 z-10 group">
     <div
       class="
         bg-primary-500
         transition-all
         relative
         z-20
-        hover:w-52
+        group-hover:w-52
         sidebar
         h-full
         overflow-x-hidden
@@ -15,7 +15,18 @@
     >
       <div class="w-52 flex flex-col h-full">
         <div class="p-2">
-          <el-select class="w-full" size="small" v-model="botGuidWithType">
+          <el-select
+            :class="isMiniSidebar && 'invisible opacity-0 -translate-x-full'"
+            class="
+              w-full
+              transition-all
+              group-hover:visible
+              group-hover:opacity-100
+              group-hover:translate-x-0
+            "
+            size="small"
+            v-model="botGuidWithType"
+          >
             <el-option
               v-for="opt in botOpts"
               :key="opt.value"
