@@ -2,7 +2,9 @@
   <div class="fixed top-0 w-screen z-30">
     <div class="bg-white flex items-center h-14">
       <div class="w-52 p-3">
-        <img class="w-36 h-auto" src="@/assets/logo.png" alt="" />
+        <router-link to="/"
+          ><img class="w-36 h-auto" src="@/assets/logo.png" alt=""
+        /></router-link>
       </div>
       <div class="flex-1 flex items-center justify-end h-full">
         <div

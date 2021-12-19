@@ -28,14 +28,16 @@ export default defineComponent({
     const { activePage } = useLayoutState()
     const { breadcrumb, botType, botGuid } = useGlobalState()
     watchEffect(() => {
-      breadcrumb.value = [
-        { name: '機器人管理' },
-        {
-          name: `${productTypeMap[botType.value]}-${botGuid.value}`,
-          mobileShow: true,
-        },
-        { name: '主選單列表', mobileShow: true },
-      ]
+      breadcrumb.value = botType.value
+        ? [
+            { name: '機器人管理' },
+            {
+              name: `${productTypeMap[botType.value]}-${botGuid.value}`,
+              mobileShow: true,
+            },
+            { name: '主選單列表', mobileShow: true },
+          ]
+        : []
     })
 
     const { fetchData, isLoading, list, meta } = useInboxList()

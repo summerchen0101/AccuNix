@@ -7,7 +7,10 @@ import LifeCycle from '@/components/charts/LifeCycle.vue'
 import Message from '@/components/charts/Message.vue'
 import Scripts from '@/components/charts/Scripts.vue'
 import { BotType } from '@/lib/enum'
-import { defineComponent } from 'vue'
+import { productTypeMap } from '@/lib/maps'
+import { useGlobalState } from '@/providers/globalProvider'
+import { useLayoutState } from '@/providers/layoutProvider'
+import { defineComponent, onMounted, watchEffect } from 'vue'
 
 export default defineComponent({
   components: {
@@ -20,6 +23,25 @@ export default defineComponent({
     Scripts,
   },
   setup() {
+    const { activePage } = useLayoutState()
+    const { lineBotGuid, breadcrumb, botType, botGuid } = useGlobalState()
+    // onMounted(() => {
+    //   activePage.value = 'lineBasic'
+    // })
+
+    // watchEffect(() => {
+    //   breadcrumb.value = botType.value
+    //     ? [
+    //         { name: '機器人管理' },
+    //         {
+    //           name: `${productTypeMap[botType.value]}-${botGuid.value}`,
+    //           mobileShow: true,
+    //         },
+    //         { name: '儀表板', mobileShow: true },
+    //       ]
+    //     : []
+    // })
+
     return { botType: BotType.LINE }
   },
 })

@@ -8,6 +8,12 @@ export interface Menu {
 
 export const botMenus: Menu[] = [
   {
+    label: '儀表板',
+    path: '/line/chart',
+    icon: 'fas fa-chart-bar',
+    code: 'lineBasic',
+  },
+  {
     label: '機器人主選單',
     path: '/inbox/list',
     icon: 'fas fa-border-all',

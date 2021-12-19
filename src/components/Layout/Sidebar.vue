@@ -22,6 +22,8 @@
               :label="opt.label"
               :value="opt.value"
             >
+              <i class="text-lg mr-1" :class="opt.icon"></i>
+              {{ opt.guid }}
             </el-option>
           </el-select>
         </div>
@@ -58,7 +60,7 @@ import { useLayoutState } from '@/providers/layoutProvider'
 import { computed, defineComponent, watchEffect } from 'vue'
 import { menuList, botMenus } from '@/lib/menu'
 import { useGlobalState } from '@/providers/globalProvider'
-import { productTypeMap } from '@/lib/maps'
+import { productIconMap, productTypeMap } from '@/lib/maps'
 
 export default defineComponent({
   name: 'Sidebar',
@@ -70,8 +72,10 @@ export default defineComponent({
     const { loginInfo, botGuidWithType, botGuid } = useGlobalState()
     const botOpts = computed(() =>
       loginInfo.value?.bots.map((t) => ({
+        guid: t.GUID,
         label: `${productTypeMap[t.product_type_id]}(${t.GUID})`,
         value: `${t.product_type_id}_${t.GUID}`,
+        icon: productIconMap[t.product_type_id],
       })),
     )
     // watchEffect(() => {
