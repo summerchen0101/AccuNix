@@ -48,9 +48,9 @@ export const menuList: Menu[] = [
     path: null,
     icon: 'fas fa-users',
     subs: [
-      { label: '編輯組織', path: '/', code: '' },
-      { label: '角色管理', path: '/', code: '' },
-      { label: '使用者管理', path: '/', code: '' },
+      { label: '編輯組織', path: '/', code: 'managerOrganization' },
+      { label: '角色管理', path: '/', code: 'managerRole' },
+      { label: '使用者管理', path: '/', code: 'managerUser' },
     ],
   },
   // {
@@ -63,12 +63,22 @@ export const menuList: Menu[] = [
   //     { label: 'API Token', path: '/token', code: 'Token' },
   //   ],
   // },
-  { label: '一對一聊天', path: '/', icon: 'fas fa-comment-dots', code: '' },
-  { label: '問卷管理', path: '/', icon: 'fas fa-file-signature', code: '' },
+  {
+    label: '一對一聊天',
+    path: '/',
+    icon: 'fas fa-comment-dots',
+    code: 'managerOneToOne',
+  },
+  {
+    label: '問卷管理',
+    path: '/',
+    icon: 'fas fa-file-signature',
+    code: 'managerForm',
+  },
   {
     label: '智慧客服',
     path: null,
     icon: 'fas fa-headset',
-    subs: [{ label: '知識庫列表', path: '/', code: '' }],
+    subs: [{ label: '知識庫列表', path: '/', code: 'managerQnAMaker' }],
   },
 ]

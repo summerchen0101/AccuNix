@@ -29,7 +29,7 @@
           <MenuItem v-for="m in botMenus" :key="m.label" :menu="m" />
         </ul>
         <ul class="bg-primary-600">
-          <MenuItem v-for="m in menuList" :key="m.label" :menu="m" />
+          <MenuItem v-for="m in perOrgMenus" :key="m.label" :menu="m" />
         </ul>
       </div>
     </div>
@@ -83,17 +83,28 @@ export default defineComponent({
     const botInfo = computed(() => {
       return loginInfo.value?.bots.find((t) => t.GUID === botGuid.value)
     })
-    const perBotMenus = computed(() => {
-      // Object.entries(botInfo.value.permissions).map(([code, permission]) => {
-      // })
-      return botMenus.filter((m) => botInfo.value?.permissions[m.code]?.read)
-    })
-    watchEffect(() => {
-      console.log(botInfo.value)
-    })
+    const perBotMenus = computed(() =>
+      botMenus.filter((m) => botInfo.value?.permissions[m.code]?.read),
+    )
+    const perOrgMenus = computed(() =>
+      menuList
+        .map((m) => {
+          return {
+            ...m,
+            subs: m.subs?.filter(
+              (n) => loginInfo.value?.organization.permissions[n.code]?.read,
+            ),
+          }
+        })
+        .filter((m) =>
+          m.subs
+            ? m.subs?.length > 0
+            : loginInfo.value?.organization.permissions[m.code]?.read,
+        ),
+    )
     return {
       isMiniSidebar,
-      menuList,
+      perOrgMenus,
       botMenus: perBotMenus,
       botOpts,
       botGuidWithType,
