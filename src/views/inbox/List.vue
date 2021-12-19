@@ -51,7 +51,7 @@ export default defineComponent({
       fetchData(req)
     }
     onMounted(() => {
-      activePage.value = 'Line'
+      activePage.value = 'lineRichmenu'
       fetchData(req)
     })
 

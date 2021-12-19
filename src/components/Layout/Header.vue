@@ -23,7 +23,7 @@
             ><img src="https://blb.accubot.com.tw/uploads/!logged-user.jpg"
           /></span>
           <div class="text-center w-28">
-            <div class="">Accunix</div>
+            <div class="">{{ loginInfo?.name }}</div>
             <div class="text-gray-500 text-sm">maintainer</div>
           </div>
           <i class="el-icon-arrow-down"></i>
@@ -99,9 +99,10 @@
 
 <script lang="ts">
 import useAlert from '@/hooks/useAlert'
+import { useGlobalState } from '@/providers/globalProvider'
 import { useLayoutState } from '@/providers/layoutProvider'
 import useLogout from '@/service/useLogout'
-import { defineComponent, PropType } from '@vue/runtime-core'
+import { defineComponent, ref } from '@vue/runtime-core'
 import { useRouter } from 'vue-router'
 import Breadcrumb from '../Breadcrumb.vue'
 
@@ -109,6 +110,7 @@ export default defineComponent({
   setup(props) {
     const router = useRouter()
     const { isMiniSidebar } = useLayoutState()
+    const { loginInfo } = useGlobalState()
     const { doLogout, isLoading: isLogoutLoading } = useLogout()
     const alert = useAlert()
     const handleLogout = async () => {
@@ -116,7 +118,12 @@ export default defineComponent({
       alert('登出成功', 'success')
       router.push('/login')
     }
-    return { isMiniSidebar, handleLogout, isLogoutLoading }
+    return {
+      isMiniSidebar,
+      handleLogout,
+      isLogoutLoading,
+      loginInfo,
+    }
   },
   components: { Breadcrumb },
 })

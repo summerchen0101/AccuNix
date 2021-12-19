@@ -11,19 +11,34 @@ export const botMenus: Menu[] = [
     label: '機器人主選單',
     path: '/inbox/list',
     icon: 'fas fa-border-all',
-    code: '',
+    code: 'lineRichmenu',
   },
   {
     label: '自動回應設定',
     path: '/',
     icon: 'far fa-caret-square-left',
-    code: '',
+    code: 'lineAutoResponse',
   },
-  { label: '關鍵字庫', path: '/', icon: 'fab fa-slack-hash', code: '' },
-  { label: '排程任務', path: '/', icon: 'far fa-clock', code: '' },
-  { label: '好友管理', path: '/', icon: 'far fa-user', code: '' },
-  { label: '常用訊息庫', path: '/', icon: 'far fa-comments', code: '' },
-  { label: '問券腳本', path: '/', icon: 'far fa-sticky-note', code: '' },
+  {
+    label: '關鍵字庫',
+    path: '/',
+    icon: 'fab fa-slack-hash',
+    code: 'lineKeyword',
+  },
+  { label: '排程任務', path: '/', icon: 'far fa-clock', code: 'lineSchedule' },
+  { label: '好友管理', path: '/', icon: 'far fa-user', code: 'lineUser' },
+  {
+    label: '常用訊息庫',
+    path: '/',
+    icon: 'far fa-comments',
+    code: 'lineMessage',
+  },
+  {
+    label: '問券腳本',
+    path: '/',
+    icon: 'far fa-sticky-note',
+    code: 'lineForm',
+  },
 ]
 
 export const menuList: Menu[] = [

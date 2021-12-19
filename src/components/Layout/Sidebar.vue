@@ -55,7 +55,7 @@
 <script lang="ts">
 import MenuItem from '@/components/Layout/MenuItem.vue'
 import { useLayoutState } from '@/providers/layoutProvider'
-import { computed, defineComponent } from 'vue'
+import { computed, defineComponent, watchEffect } from 'vue'
 import { menuList, botMenus } from '@/lib/menu'
 import { useGlobalState } from '@/providers/globalProvider'
 import { productTypeMap } from '@/lib/maps'
@@ -67,14 +67,38 @@ export default defineComponent({
   },
   setup(props) {
     const { isMiniSidebar } = useLayoutState()
-    const { loginInfo, botGuidWithType } = useGlobalState()
+    const { loginInfo, botGuidWithType, botGuid } = useGlobalState()
     const botOpts = computed(() =>
       loginInfo.value?.bots.map((t) => ({
         label: `${productTypeMap[t.product_type_id]}(${t.GUID})`,
         value: `${t.product_type_id}_${t.GUID}`,
       })),
     )
-    return { isMiniSidebar, menuList, botMenus, botOpts, botGuidWithType }
+    // watchEffect(() => {
+    //   perBotMenus.value = loginInfo.value?.bots.find(
+    //     (t) => t.GUID === botGuid.value,
+    //   )
+    //   console.log(perBotMenus.value)
+    // })
+    const botInfo = computed(() => {
+      return loginInfo.value?.bots.find((t) => t.GUID === botGuid.value)
+    })
+    const perBotMenus = computed(() => {
+      // Object.entries(botInfo.value.permissions).map(([code, permission]) => {
+      // })
+      return botMenus.filter((m) => botInfo.value?.permissions[m.code]?.read)
+    })
+    watchEffect(() => {
+      console.log(botInfo.value)
+    })
+    return {
+      isMiniSidebar,
+      menuList,
+      botMenus: perBotMenus,
+      botOpts,
+      botGuidWithType,
+      botInfo,
+    }
   },
 })
 </script>

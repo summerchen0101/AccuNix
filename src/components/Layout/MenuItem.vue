@@ -1,5 +1,5 @@
 <template>
-  <li class="border-white/10 text-gray-100">
+  <li class="border-white/10 text-gray-100 hover:text-opacity-80">
     <template v-if="menu.subs">
       <a
         href="#"
@@ -22,7 +22,7 @@
     <router-link
       v-else-if="menu.path"
       class="px-3.5 h-10 flex items-center"
-      :class="isActive && 'bg-warning-500 text-gray-600 font-semibold'"
+      :class="isActive && 'bg-secondary-500 text-white'"
       :to="menu.path"
     >
       <i class="w-10" :class="menu.icon"></i>
