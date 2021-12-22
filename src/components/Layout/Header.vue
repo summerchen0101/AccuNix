@@ -79,6 +79,7 @@
         text-white
         flex
         items-center
+        shadow-lg
       "
     >
       <div

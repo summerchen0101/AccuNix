@@ -62,7 +62,7 @@ export default defineComponent({
 <template>
   <Layout>
     <div class="p-3">
-      <div class="flex flex-col sm:flex-row items-center mb-3">
+      <div class="flex flex-col sm:flex-row items-center mb-3 gap-1">
         <div class="flex space-x-3 w-full sm:w-auto mt-3 sm:mt-0">
           <!-- <el-select class="flex-1 sm:w-52" v-model="lineBotGuid">
             <el-option :label="lineBotGuid" :value="lineBotGuid" />
