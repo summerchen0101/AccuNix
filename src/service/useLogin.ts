@@ -1,3 +1,4 @@
+import { useApiErrHandler } from '@/hooks/useApiErrHandler'
 import useRequest from '@/hooks/useRequest'
 import { useGlobalState } from '@/providers/globalProvider'
 import { ref } from 'vue'
@@ -11,6 +12,7 @@ export interface LoginReq {
 }
 
 function useLogin() {
+  const apiErrHandler = useApiErrHandler()
   const isLoading = ref(false)
   const isError = ref(false)
   const data = ref<LoginInfoRes>(null)
@@ -29,6 +31,7 @@ function useLogin() {
       const _bot = res.bots[0]
       botGuidWithType.value = `${_bot.product_type_id}_${_bot?.GUID}`
     } catch (err) {
+      apiErrHandler(err)
       isError.value = true
     }
     isLoading.value = false
