@@ -1,62 +1,91 @@
 <script lang="ts">
-import { BreadcrumbItem } from '@/providers/globalProvider'
-import Layout from '@/components/Layout/Layout.vue'
 import TabGroup from '@/components/TabGroup.vue'
+import { productTypeMap } from '@/lib/maps'
 import { useGlobalState } from '@/providers/globalProvider'
 import { useLayoutState } from '@/providers/layoutProvider'
 import { OptionType } from '@/types'
-import { defineComponent, onMounted } from 'vue'
+import { computed, defineComponent, onMounted, watchEffect } from 'vue'
 
 export default defineComponent({
   components: {
-    Layout,
     TabGroup,
   },
   setup() {
     const { activePage } = useLayoutState()
-    const { botGuid } = useGlobalState()
-    onMounted(() => {
-      activePage.value = 'Facebook'
-    })
-    const breadcrumb: BreadcrumbItem[] = [
-      { name: '聊天機器人' },
-      { name: 'Facebook儀表板' },
-    ]
-
+    const { breadcrumb, loginInfo, botGuidWithType, botType, botGuid } =
+      useGlobalState()
+    const botOpts = computed(() =>
+      loginInfo.value?.bots
+        .filter((t) => t.product_type_id === botType.value)
+        .map((t) => ({
+          guid: t.GUID,
+          label: `${t.name}(${t.GUID})`,
+          value: `${t.product_type_id}_${t.GUID}`,
+          img: t.picture,
+        })),
+    )
     const tabOptions: OptionType<string>[] = [
       { label: '儀表板', value: 'FbChart' },
       { label: '機器人設定', value: 'FbRobot' },
     ]
-    return { breadcrumb, botGuid, tabOptions }
+
+    onMounted(() => {
+      activePage.value = 'fbBasic'
+    })
+
+    watchEffect(() => {
+      breadcrumb.value = botType.value
+        ? [
+            { name: '機器人管理' },
+            {
+              name: `${productTypeMap[botType.value]}-${botGuid.value}`,
+              mobileShow: true,
+            },
+            { name: '儀表板', mobileShow: true },
+          ]
+        : []
+    })
+
+    return { tabOptions, botOpts, botGuidWithType }
   },
 })
 </script>
 
 <template>
-  <Layout>
-    <div class="p-3">
-      <div class="flex flex-col sm:flex-row items-center mb-3">
-        <TabGroup
-          :value="$route.name.toString()"
-          @change="
-            (val) =>
-              $router.push({
-                name: val.toString(),
-              })
-          "
-          :options="tabOptions"
-        />
-        <div class="flex-1"></div>
-        <div class="flex space-x-3 w-full sm:w-auto mt-3 sm:mt-0">
-          <el-select class="flex-1 sm:w-52" v-model="botGuid">
-            <el-option :label="botGuid" :value="botGuid" />
-          </el-select>
-          <div class="ctrl-btn">
-            <i class="fas fa-plus"></i>
-          </div>
+  <div class="p-3">
+    <div class="flex flex-col sm:flex-row items-center mb-3 gap-1">
+      <div class="flex space-x-3 w-full sm:w-auto mt-3 sm:mt-0">
+        <el-select class="flex-1 sm:w-72" v-model="botGuidWithType">
+          <el-option
+            v-for="opt in botOpts"
+            :key="opt.value"
+            :label="opt.label"
+            :value="opt.value"
+          >
+            <img
+              :src="opt.img"
+              class="rounded-full w-7 h-7 inline-block mr-2"
+              alt=""
+            />
+            {{ opt.label }}
+          </el-option>
+        </el-select>
+        <div class="ctrl-btn">
+          <i class="fas fa-plus"></i>
         </div>
       </div>
-      <router-view />
+      <div class="flex-1"></div>
+      <TabGroup
+        :value="$route.name.toString()"
+        @change="
+          (val) =>
+            $router.push({
+              name: val.toString(),
+            })
+        "
+        :options="tabOptions"
+      />
     </div>
-  </Layout>
+    <router-view />
+  </div>
 </template>

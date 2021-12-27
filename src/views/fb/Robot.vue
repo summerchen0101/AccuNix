@@ -1,5 +1,6 @@
 <script lang="ts">
 import CardPanel from '@/components/CardPanel.vue'
+import { useGlobalState } from '@/providers/globalProvider'
 import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
@@ -7,8 +8,9 @@ export default defineComponent({
     CardPanel,
   },
   setup() {
+    const { botInfo } = useGlobalState()
     const selected = ref(1)
-    return { selected }
+    return { selected, botInfo }
   },
 })
 </script>
@@ -28,18 +30,11 @@ export default defineComponent({
       "
     >
       <div class="flex space-x-5 py-3">
-        <div>標籤額度： 0/500</div>
-        <div>加入好友： 1</div>
-        <div>封鎖好友： 0</div>
-        <div class="flex-1"></div>
-        <a href="#" class="text-primary-500"> 下載好友資訊 </a>
+        <div>標籤額度： {{ botInfo?.tagCount }}/{{ botInfo?.tagQuota }}</div>
+        <div>好友數量： {{ botInfo?.usersCount }}</div>
       </div>
       <div class="flex space-x-5 py-3">
-        <div>Webhook 狀態 : 啟用中</div>
-        <div>串接狀態 : 已串接</div>
-      </div>
-      <div class="flex space-x-5 py-3">
-        <div>備註</div>
+        <div>備註： {{ botInfo?.description || '-' }}</div>
         <div class="flex-1"></div>
         <a href="#" class="text-primary-500"> 編輯 </a>
       </div>
@@ -47,7 +42,7 @@ export default defineComponent({
     <CardPanel
       title="機器人主選單"
       icon="far fa-caret-square-left"
-      desc="此為預設顯示於聊天室供用戶點選的圖文選單，若用戶有指定主選單，將以指定主選單為主"
+      desc="此為預設顯示於聊天室供用戶點選的選單，部分粉絲頁受歐盟隱私政策影響，將無法使用此功能"
       @setting="() => $router.push({ name: 'InboxList' })"
     >
       <div>
@@ -60,34 +55,33 @@ export default defineComponent({
     <CardPanel
       title="自動回應設定"
       icon="far fa-caret-square-left"
-      desc="提供 LINE 自動回應訊息設定。"
+      desc="提供 Messenger 自動回應訊息設定。"
     />
     <CardPanel
       title="關鍵字庫"
       icon="fab fa-slack-hash"
-      desc="提供 LINE
-        關鍵字互動，可藉由關鍵字動作：貼標籤、發送訊息、切換主選單、進入腳本、呼叫真人客服。"
+      desc="提供 Messenger 關鍵字互動，可藉由關鍵字動作：貼標籤、發送訊息、切換主選單、進入腳本、呼叫真人客服"
       @setting="() => $router.push({ name: 'KeywordList' })"
     />
     <CardPanel
       title="排程任務"
       icon="far fa-clock"
-      desc="可指定時間發送訊息或切換主選單。"
+      desc="可指定時間透過 Messenger 發送訊息。"
     />
     <CardPanel
       title="好友管理"
       icon="far fa-user"
-      desc="可以查看與搜尋 LINE 好友。"
+      desc="可以查看與搜尋 Messenger 好友。"
     />
     <CardPanel
       title="常用訊息庫"
       icon="far fa-comments"
-      desc="提供 LINE 常用訊息庫設定，支援多種樣式靈活調整。"
+      desc="提供 Messenger 常用訊息庫設定，支援多種樣式靈活調整。"
     />
     <CardPanel
       title="問券腳本"
       icon="far fa-sticky-note"
-      desc="可透過問券腳本，與問券管理對接，完成好友個人基本資料或愛好蒐集。"
+      desc="可透過問卷腳本，與問卷管理對接，完成好友個人基本資料或愛好蒐集。"
     />
   </div>
 </template>

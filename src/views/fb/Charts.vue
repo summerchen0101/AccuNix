@@ -7,7 +7,6 @@ import LifeCycle from '@/components/charts/LifeCycle.vue'
 import Message from '@/components/charts/Message.vue'
 import Scripts from '@/components/charts/Scripts.vue'
 import { defineComponent } from 'vue'
-import { BotType } from '@/lib/enum'
 
 export default defineComponent({
   components: {
@@ -20,19 +19,19 @@ export default defineComponent({
     Scripts,
   },
   setup() {
-    return { botType: BotType.FB }
+    return {}
   },
 })
 </script>
 
 <template>
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
-    <LifeCycle :type="botType" />
-    <Activity :type="botType" />
-    <Friends :type="botType" />
-    <Message :type="botType" />
-    <Labels :type="botType" />
-    <Keywords :type="botType" />
-    <Scripts :type="botType" />
+    <LifeCycle />
+    <Activity />
+    <Friends />
+    <Message />
+    <Labels />
+    <Keywords />
+    <Scripts />
   </div>
 </template>

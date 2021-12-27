@@ -6,11 +6,7 @@ import Labels from '@/components/charts/Labels.vue'
 import LifeCycle from '@/components/charts/LifeCycle.vue'
 import Message from '@/components/charts/Message.vue'
 import Scripts from '@/components/charts/Scripts.vue'
-import { BotType } from '@/lib/enum'
-import { productTypeMap } from '@/lib/maps'
-import { useGlobalState } from '@/providers/globalProvider'
-import { useLayoutState } from '@/providers/layoutProvider'
-import { defineComponent, onMounted, watchEffect } from 'vue'
+import { defineComponent } from 'vue'
 
 export default defineComponent({
   components: {
@@ -23,19 +19,19 @@ export default defineComponent({
     Scripts,
   },
   setup() {
-    return { botType: BotType.LINE }
+    return {}
   },
 })
 </script>
 
 <template>
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
-    <LifeCycle :type="botType" />
+    <LifeCycle />
     <Activity />
     <Friends />
-    <Message :type="botType" />
-    <Labels :type="botType" />
-    <Keywords :type="botType" />
-    <Scripts :type="botType" />
+    <Message />
+    <Labels />
+    <Keywords />
+    <Scripts />
   </div>
 </template>

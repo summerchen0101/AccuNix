@@ -55,7 +55,6 @@ export interface Organization {
 }
 
 function useLoginInfo() {
-  const router = useRouter()
   const apiErrHandler = useApiErrHandler()
   const { loginInfo, botGuidWithType } = useGlobalState()
   const isLoading = ref(false)

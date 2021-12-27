@@ -24,9 +24,6 @@ export interface FriendTrandRes {
 function useFriendTrand() {
   const apiErrHandler = useApiErrHandler()
   const { botApiPath } = useGlobalState()
-  watchEffect(() => {
-    console.log(botApiPath)
-  })
   const isLoading = ref(false)
   const isError = ref(false)
   const data = ref<FriendTrand[]>([])

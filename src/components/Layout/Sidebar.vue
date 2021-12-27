@@ -74,7 +74,8 @@ import MenuItem from '@/components/Layout/MenuItem.vue'
 import { botMenus, menuList } from '@/lib/menu'
 import { useGlobalState } from '@/providers/globalProvider'
 import { useLayoutState } from '@/providers/layoutProvider'
-import { computed, defineComponent } from 'vue'
+import { computed, defineComponent, watch } from 'vue'
+import { useRouter } from 'vue-router'
 
 export default defineComponent({
   name: 'Sidebar',
@@ -82,6 +83,7 @@ export default defineComponent({
     MenuItem,
   },
   setup(props) {
+    const router = useRouter()
     const { isMiniSidebar } = useLayoutState()
     const { loginInfo, botGuidWithType, botType, botInfo } = useGlobalState()
     const botOpts = computed(() =>
@@ -113,6 +115,14 @@ export default defineComponent({
             ? m.subs?.length > 0
             : loginInfo.value?.organization.permissions[m.code]?.read,
         ),
+    )
+    watch(
+      () => perBotMenus.value,
+      () => {
+        if (perBotMenus.value.length) {
+          router.push(perBotMenus.value[0].path)
+        }
+      },
     )
     return {
       isMiniSidebar,
