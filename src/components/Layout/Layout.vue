@@ -14,7 +14,12 @@
       "
       :class="isMiniSidebar ? 'md:ml-12' : 'md:ml-52'"
     >
-      <div class="bg-gray-100 flex-1 overflow-y-auto static"><slot></slot></div>
+      <div class="bg-gray-100 flex-1 overflow-y-auto static">
+        <transition name="fade">
+          <slot v-if="botApiPath"></slot>
+          <Spinner v-else />
+        </transition>
+      </div>
     </div>
   </div>
 </template>
@@ -22,23 +27,27 @@
 <script lang="ts">
 import Header from '@/components/Layout/Header.vue'
 import Sidebar from '@/components/Layout/Sidebar.vue'
+import { useGlobalState } from '@/providers/globalProvider'
 import { useLayoutState } from '@/providers/layoutProvider'
 import useLoginInfo from '@/service/useLoginInfo'
 import { defineComponent, onMounted } from 'vue'
+import Spinner from '../Spinner.vue'
 
 export default defineComponent({
   name: 'Layout',
   components: {
     Header,
     Sidebar,
+    Spinner,
   },
   setup(props) {
     const { isMiniSidebar } = useLayoutState()
+    const { botApiPath } = useGlobalState()
     const { fetchData } = useLoginInfo()
     onMounted(() => {
       fetchData()
     })
-    return { isMiniSidebar }
+    return { isMiniSidebar, botApiPath }
   },
 })
 </script>

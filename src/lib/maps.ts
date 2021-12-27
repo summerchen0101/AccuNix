@@ -12,3 +12,7 @@ export const productIconMap = {
   [ProductType.LINE]: 'fab fa-line',
   [ProductType.FB]: 'fab fa-facebook-square',
 }
+export const productApiPathMap = {
+  [ProductType.LINE]: 'LINEBot',
+  [ProductType.FB]: 'FBMessengerBot',
+}
