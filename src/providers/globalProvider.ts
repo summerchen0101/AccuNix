@@ -22,9 +22,7 @@ const botGuid = computed<string>(() => botGuidWithType.value.split('_')[1])
 //   console.log(productApiPathMap[botType.value])
 // })
 const state = {
-  orgGuid: ref('5db11c59'),
-  lineBotGuid: ref('5db13bab'),
-  fbBotGuid: ref('5db2af62'),
+  orgGuid: ref(''),
   botGuidWithType,
   botType,
   botGuid,

@@ -1,7 +1,6 @@
 import { useApiErrHandler } from '@/hooks/useApiErrHandler'
 import useRequest from '@/hooks/useRequest'
 import { ref } from 'vue'
-import { useRouter } from 'vue-router'
 import { useGlobalState } from '../providers/globalProvider'
 
 export interface Action {
@@ -49,9 +48,8 @@ export interface InboxCreateReq {
 }
 
 function useInboxCreate() {
-  const router = useRouter()
   const apiErrHandler = useApiErrHandler()
-  const { lineBotGuid } = useGlobalState()
+  const { botApiPath } = useGlobalState()
   const isLoading = ref(false)
   const isError = ref(false)
   const doCreate = async (data: InboxCreateReq) => {
@@ -60,7 +58,7 @@ function useInboxCreate() {
     try {
       const res = await useRequest({
         method: 'post',
-        url: `/LINEBot/${lineBotGuid.value}/Richmenu/store`,
+        url: `${botApiPath.value}/Richmenu/store`,
         data,
       })
     } catch (err) {

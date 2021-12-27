@@ -12,6 +12,7 @@ import {
   onUnmounted,
   reactive,
   ref,
+  watch,
   watchEffect,
 } from 'vue'
 import { useRouter } from 'vue-router'
@@ -24,7 +25,6 @@ export default defineComponent({
     PageIconBtn,
   },
   setup() {
-    const router = useRouter()
     const { activePage } = useLayoutState()
     const { breadcrumb, botType, botGuid } = useGlobalState()
     watchEffect(() => {
@@ -56,6 +56,12 @@ export default defineComponent({
       activePage.value = 'lineRichmenu'
       fetchData(req)
     })
+    watch(
+      () => botGuid.value,
+      () => {
+        fetchData(req)
+      },
+    )
 
     return {
       req,

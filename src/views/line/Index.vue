@@ -1,7 +1,7 @@
 <script lang="ts">
 import Layout from '@/components/Layout/Layout.vue'
 import TabGroup from '@/components/TabGroup.vue'
-import { productIconMap, productTypeMap } from '@/lib/maps'
+import { productTypeMap } from '@/lib/maps'
 import { useGlobalState } from '@/providers/globalProvider'
 import { useLayoutState } from '@/providers/layoutProvider'
 import { OptionType } from '@/types'
@@ -14,14 +14,8 @@ export default defineComponent({
   },
   setup() {
     const { activePage } = useLayoutState()
-    const {
-      breadcrumb,
-      lineBotGuid,
-      loginInfo,
-      botGuidWithType,
-      botType,
-      botGuid,
-    } = useGlobalState()
+    const { breadcrumb, loginInfo, botGuidWithType, botType, botGuid } =
+      useGlobalState()
     const botOpts = computed(() =>
       loginInfo.value?.bots
         .filter((t) => t.product_type_id === botType.value)
@@ -54,7 +48,7 @@ export default defineComponent({
         : []
     })
 
-    return { lineBotGuid, tabOptions, botOpts, botGuidWithType }
+    return { tabOptions, botOpts, botGuidWithType }
   },
 })
 </script>
@@ -64,9 +58,6 @@ export default defineComponent({
     <div class="p-3">
       <div class="flex flex-col sm:flex-row items-center mb-3 gap-1">
         <div class="flex space-x-3 w-full sm:w-auto mt-3 sm:mt-0">
-          <!-- <el-select class="flex-1 sm:w-52" v-model="lineBotGuid">
-            <el-option :label="lineBotGuid" :value="lineBotGuid" />
-          </el-select> -->
           <el-select class="flex-1 sm:w-72" v-model="botGuidWithType">
             <el-option
               v-for="opt in botOpts"

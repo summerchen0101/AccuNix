@@ -14,7 +14,7 @@ export default defineComponent({
   },
   setup() {
     const { activePage } = useLayoutState()
-    const { fbBotGuid } = useGlobalState()
+    const { botGuid } = useGlobalState()
     onMounted(() => {
       activePage.value = 'Facebook'
     })
@@ -27,7 +27,7 @@ export default defineComponent({
       { label: '儀表板', value: 'FbChart' },
       { label: '機器人設定', value: 'FbRobot' },
     ]
-    return { breadcrumb, fbBotGuid, tabOptions }
+    return { breadcrumb, botGuid, tabOptions }
   },
 })
 </script>
@@ -48,8 +48,8 @@ export default defineComponent({
         />
         <div class="flex-1"></div>
         <div class="flex space-x-3 w-full sm:w-auto mt-3 sm:mt-0">
-          <el-select class="flex-1 sm:w-52" v-model="fbBotGuid">
-            <el-option :label="fbBotGuid" :value="fbBotGuid" />
+          <el-select class="flex-1 sm:w-52" v-model="botGuid">
+            <el-option :label="botGuid" :value="botGuid" />
           </el-select>
           <div class="ctrl-btn">
             <i class="fas fa-plus"></i>

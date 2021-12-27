@@ -1,9 +1,8 @@
-import { ListBaseReq, ListMeta } from './../types/index'
 import { useApiErrHandler } from '@/hooks/useApiErrHandler'
 import useRequest from '@/hooks/useRequest'
 import { ref } from 'vue'
-import { useRouter } from 'vue-router'
 import { useGlobalState } from '../providers/globalProvider'
+import { ListBaseReq, ListMeta } from './../types/index'
 
 export interface InboxListReq extends ListBaseReq {
   search?: string
@@ -41,9 +40,8 @@ export interface Links {
 }
 
 function useInboxList() {
-  const router = useRouter()
   const apiErrHandler = useApiErrHandler()
-  const { lineBotGuid } = useGlobalState()
+  const { botApiPath } = useGlobalState()
   const isLoading = ref(false)
   const isError = ref(false)
   const list = ref<Inbox[]>([])
@@ -54,7 +52,7 @@ function useInboxList() {
     try {
       const res = await useRequest<InboxListRes>({
         method: 'get',
-        url: `/LINEBot/${lineBotGuid.value}/Richmenu/getIndexList`,
+        url: `${botApiPath.value}/Richmenu/getIndexList`,
         config: { params: req },
       })
       list.value = res.data.rows

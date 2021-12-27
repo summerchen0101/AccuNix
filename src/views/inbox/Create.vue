@@ -52,7 +52,7 @@ export default defineComponent({
     const layoutImgSrc = ref('')
     const imgFile = ref<File>()
     const alert = useAlert()
-    const { lineBotGuid, orgGuid } = useGlobalState()
+    const { botGuid, orgGuid } = useGlobalState()
     const layoutSelectorVisible = ref(false)
     const activeBox = ref<number>(1)
     const selectedLayout = ref<number>(1)
@@ -109,15 +109,6 @@ export default defineComponent({
       { label: '發送票券券庫', value: 'TicketBox' },
     ]
 
-    const actionMap = {
-      Inbox: 'richmenu_switch',
-      Link: 'uri',
-      Message: 'send_messages',
-      OpenTicket: 'coupon_wallet',
-      TicketActivity: 'coupon',
-      Keyword: 'keyword',
-    }
-
     const initActionForm = (type) => {
       data.areas[activeBox.value] = {
         tags: [],
@@ -154,7 +145,7 @@ export default defineComponent({
       formData.append('from', 'richmenu')
       formData.append(
         'path',
-        `org/${orgGuid.value}/line/${lineBotGuid.value}/richmenu`,
+        `org/${orgGuid.value}/line/${botGuid.value}/richmenu`,
       )
       formData.append('file', file)
       return doUpload(formData)
