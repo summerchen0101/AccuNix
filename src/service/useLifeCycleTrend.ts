@@ -1,8 +1,6 @@
 import { useApiErrHandler } from '@/hooks/useApiErrHandler'
 import useRequest from '@/hooks/useRequest'
-import { BotType } from '@/lib/enum'
 import { ref } from 'vue'
-import { useRouter } from 'vue-router'
 import { useGlobalState } from '../providers/globalProvider'
 
 export interface LifeCycleTrandReq {
@@ -24,24 +22,20 @@ export interface LifeCycleTrandRes {
   message?: string
 }
 
-function useLifeCycleTrand(type: BotType) {
-  const router = useRouter()
+function useLifeCycleTrand() {
   const apiErrHandler = useApiErrHandler()
-  const { lineBotGuid, fbBotGuid } = useGlobalState()
+  const { botApiPath } = useGlobalState()
   const isLoading = ref(false)
   const isError = ref(false)
   const data = ref<LifeCycleTrand[]>([])
-  const apiPathMap: Record<BotType, string> = {
-    line: `LINEBot/${lineBotGuid.value}`,
-    fb: `FBMessengerBot/${fbBotGuid.value}`,
-  }
+
   const fetchData = async (req: LifeCycleTrandReq) => {
     isLoading.value = true
     isError.value = false
     try {
       const res = await useRequest<LifeCycleTrandRes>({
         method: 'get',
-        url: `${apiPathMap[type]}/Dashboard/lifecycle-trend`,
+        url: `${botApiPath.value}/Dashboard/lifecycle-trend`,
         config: { params: req },
       })
       data.value = res.data

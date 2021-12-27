@@ -2,22 +2,29 @@
 import DoughnutChart from '@/components/DoughnutChart.vue'
 import SectionPanel from '@/components/SectionPanel.vue'
 import { BotType } from '@/lib/enum'
+import { useGlobalState } from '@/providers/globalProvider'
 import useLifeCycleOverview from '@/service/useLifeCycleOverview'
-import { computed, defineComponent, PropType } from 'vue'
+import { computed, defineComponent, onMounted, PropType, watch } from 'vue'
 import Spinner from '../Spinner.vue'
 
 export default defineComponent({
   props: {
-    type: {
-      type: String as PropType<BotType>,
-      required: true,
-    },
     tab: Number,
   },
   emits: ['update:tab'],
   setup(props, { emit }) {
-    const { fetchData, isLoading, data } = useLifeCycleOverview(props.type)
-    fetchData()
+    const { botGuid } = useGlobalState()
+    const { fetchData, isLoading, data } = useLifeCycleOverview()
+
+    onMounted(() => {
+      fetchData()
+    })
+    watch(
+      () => botGuid.value,
+      () => {
+        fetchData()
+      },
+    )
     const localTab = computed({
       get: () => props.tab,
       set: (val) => emit('update:tab', val),

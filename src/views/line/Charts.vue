@@ -23,25 +23,6 @@ export default defineComponent({
     Scripts,
   },
   setup() {
-    const { activePage } = useLayoutState()
-    const { lineBotGuid, breadcrumb, botType, botGuid } = useGlobalState()
-    // onMounted(() => {
-    //   activePage.value = 'lineBasic'
-    // })
-
-    // watchEffect(() => {
-    //   breadcrumb.value = botType.value
-    //     ? [
-    //         { name: '機器人管理' },
-    //         {
-    //           name: `${productTypeMap[botType.value]}-${botGuid.value}`,
-    //           mobileShow: true,
-    //         },
-    //         { name: '儀表板', mobileShow: true },
-    //       ]
-    //     : []
-    // })
-
     return { botType: BotType.LINE }
   },
 })
@@ -50,8 +31,8 @@ export default defineComponent({
 <template>
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
     <LifeCycle :type="botType" />
-    <Activity :type="botType" />
-    <Friends :type="botType" />
+    <Activity />
+    <Friends />
     <Message :type="botType" />
     <Labels :type="botType" />
     <Keywords :type="botType" />

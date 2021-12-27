@@ -1,18 +1,12 @@
 <script lang="ts">
-import { BotType } from '@/lib/enum'
+import { useGlobalState } from '@/providers/globalProvider'
 import useScriptOverview from '@/service/useScriptOverview'
 import { format, subDays } from 'date-fns'
-import { defineComponent, onMounted, ref, PropType } from 'vue'
+import { defineComponent, onMounted, ref, watch } from 'vue'
 import SectionPanel from '../SectionPanel.vue'
 import Spinner from '../Spinner.vue'
 
 export default defineComponent({
-  props: {
-    type: {
-      type: String as PropType<BotType>,
-      required: true,
-    },
-  },
   components: {
     SectionPanel,
     Spinner,
@@ -20,7 +14,8 @@ export default defineComponent({
   setup(props) {
     const startAt = ref(subDays(new Date(), 8))
     const endAt = ref(subDays(new Date(), 1))
-    const { list, fetchData, isLoading } = useScriptOverview(props.type)
+    const { botGuid } = useGlobalState()
+    const { list, fetchData, isLoading } = useScriptOverview()
 
     const onSearch = () => {
       const search = {
@@ -35,6 +30,12 @@ export default defineComponent({
     onMounted(() => {
       onSearch()
     })
+    watch(
+      () => botGuid.value,
+      () => {
+        onSearch()
+      },
+    )
 
     return { startAt, endAt, list, isLoading, onSearch }
   },

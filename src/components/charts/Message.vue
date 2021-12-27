@@ -1,7 +1,7 @@
 <script lang="ts">
-import { BotType } from '@/lib/enum'
+import { useGlobalState } from '@/providers/globalProvider'
 import { format, subDays } from 'date-fns'
-import { computed, defineComponent, onMounted, ref, PropType } from 'vue'
+import { computed, defineComponent, onMounted, ref, watch } from 'vue'
 import useMessageTrand, {
   MessageTrand,
   MessageTrandReq,
@@ -10,16 +10,11 @@ import SectionPanel from '../SectionPanel.vue'
 import Spinner from '../Spinner.vue'
 
 export default defineComponent({
-  props: {
-    type: {
-      type: String as PropType<BotType>,
-      required: true,
-    },
-  },
   setup(props) {
     const startAt = ref(subDays(new Date(), 8))
     const endAt = ref(subDays(new Date(), 1))
-    const { fetchData, isLoading, data } = useMessageTrand(props.type)
+    const { botGuid } = useGlobalState()
+    const { fetchData, isLoading, data } = useMessageTrand()
     const onSearch = () => {
       const search: MessageTrandReq = {
         startAt: startAt.value
@@ -32,6 +27,12 @@ export default defineComponent({
     onMounted(() => {
       onSearch()
     })
+    watch(
+      () => botGuid.value,
+      () => {
+        onSearch()
+      },
+    )
     const dataMap: Partial<Record<keyof MessageTrand, string>> = {
       reply: '自動回應',
       push: '主動推播',

@@ -2,7 +2,6 @@ import { useApiErrHandler } from '@/hooks/useApiErrHandler'
 import useRequest from '@/hooks/useRequest'
 import { BotType } from '@/lib/enum'
 import { ref } from 'vue'
-import { useRouter } from 'vue-router'
 import { useGlobalState } from '../providers/globalProvider'
 
 export interface ScriptOverviewReq {
@@ -22,24 +21,20 @@ export interface ScriptOverviewRes {
   message?: string
 }
 
-function useScriptOverview(type: BotType) {
-  const router = useRouter()
+function useScriptOverview() {
   const apiErrHandler = useApiErrHandler()
-  const { lineBotGuid, fbBotGuid } = useGlobalState()
+  const { botApiPath } = useGlobalState()
   const isLoading = ref(false)
   const isError = ref(false)
   const list = ref<ScriptOverviewRes['data']>([])
-  const apiPathMap: Record<BotType, string> = {
-    line: `LINEBot/${lineBotGuid.value}`,
-    fb: `FBMessengerBot/${fbBotGuid.value}`,
-  }
+
   const fetchData = async (req: ScriptOverviewReq) => {
     isLoading.value = true
     isError.value = false
     try {
       const res = await useRequest<ScriptOverviewRes>({
         method: 'get',
-        url: `${apiPathMap[type]}/Dashboard/script-overview`,
+        url: `${botApiPath.value}/Dashboard/script-overview`,
         config: { params: req },
       })
       list.value = res.data

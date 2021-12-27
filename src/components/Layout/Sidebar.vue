@@ -71,11 +71,10 @@
 
 <script lang="ts">
 import MenuItem from '@/components/Layout/MenuItem.vue'
-import { useLayoutState } from '@/providers/layoutProvider'
-import { computed, defineComponent, watchEffect } from 'vue'
-import { menuList, botMenus } from '@/lib/menu'
+import { botMenus, menuList } from '@/lib/menu'
 import { useGlobalState } from '@/providers/globalProvider'
-import { productIconMap, productTypeMap } from '@/lib/maps'
+import { useLayoutState } from '@/providers/layoutProvider'
+import { computed, defineComponent } from 'vue'
 
 export default defineComponent({
   name: 'Sidebar',

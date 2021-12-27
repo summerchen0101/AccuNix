@@ -13,23 +13,20 @@ export interface HoursOverviewRes {
   message?: string
 }
 
-function useHoursOverview(type: BotType) {
+function useHoursOverview() {
   const apiErrHandler = useApiErrHandler()
-  const { lineBotGuid, fbBotGuid } = useGlobalState()
+  const { botApiPath } = useGlobalState()
   const isLoading = ref(false)
   const isError = ref(false)
   const list = ref<HoursOverviewRes['data']>([])
-  const apiPathMap: Record<BotType, string> = {
-    line: `LINEBot/${lineBotGuid.value}`,
-    fb: `FBMessengerBot/${fbBotGuid.value}`,
-  }
+
   const fetchData = async () => {
     isLoading.value = true
     isError.value = false
     try {
       const res = await useRequest<HoursOverviewRes>({
         method: 'get',
-        url: `${apiPathMap[type]}/Dashboard/freqhour-overview`,
+        url: `${botApiPath.value}/Dashboard/freqhour-overview`,
       })
       list.value = res.data
     } catch (err) {

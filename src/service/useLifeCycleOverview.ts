@@ -24,24 +24,20 @@ export interface LifeCycle {
   users_percent: string
 }
 
-function useLifeCycleOverview(type: BotType) {
-  const router = useRouter()
+function useLifeCycleOverview() {
   const apiErrHandler = useApiErrHandler()
-  const { lineBotGuid, fbBotGuid } = useGlobalState()
+  const { botApiPath } = useGlobalState()
   const isLoading = ref(false)
   const isError = ref(false)
   const data = ref<LifeCycleOverviewRes['data']>(null)
-  const apiPathMap: Record<BotType, string> = {
-    line: `LINEBot/${lineBotGuid.value}`,
-    fb: `FBMessengerBot/${fbBotGuid.value}`,
-  }
+
   const fetchData = async () => {
     isLoading.value = true
     isError.value = false
     try {
       const res = await useRequest<LifeCycleOverviewRes>({
         method: 'get',
-        url: `${apiPathMap[type]}/Dashboard/lifecycle-overview`,
+        url: `${botApiPath.value}/Dashboard/lifecycle-overview`,
       })
       data.value = res.data
     } catch (err) {

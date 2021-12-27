@@ -1,22 +1,18 @@
 <script lang="ts">
 import { BotType } from '@/lib/enum'
+import { useGlobalState } from '@/providers/globalProvider'
 import useKeywordTrand from '@/service/useKeywordTrend'
 import { format, subDays } from 'date-fns'
-import { defineComponent, onMounted, ref, PropType } from 'vue'
+import { defineComponent, onMounted, ref, PropType, watch } from 'vue'
 import SectionPanel from '../SectionPanel.vue'
 import Spinner from '../Spinner.vue'
 
 export default defineComponent({
-  props: {
-    type: {
-      type: String as PropType<BotType>,
-      required: true,
-    },
-  },
   setup(props) {
     const startAt = ref(subDays(new Date(), 8))
     const endAt = ref(subDays(new Date(), 1))
-    const { list, fetchData, isLoading } = useKeywordTrand(props.type)
+    const { list, fetchData, isLoading } = useKeywordTrand()
+    const { botGuid } = useGlobalState()
     const onSearch = () => {
       const search = {
         startAt: startAt.value
@@ -29,6 +25,12 @@ export default defineComponent({
     onMounted(() => {
       onSearch()
     })
+    watch(
+      () => botGuid.value,
+      () => {
+        onSearch()
+      },
+    )
     return { startAt, endAt, list, isLoading, onSearch }
   },
   components: { SectionPanel, Spinner },

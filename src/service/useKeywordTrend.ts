@@ -23,24 +23,20 @@ export interface KeywordTrandRes {
   message?: string
 }
 
-function useKeywordTrand(type: BotType) {
-  const router = useRouter()
+function useKeywordTrand() {
   const apiErrHandler = useApiErrHandler()
-  const { lineBotGuid, fbBotGuid } = useGlobalState()
+  const { botApiPath } = useGlobalState()
   const isLoading = ref(false)
   const isError = ref(false)
   const list = ref<KeywordTrand[]>([])
-  const apiPathMap: Record<BotType, string> = {
-    line: `LINEBot/${lineBotGuid.value}`,
-    fb: `FBMessengerBot/${fbBotGuid.value}`,
-  }
+
   const fetchData = async (req: KeywordTrandReq) => {
     isLoading.value = true
     isError.value = false
     try {
       const res = await useRequest<KeywordTrandRes>({
         method: 'get',
-        url: `${apiPathMap[type]}/Dashboard/keyword-trend`,
+        url: `${botApiPath.value}/Dashboard/keyword-trend`,
         config: { params: req },
       })
       list.value = res.data

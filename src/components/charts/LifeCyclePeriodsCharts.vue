@@ -1,26 +1,24 @@
 <script lang="ts">
 import { BotType } from '@/lib/enum'
+import { useGlobalState } from '@/providers/globalProvider'
 import useLifeCycleTrand, {
   LifeCycleTrandReq,
 } from '@/service/useLifeCycleTrend'
 import { format, subDays } from 'date-fns'
-import { computed, defineComponent, onMounted, ref, PropType } from 'vue'
+import { computed, defineComponent, onMounted, ref, PropType, watch } from 'vue'
 import SectionPanel from '../SectionPanel.vue'
 import Spinner from '../Spinner.vue'
 
 export default defineComponent({
   props: {
-    type: {
-      type: String as PropType<BotType>,
-      required: true,
-    },
     tab: Number,
   },
   emits: ['update:tab'],
   setup(props, { emit }) {
     const startAt = ref(subDays(new Date(), 8))
     const endAt = ref(subDays(new Date(), 1))
-    const { fetchData, isLoading, data } = useLifeCycleTrand(props.type)
+    const { botGuid } = useGlobalState()
+    const { fetchData, isLoading, data } = useLifeCycleTrand()
     const onSearch = () => {
       const search: LifeCycleTrandReq = {
         startAt: startAt.value
@@ -33,6 +31,12 @@ export default defineComponent({
     onMounted(() => {
       onSearch()
     })
+    watch(
+      () => botGuid.value,
+      () => {
+        onSearch()
+      },
+    )
     const localTab = computed({
       get: () => props.tab,
       set: (val) => emit('update:tab', val),

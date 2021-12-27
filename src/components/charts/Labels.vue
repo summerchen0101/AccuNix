@@ -1,16 +1,10 @@
 <script lang="ts">
-import { BotType } from '@/lib/enum'
+import { useGlobalState } from '@/providers/globalProvider'
 import useTagOverview from '@/service/useTagOverview'
-import { defineComponent, onMounted, ref, PropType } from 'vue'
+import { defineComponent, onMounted, ref, watch } from 'vue'
 import SectionPanel from '../SectionPanel.vue'
 import Spinner from '../Spinner.vue'
 export default defineComponent({
-  props: {
-    type: {
-      type: String as PropType<BotType>,
-      required: true,
-    },
-  },
   components: {
     SectionPanel,
     Spinner,
@@ -18,10 +12,17 @@ export default defineComponent({
   setup(props) {
     const selected = ref(1)
     const limit = ref(10)
-    const { list, fetchData, isLoading } = useTagOverview(props.type)
+    const { botGuid } = useGlobalState()
+    const { list, fetchData, isLoading } = useTagOverview()
     onMounted(() => {
       fetchData()
     })
+    watch(
+      () => botGuid.value,
+      () => {
+        fetchData()
+      },
+    )
     return { selected, limit, list, isLoading }
   },
 })

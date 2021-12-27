@@ -1,27 +1,27 @@
 <script lang="ts">
 import useHoursOverview from '@/service/useHoursOverview'
-import { computed, defineComponent, onMounted, PropType } from 'vue'
+import { computed, defineComponent, onMounted, PropType, watch } from 'vue'
 import SectionPanel from '../SectionPanel.vue'
 import Spinner from '../Spinner.vue'
-import { BotType } from '@/lib/enum'
+import { useGlobalState } from '@/providers/globalProvider'
 
 export default defineComponent({
-  props: {
-    type: {
-      type: String as PropType<BotType>,
-      required: true,
-    },
-  },
   components: {
     SectionPanel,
     Spinner,
   },
   setup(props) {
-    const { fetchData, isLoading, list } = useHoursOverview(props.type)
-
+    const { fetchData, isLoading, list } = useHoursOverview()
+    const { botGuid } = useGlobalState()
     onMounted(() => {
       fetchData()
     })
+    watch(
+      () => botGuid.value,
+      () => {
+        fetchData()
+      },
+    )
 
     const chartOptions = computed(() => ({
       chart: {

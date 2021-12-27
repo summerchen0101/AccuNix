@@ -2,20 +2,15 @@
 import SectionPanel from '@/components/SectionPanel.vue'
 import Spinner from '@/components/Spinner.vue'
 import { BotType } from '@/lib/enum'
+import { useGlobalState } from '@/providers/globalProvider'
 import { format, subDays } from 'date-fns'
-import { computed, defineComponent, onMounted, ref, PropType } from 'vue'
+import { computed, defineComponent, onMounted, ref, PropType, watch } from 'vue'
 import useFriendTrand, {
   FriendTrand,
   FriendTrandReq,
 } from '../../service/useFriendTrend'
 
 export default defineComponent({
-  props: {
-    type: {
-      type: String as PropType<BotType>,
-      required: true,
-    },
-  },
   components: {
     Spinner,
     SectionPanel,
@@ -23,7 +18,8 @@ export default defineComponent({
   setup(props) {
     const startAt = ref(subDays(new Date(), 8))
     const endAt = ref(subDays(new Date(), 1))
-    const { fetchData, isLoading, data } = useFriendTrand(props.type)
+    const { fetchData, isLoading, data } = useFriendTrand()
+    const { botGuid } = useGlobalState()
 
     const onSearch = () => {
       const search: FriendTrandReq = {
@@ -38,6 +34,12 @@ export default defineComponent({
     onMounted(() => {
       onSearch()
     })
+    watch(
+      () => botGuid.value,
+      () => {
+        onSearch()
+      },
+    )
 
     const dataMap: Partial<Record<keyof FriendTrand, string>> = {
       cumulativeFollowers: '累積好友',
