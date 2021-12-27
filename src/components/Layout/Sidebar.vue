@@ -94,7 +94,9 @@ export default defineComponent({
     )
 
     const perBotMenus = computed(() =>
-      botMenus.filter((m) => botInfo.value?.permissions[m.code]?.read),
+      botMenus[botType.value]?.filter(
+        (m) => botInfo.value?.permissions[m.code]?.read,
+      ),
     )
     const perOrgMenus = computed(() =>
       menuList

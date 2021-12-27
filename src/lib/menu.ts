@@ -1,3 +1,5 @@
+import { ProductType } from './enum'
+
 export interface Menu {
   label: string
   icon?: string
@@ -6,46 +8,98 @@ export interface Menu {
   code?: string
 }
 
-export const botMenus: Menu[] = [
-  {
-    label: '儀表板',
-    path: '/line/chart',
-    icon: 'fas fa-chart-bar',
-    code: 'basic',
-  },
-  {
-    label: '機器人主選單',
-    path: '/inbox/list',
-    icon: 'fas fa-border-all',
-    code: 'richmenu',
-  },
-  {
-    label: '自動回應設定',
-    path: '/',
-    icon: 'far fa-caret-square-left',
-    code: 'autoResponse',
-  },
-  {
-    label: '關鍵字庫',
-    path: '/',
-    icon: 'fab fa-slack-hash',
-    code: 'keyword',
-  },
-  { label: '排程任務', path: '/', icon: 'far fa-clock', code: 'lineSchedule' },
-  { label: '好友管理', path: '/', icon: 'far fa-user', code: 'lineUser' },
-  {
-    label: '常用訊息庫',
-    path: '/',
-    icon: 'far fa-comments',
-    code: 'message',
-  },
-  {
-    label: '問券腳本',
-    path: '/',
-    icon: 'far fa-sticky-note',
-    code: 'form',
-  },
-]
+export const botMenus: Record<ProductType, Menu[]> = {
+  [ProductType.LINE]: [
+    {
+      label: '儀表板',
+      path: '/line/chart',
+      icon: 'fas fa-chart-bar',
+      code: 'basic',
+    },
+    {
+      label: '機器人主選單',
+      path: '/inbox/list',
+      icon: 'fas fa-border-all',
+      code: 'richmenu',
+    },
+    {
+      label: '自動回應設定',
+      path: '/',
+      icon: 'far fa-caret-square-left',
+      code: 'autoResponse',
+    },
+    {
+      label: '關鍵字庫',
+      path: '/',
+      icon: 'fab fa-slack-hash',
+      code: 'keyword',
+    },
+    {
+      label: '排程任務',
+      path: '/',
+      icon: 'far fa-clock',
+      code: 'lineSchedule',
+    },
+    { label: '好友管理', path: '/', icon: 'far fa-user', code: 'lineUser' },
+    {
+      label: '常用訊息庫',
+      path: '/',
+      icon: 'far fa-comments',
+      code: 'message',
+    },
+    {
+      label: '問券腳本',
+      path: '/',
+      icon: 'far fa-sticky-note',
+      code: 'form',
+    },
+  ],
+  [ProductType.FB]: [
+    {
+      label: '儀表板',
+      path: '/fb/chart',
+      icon: 'fas fa-chart-bar',
+      code: 'basic',
+    },
+    {
+      label: '機器人主選單',
+      path: '/inbox/list',
+      icon: 'fas fa-border-all',
+      code: 'richmenu',
+    },
+    {
+      label: '自動回應設定',
+      path: '/',
+      icon: 'far fa-caret-square-left',
+      code: 'autoResponse',
+    },
+    {
+      label: '關鍵字庫',
+      path: '/',
+      icon: 'fab fa-slack-hash',
+      code: 'keyword',
+    },
+    {
+      label: '排程任務',
+      path: '/',
+      icon: 'far fa-clock',
+      code: 'lineSchedule',
+    },
+    { label: '好友管理', path: '/', icon: 'far fa-user', code: 'lineUser' },
+    {
+      label: '常用訊息庫',
+      path: '/',
+      icon: 'far fa-comments',
+      code: 'message',
+    },
+    {
+      label: '問券腳本',
+      path: '/',
+      icon: 'far fa-sticky-note',
+      code: 'form',
+    },
+  ],
+}
 
 export const menuList: Menu[] = [
   // { label: '首頁', path: '/', icon: 'fa-home', code: 'Home' },

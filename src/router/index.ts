@@ -30,18 +30,18 @@ const routes: Array<RouteRecordRaw> = [
     ],
   },
   {
-    path: '/facebook',
+    path: '/fb',
     name: 'Facebook',
     component: () => import('@/views/fb/Index.vue'),
     redirect: { name: 'FbChart' },
     children: [
       {
-        path: '/facebook/chart',
+        path: '/fb/chart',
         name: 'FbChart',
         component: () => import('@/views/fb/Charts.vue'),
       },
       {
-        path: '/facebook/robot',
+        path: '/fb/robot',
         name: 'FbRobot',
         component: () => import('@/views/fb/Robot.vue'),
       },
