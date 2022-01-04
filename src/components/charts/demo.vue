@@ -25,9 +25,9 @@ export default defineComponent({
         fetchData()
       },
     )
-    const myChart = ref(null)
+    const colorChart = ref(null)
     const createChart = () => {
-      let chart = am4core.create(myChart.value, am4charts.XYChart)
+      let chart = am4core.create(colorChart.value, am4charts.XYChart)
 
       // Add data
       chart.data = list.value.map((t, i) => ({
@@ -38,14 +38,11 @@ export default defineComponent({
       // Create axes
       let categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis())
       categoryAxis.dataFields.category = 'hours'
+      // categoryAxis.title.text = 'Countries'
       categoryAxis.renderer.minGridDistance = 20
-      categoryAxis.renderer.grid.template.disabled = true
-      categoryAxis.fontSize = 12
 
       let valueAxis = chart.yAxes.push(new am4charts.ValueAxis())
-      valueAxis.renderer.opposite = true
-      valueAxis.fontSize = 12
-      valueAxis.cursorTooltipEnabled = false
+      // valueAxis.title.text = 'Litres sold (M)'
 
       // Create series
       let series = chart.series.push(new am4charts.LineSeries())
@@ -57,15 +54,30 @@ export default defineComponent({
 
       // Drop-shaped tooltips
       series.tooltip.getFillFromObject = false
+      // series.tooltip.pointerOrientation = 'left'
+      // series.tooltip.label.propertyFields.fill = 'color'
+      // series.tooltip.background.propertyFields.stroke = 'color'
+      // series.tooltip.background.cornerRadius = 40
       series.tooltip.background.fill = am4core.color('#187FDD')
       series.tooltip.label.fill = am4core.color('#fff')
       series.tooltipText = '{users}'
+      // series.tooltip.background.strokeOpacity = 0
+      // series.tooltip.pointerOrientation = 'vertical'
       series.tooltip.label.textAlign = 'middle'
+
+      // Make bullets grow on hover
+      // let bullet = series.bullets.push(new am4charts.CircleBullet())
+      // bullet.circle.fill = am4core.color('#fff')
+
+      // let bullethover = bullet.states.create('hover')
+      // bullethover.properties.scale = 1.3
 
       // Make a panning cursor
       chart.cursor = new am4charts.XYCursor()
       chart.cursor.lineY.disabled = true
       chart.cursor.behavior = 'none'
+      // chart.cursor.xAxis = categoryAxis
+      // chart.cursor.snapToSeries = series
     }
 
     watch(
@@ -74,15 +86,13 @@ export default defineComponent({
         createChart()
       },
     )
-    return { myChart }
+    return { colorChart }
   },
 })
 </script>
 
 <template>
   <SectionPanel title="24小時好友活躍分佈">
-    <div class="h-[350px] pt-6">
-      <div ref="myChart" class="w-full h-full"></div>
-    </div>
+    <div ref="colorChart" class="w-full h-full"></div>
   </SectionPanel>
 </template>

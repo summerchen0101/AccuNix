@@ -24,7 +24,7 @@ function useMessageTrand() {
   const { botApiPath } = useGlobalState()
   const isLoading = ref(false)
   const isError = ref(false)
-  const data = ref<MessageTrand[]>([])
+  const list = ref<MessageTrand[]>([])
 
   const fetchData = async (req: MessageTrandReq) => {
     isLoading.value = true
@@ -35,16 +35,16 @@ function useMessageTrand() {
         url: `${botApiPath.value}/Dashboard/message-trend`,
         config: { params: req },
       })
-      data.value = res.data
+      list.value = res.data
     } catch (err) {
       apiErrHandler(err)
       isError.value = true
     }
     isLoading.value = false
-    return data.value
+    return list.value
   }
 
-  return { data, fetchData, isLoading }
+  return { list, fetchData, isLoading }
 }
 
 export default useMessageTrand

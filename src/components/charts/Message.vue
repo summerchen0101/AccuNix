@@ -8,13 +8,20 @@ import useMessageTrand, {
 } from '../../service/useMessageTrend'
 import SectionPanel from '../SectionPanel.vue'
 import Spinner from '../Spinner.vue'
+import * as am4charts from '@amcharts/amcharts4/charts'
+import * as am4core from '@amcharts/amcharts4/core'
+import am4themes_animated from '@amcharts/amcharts4/themes/animated'
+import am4lang_zh_Hant from '@amcharts/amcharts4/lang/zh_Hant'
+
+am4core.useTheme(am4themes_animated)
 
 export default defineComponent({
+  components: { SectionPanel, Spinner },
   setup(props) {
     const startAt = ref(subDays(new Date(), 8))
     const endAt = ref(subDays(new Date(), 1))
     const { botGuid } = useGlobalState()
-    const { fetchData, isLoading, data } = useMessageTrand()
+    const { fetchData, isLoading, list } = useMessageTrand()
     const onSearch = () => {
       const search: MessageTrandReq = {
         startAt: startAt.value
@@ -38,59 +45,93 @@ export default defineComponent({
       push: '主動推播',
     }
     const selected = ref<keyof MessageTrand>('reply')
-    const chartOptions = computed(() => ({
-      chart: {
-        toolbar: {
-          show: false,
-        },
-        height: 350,
-        type: 'line',
-        zoom: {
-          enabled: false,
-        },
+
+    const myChart = ref(null)
+    const createChart = () => {
+      let chart = am4core.create(myChart.value, am4charts.XYChart)
+      chart.language.locale = am4lang_zh_Hant
+      // Add data
+      chart.data = list.value.map((t) => ({
+        date: t.date,
+        reply: t.reply,
+        push: t.push,
+      }))
+
+      console.log(chart.data)
+      // Create axes
+      let categoryAxis = chart.xAxes.push(new am4charts.DateAxis())
+      // categoryAxis.dataFields.date = 'date'
+
+      categoryAxis.renderer.minGridDistance = 20
+
+      categoryAxis.dateFormats.setKey('day', 'MM/dd')
+      categoryAxis.fontSize = 12
+
+      // categoryAxis.dateFormatter = new am4core.DateFormatter()
+      // categoryAxis.dateFormatter.dateFormat = 'MM-dd'
+
+      let valueAxis = chart.yAxes.push(new am4charts.ValueAxis())
+      valueAxis.renderer.opposite = true
+      valueAxis.fontSize = 12
+      valueAxis.cursorTooltipEnabled = false
+      // valueAxis.renderer.minGridDistance = 50
+      valueAxis.min = 0
+      // valueAxis.max = 20
+      // valueAxis.extraMin = 0.2
+
+      // Create series
+      let series = chart.series.push(new am4charts.LineSeries())
+      // series.name = 'Reply'
+      series.stroke = am4core.color('#187FDD')
+      series.strokeWidth = 2
+      series.dataFields.valueY = selected.value
+      series.dataFields.dateX = 'date'
+
+      // Drop-shaped tooltips
+      series.tooltip.getFillFromObject = false
+      series.tooltip.background.fill = am4core.color('#187FDD')
+      series.tooltip.label.fill = am4core.color('#fff')
+      // series.tooltipText = '{reply}'
+
+      // series.tooltipText = "{dateX.formatDate('MM/dd')}:{valueY}"
+      series.tooltipText = '{valueY}'
+      series.tooltip.label.textAlign = 'middle'
+
+      // Make a panning cursor
+      chart.cursor = new am4charts.XYCursor()
+      chart.cursor.lineY.disabled = true
+      chart.cursor.behavior = 'none'
+    }
+
+    watch(
+      () => list.value,
+      () => {
+        createChart()
       },
-      dataLabels: {
-        enabled: false,
+    )
+    watch(
+      () => selected.value,
+      () => {
+        createChart()
       },
-      stroke: {
-        curve: 'straight',
-        width: 2,
-      },
-      grid: {
-        row: {
-          colors: ['#f3f3f3', 'transparent'],
-          opacity: 0.5,
-        },
-      },
-      xaxis: {
-        categories: data.value.map((t) => format(new Date(t.date), 'M-dd')),
-      },
-    }))
-    const series = computed(() => [
-      {
-        name: dataMap[selected.value],
-        data: data.value.map((t) => t[selected.value]),
-      },
-    ])
+    )
     return {
       isLoading,
       startAt,
       endAt,
       selected,
-      series,
-      chartOptions,
       dataMap,
       onSearch,
+      myChart,
     }
   },
-  components: { SectionPanel, Spinner },
 })
 </script>
 
 <template>
   <SectionPanel title="訊息使用狀況">
     <Spinner v-if="isLoading" />
-    <div v-else class="mt-3">
+    <div class="mt-3">
       <div class="flex space-x-2 mb-3">
         <el-date-picker
           type="date"
@@ -118,12 +159,7 @@ export default defineComponent({
         >
       </el-radio-group>
       <div class="h-[250px]">
-        <apexchart
-          type="line"
-          :options="chartOptions"
-          :series="series"
-          height="100%"
-        ></apexchart>
+        <div ref="myChart" class="w-full h-full"></div>
       </div>
     </div>
   </SectionPanel>
