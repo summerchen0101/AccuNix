@@ -26,7 +26,7 @@ function useFriendTrand() {
   const { botApiPath } = useGlobalState()
   const isLoading = ref(false)
   const isError = ref(false)
-  const data = ref<FriendTrand[]>([])
+  const list = ref<FriendTrand[]>([])
   const fetchData = async (req: FriendTrandReq) => {
     isLoading.value = true
     isError.value = false
@@ -36,16 +36,16 @@ function useFriendTrand() {
         url: `${botApiPath.value}/Dashboard/friend-trend`,
         config: { params: req },
       })
-      data.value = res.data
+      list.value = res.data
     } catch (err) {
       apiErrHandler(err)
       isError.value = true
     }
     isLoading.value = false
-    return data.value
+    return list.value
   }
 
-  return { data, fetchData, isLoading }
+  return { list, fetchData, isLoading }
 }
 
 export default useFriendTrand

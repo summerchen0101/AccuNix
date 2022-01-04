@@ -1,7 +1,14 @@
 <script lang="ts">
 import { useGlobalState } from '@/providers/globalProvider'
 import { format, subDays } from 'date-fns'
-import { computed, defineComponent, onMounted, ref, watch } from 'vue'
+import {
+  computed,
+  defineComponent,
+  onMounted,
+  ref,
+  watch,
+  watchEffect,
+} from 'vue'
 import useMessageTrand, {
   MessageTrand,
   MessageTrandReq,
@@ -47,17 +54,13 @@ export default defineComponent({
     const selected = ref<keyof MessageTrand>('reply')
 
     const myChart = ref(null)
-    const createChart = () => {
+
+    watchEffect(() => {
       let chart = am4core.create(myChart.value, am4charts.XYChart)
       chart.language.locale = am4lang_zh_Hant
       // Add data
-      chart.data = list.value.map((t) => ({
-        date: t.date,
-        reply: t.reply,
-        push: t.push,
-      }))
+      chart.data = list.value
 
-      console.log(chart.data)
       // Create axes
       let categoryAxis = chart.xAxes.push(new am4charts.DateAxis())
       // categoryAxis.dataFields.date = 'date'
@@ -101,20 +104,7 @@ export default defineComponent({
       chart.cursor = new am4charts.XYCursor()
       chart.cursor.lineY.disabled = true
       chart.cursor.behavior = 'none'
-    }
-
-    watch(
-      () => list.value,
-      () => {
-        createChart()
-      },
-    )
-    watch(
-      () => selected.value,
-      () => {
-        createChart()
-      },
-    )
+    })
     return {
       isLoading,
       startAt,

@@ -73,11 +73,30 @@ export default defineComponent({
             size="small"
             max-height="250"
           >
-            <el-table-column prop="name" label="腳本名稱"></el-table-column>
-            <el-table-column prop="total" label="開啟次數"></el-table-column>
-            <el-table-column label="腳本完成率" align="center">
+            <el-table-column
+              prop="name"
+              label="腳本名稱"
+              width="120"
+            ></el-table-column>
+            <el-table-column
+              prop="total"
+              label="開啟次數"
+              align="center"
+              width="80"
+            ></el-table-column>
+            <el-table-column label="腳本完成率">
+              <template #default="scope">
+                <div class="bg-gray-200 w-full h-5 relative">
+                  <div
+                    class="bg-primary-400 h-full"
+                    :style="`width: ${scope.row.finish}`"
+                  ></div>
+                </div>
+              </template>
+            </el-table-column>
+            <el-table-column width="60">
               <template #default="props">
-                <span>{{ props.row.finish }}%</span>
+                <span>{{ props.row.finish }}</span>
               </template>
             </el-table-column>
           </el-table>

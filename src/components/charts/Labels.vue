@@ -10,7 +10,7 @@ export default defineComponent({
     Spinner,
   },
   setup(props) {
-    const selected = ref(1)
+    const selected = ref('user_count')
     const limit = ref(10)
     const { botGuid } = useGlobalState()
     const { list, fetchData, isLoading } = useTagOverview()
@@ -33,8 +33,8 @@ export default defineComponent({
     <template v-slot:default>
       <div class="mt-3 min-h-[300px]">
         <el-radio-group class="mb-3" v-model="selected">
-          <el-radio :label="1">依人數呈現</el-radio>
-          <el-radio :label="2">依觸發次數呈現</el-radio>
+          <el-radio label="user_count">依人數呈現</el-radio>
+          <el-radio label="active_count">依觸發次數呈現</el-radio>
         </el-radio-group>
         <Spinner v-if="isLoading" />
         <template v-else>
@@ -45,17 +45,24 @@ export default defineComponent({
             size="small"
             max-height="280"
           >
-            <el-table-column prop="name" label="標籤"></el-table-column>
             <el-table-column
-              v-if="selected === 1"
-              prop="user_count"
-              label="人數"
+              prop="name"
+              label="標籤"
+              width="170"
             ></el-table-column>
             <el-table-column
-              v-else
-              prop="active_count"
-              label="次數"
-            ></el-table-column>
+              :label="selected === 'user_count' ? '人數' : '次數'"
+            >
+              <template #default="scope">
+                <div class="bg-gray-200 w-full h-5 relative">
+                  <div
+                    class="bg-primary-400 h-full"
+                    :style="`width: ${(scope.row[selected] / 200) * 100}%`"
+                  ></div>
+                </div>
+              </template>
+            </el-table-column>
+            <el-table-column :prop="selected" width="60"></el-table-column>
           </el-table>
         </template>
       </div>

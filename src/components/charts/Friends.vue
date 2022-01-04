@@ -4,11 +4,26 @@ import Spinner from '@/components/Spinner.vue'
 import { BotType } from '@/lib/enum'
 import { useGlobalState } from '@/providers/globalProvider'
 import { format, subDays } from 'date-fns'
-import { computed, defineComponent, onMounted, ref, PropType, watch } from 'vue'
+import {
+  computed,
+  defineComponent,
+  onMounted,
+  ref,
+  PropType,
+  watch,
+  watchEffect,
+} from 'vue'
 import useFriendTrand, {
   FriendTrand,
   FriendTrandReq,
 } from '../../service/useFriendTrend'
+
+import * as am4charts from '@amcharts/amcharts4/charts'
+import * as am4core from '@amcharts/amcharts4/core'
+import am4themes_animated from '@amcharts/amcharts4/themes/animated'
+import am4lang_zh_Hant from '@amcharts/amcharts4/lang/zh_Hant'
+
+am4core.useTheme(am4themes_animated)
 
 export default defineComponent({
   components: {
@@ -18,7 +33,7 @@ export default defineComponent({
   setup(props) {
     const startAt = ref(subDays(new Date(), 8))
     const endAt = ref(subDays(new Date(), 1))
-    const { fetchData, isLoading, data } = useFriendTrand()
+    const { fetchData, isLoading, list } = useFriendTrand()
     const { botGuid } = useGlobalState()
 
     const onSearch = () => {
@@ -49,49 +64,66 @@ export default defineComponent({
     }
 
     const selected = ref<keyof FriendTrand>('cumulativeFollowers')
-    const chartOptions = computed(() => ({
-      chart: {
-        toolbar: {
-          show: false,
-        },
-        height: 350,
-        type: 'line',
-        zoom: {
-          enabled: false,
-        },
-      },
-      dataLabels: {
-        enabled: false,
-      },
-      stroke: {
-        curve: 'straight',
-        width: 2,
-      },
-      grid: {
-        row: {
-          colors: ['#f3f3f3', 'transparent'],
-          opacity: 0.5,
-        },
-      },
-      xaxis: {
-        categories: data.value.map((t) => format(new Date(t.date), 'M-dd')),
-      },
-    }))
-    const series = computed(() => [
-      {
-        name: dataMap[selected.value],
-        data: data.value.map((t) => t[selected.value]),
-      },
-    ])
+    const myChart = ref(null)
+
+    watchEffect(() => {
+      let chart = am4core.create(myChart.value, am4charts.XYChart)
+      chart.language.locale = am4lang_zh_Hant
+      // Add data
+      chart.data = list.value
+
+      // Create axes
+      let categoryAxis = chart.xAxes.push(new am4charts.DateAxis())
+      // categoryAxis.dataFields.date = 'date'
+
+      categoryAxis.renderer.minGridDistance = 20
+
+      categoryAxis.dateFormats.setKey('day', 'MM/dd')
+      categoryAxis.fontSize = 12
+
+      // categoryAxis.dateFormatter = new am4core.DateFormatter()
+      // categoryAxis.dateFormatter.dateFormat = 'MM-dd'
+
+      let valueAxis = chart.yAxes.push(new am4charts.ValueAxis())
+      valueAxis.renderer.opposite = true
+      valueAxis.fontSize = 12
+      valueAxis.cursorTooltipEnabled = false
+      // valueAxis.renderer.minGridDistance = 50
+      valueAxis.min = 0
+      // valueAxis.max = 20
+      // valueAxis.extraMin = 0.2
+
+      // Create series
+      let series = chart.series.push(new am4charts.LineSeries())
+      // series.name = 'Reply'
+      series.stroke = am4core.color('#187FDD')
+      series.strokeWidth = 2
+      series.dataFields.valueY = selected.value
+      series.dataFields.dateX = 'date'
+
+      // Drop-shaped tooltips
+      series.tooltip.getFillFromObject = false
+      series.tooltip.background.fill = am4core.color('#187FDD')
+      series.tooltip.label.fill = am4core.color('#fff')
+      // series.tooltipText = '{reply}'
+
+      // series.tooltipText = "{dateX.formatDate('MM/dd')}:{valueY}"
+      series.tooltipText = '{valueY}'
+      series.tooltip.label.textAlign = 'middle'
+
+      // Make a panning cursor
+      chart.cursor = new am4charts.XYCursor()
+      chart.cursor.lineY.disabled = true
+      chart.cursor.behavior = 'none'
+    })
     return {
-      series,
       isLoading,
-      chartOptions,
       selected,
       startAt,
       endAt,
       dataMap,
       onSearch,
+      myChart,
     }
   },
 })
@@ -100,7 +132,7 @@ export default defineComponent({
 <template>
   <SectionPanel title="好友總人數分析">
     <Spinner v-if="isLoading" />
-    <div v-else class="mt-3">
+    <div class="mt-3">
       <div class="flex space-x-2 mb-3">
         <el-date-picker
           type="date"
@@ -128,12 +160,7 @@ export default defineComponent({
         >
       </el-radio-group>
       <div class="h-[250px]">
-        <apexchart
-          type="line"
-          :options="chartOptions"
-          :series="series"
-          height="100%"
-        ></apexchart>
+        <div ref="myChart" class="w-full h-full"></div>
       </div>
     </div>
   </SectionPanel>
