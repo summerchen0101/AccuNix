@@ -48,14 +48,11 @@ export default defineComponent({
           <DoughnutChart
             :percentage="+t.users_percent"
             :count="t.users_count"
+            :color="t.color"
           />
           <div class="mt-5 text-gray-600 text-center text-sm">
             {{ t.title }}
-            <el-tooltip
-              class="ml-2"
-              effect="dark"
-              content="特定時間加入, 尚未定義用戶類型暫存區"
-            >
+            <el-tooltip class="ml-2" effect="dark" :content="t.title">
               <i class="fas fa-question-circle"></i>
             </el-tooltip>
           </div>

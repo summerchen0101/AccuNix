@@ -4,7 +4,7 @@ import useHoursOverview from '@/service/useHoursOverview'
 import * as am4charts from '@amcharts/amcharts4/charts'
 import * as am4core from '@amcharts/amcharts4/core'
 import am4themes_animated from '@amcharts/amcharts4/themes/animated'
-import { defineComponent, onMounted, ref, watch } from 'vue'
+import { defineComponent, onMounted, ref, watch, watchEffect } from 'vue'
 import SectionPanel from '../SectionPanel.vue'
 
 am4core.useTheme(am4themes_animated)
@@ -26,7 +26,8 @@ export default defineComponent({
       },
     )
     const myChart = ref(null)
-    const createChart = () => {
+
+    watchEffect(() => {
       let chart = am4core.create(myChart.value, am4charts.XYChart)
 
       // Add data
@@ -66,14 +67,7 @@ export default defineComponent({
       chart.cursor = new am4charts.XYCursor()
       chart.cursor.lineY.disabled = true
       chart.cursor.behavior = 'none'
-    }
-
-    watch(
-      () => list.value,
-      () => {
-        createChart()
-      },
-    )
+    })
     return { myChart }
   },
 })
