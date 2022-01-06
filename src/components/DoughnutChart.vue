@@ -27,7 +27,6 @@ export default defineComponent({
       let chart = am4core.create(myChart.value, am4charts.PieChart)
       chart.innerRadius = am4core.percent(60)
       // Add data
-      console.log(props.color)
       chart.data = [
         {
           percent: 100 - props.percentage,

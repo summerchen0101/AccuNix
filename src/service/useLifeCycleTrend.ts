@@ -27,7 +27,7 @@ function useLifeCycleTrand() {
   const { botApiPath } = useGlobalState()
   const isLoading = ref(false)
   const isError = ref(false)
-  const data = ref<LifeCycleTrand[]>([])
+  const list = ref<LifeCycleTrand[]>([])
 
   const fetchData = async (req: LifeCycleTrandReq) => {
     isLoading.value = true
@@ -38,17 +38,16 @@ function useLifeCycleTrand() {
         url: `${botApiPath.value}/Dashboard/lifecycle-trend`,
         config: { params: req },
       })
-      data.value = res.data
+      list.value = res.data
     } catch (err) {
       apiErrHandler(err)
       isError.value = true
     }
     isLoading.value = false
-    console.log(data.value)
-    return data.value
+    return list.value
   }
 
-  return { data, fetchData, isLoading }
+  return { list, fetchData, isLoading }
 }
 
 export default useLifeCycleTrand

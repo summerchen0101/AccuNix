@@ -15,7 +15,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="bg-white rounded-md p-4 shadow-md">
+  <div class="bg-white rounded-md p-4 shadow-md min-h-[300px]">
     <div class="flex items-center">
       <div class="flex-1 flex items-center">
         <i class="text-gray-400 text-xl" :class="icon"></i>

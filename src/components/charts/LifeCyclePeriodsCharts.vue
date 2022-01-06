@@ -5,20 +5,38 @@ import useLifeCycleTrand, {
   LifeCycleTrandReq,
 } from '@/service/useLifeCycleTrend'
 import { format, subDays } from 'date-fns'
-import { computed, defineComponent, onMounted, ref, PropType, watch } from 'vue'
+import {
+  computed,
+  defineComponent,
+  onMounted,
+  ref,
+  PropType,
+  watch,
+  watchEffect,
+} from 'vue'
 import SectionPanel from '../SectionPanel.vue'
 import Spinner from '../Spinner.vue'
+import * as am4charts from '@amcharts/amcharts4/charts'
+import * as am4core from '@amcharts/amcharts4/core'
+import am4themes_animated from '@amcharts/amcharts4/themes/animated'
+import am4lang_zh_Hant from '@amcharts/amcharts4/lang/zh_Hant'
+import { LifeCycle } from '@/service/useLifeCycleOverview'
+import { keyBy } from 'lodash'
+
+am4core.useTheme(am4themes_animated)
 
 export default defineComponent({
   props: {
-    tab: Number,
+    list: {
+      type: Array as PropType<LifeCycle[]>,
+      default: () => [],
+    },
   },
-  emits: ['update:tab'],
   setup(props, { emit }) {
     const startAt = ref(subDays(new Date(), 8))
     const endAt = ref(subDays(new Date(), 1))
     const { botGuid } = useGlobalState()
-    const { fetchData, isLoading, data } = useLifeCycleTrand()
+    const { fetchData, isLoading, list } = useLifeCycleTrand()
     const onSearch = () => {
       const search: LifeCycleTrandReq = {
         startAt: startAt.value
@@ -37,117 +55,107 @@ export default defineComponent({
         onSearch()
       },
     )
-    const localTab = computed({
-      get: () => props.tab,
-      set: (val) => emit('update:tab', val),
+
+    const myChart = ref(null)
+
+    watchEffect(() => {
+      let chart = am4core.create(myChart.value, am4charts.XYChart)
+      chart.language.locale = am4lang_zh_Hant
+      // Add data
+      chart.data = list.value
+
+      // Create axes
+      let categoryAxis = chart.xAxes.push(new am4charts.DateAxis())
+      // categoryAxis.dataFields.date = 'date'
+
+      categoryAxis.renderer.minGridDistance = 20
+
+      categoryAxis.dateFormats.setKey('day', 'MM/dd')
+      categoryAxis.fontSize = 12
+      categoryAxis.startLocation = 0.5
+      categoryAxis.endLocation = 0.5
+
+      // categoryAxis.dateFormatter = new am4core.DateFormatter()
+      // categoryAxis.dateFormatter.dateFormat = 'MM-dd'
+
+      let valueAxis = chart.yAxes.push(new am4charts.ValueAxis())
+      valueAxis.renderer.opposite = true
+      valueAxis.fontSize = 12
+      // valueAxis.cursorTooltipEnabled = false
+      // valueAxis.renderer.minGridDistance = 50
+      valueAxis.min = 0
+      // valueAxis.max = 20
+      // valueAxis.extraMin = 0.2
+
+      // Create series
+
+      Array(5)
+        .fill('')
+        .forEach((_, i) => {
+          let series = chart.series.push(new am4charts.LineSeries())
+          series.name = props.list[i].title
+          series.fill = am4core.color(props.list[i].color)
+          series.stroke = am4core.color(props.list[i].color)
+          series.strokeWidth = 2
+          series.dataFields.valueY = (i + 1).toString()
+          series.dataFields.dateX = 'date'
+          series.stacked = true
+          series.fillOpacity = 0.3
+          series.visible = true
+
+          // Drop-shaped tooltips
+          series.tooltip.getFillFromObject = false
+          series.tooltip.background.fill = am4core.color(props.list[i].color)
+          series.tooltip.label.fill = am4core.color('#fff')
+          // series.tooltipText = '{reply}'
+
+          // series.tooltipText = "{dateX.formatDate('MM/dd')}:{valueY}"
+          // series.calculatePercent = true
+          series.tooltipText = `{valueY}`
+          series.tooltip.label.textAlign = 'middle'
+        })
+
+      // Make a panning cursor
+      chart.cursor = new am4charts.XYCursor()
+      // chart.cursor.lineY.disabled = true
+      chart.cursor.behavior = 'none'
+      chart.legend = new am4charts.Legend()
     })
-    const chartOptions = computed(() => ({
-      chart: {
-        height: 350,
-        width: 500,
-        type: 'line',
-        dropShadow: {
-          enabled: true,
-          color: '#000',
-          top: 18,
-          left: 7,
-          blur: 10,
-          opacity: 0.2,
-        },
-        toolbar: {
-          show: false,
-        },
-      },
-      colors: ['#3366FF', '#9AE214', '#33C9F7', '#FFB03A', '#FF7B6F'],
-      dataLabels: {
-        enabled: true,
-      },
-      stroke: {
-        curve: 'smooth',
-      },
-      grid: {
-        borderColor: '#e7e7e7',
-        row: {
-          colors: ['#f3f3f3', 'transparent'],
-          opacity: 0.5,
-        },
-      },
-      xaxis: {
-        categories: data.value.map((t) => t.date),
-      },
-    }))
-    const series = computed(() => [
-      {
-        name: '新用戶',
-        data: data.value.map((t) => t[1]),
-      },
-      {
-        name: '無回應',
-        data: data.value.map((t) => t[2]),
-      },
-      {
-        name: '積極',
-        data: data.value.map((t) => t[3]),
-      },
-      {
-        name: '消極',
-        data: data.value.map((t) => t[4]),
-      },
-      {
-        name: '沈睡',
-        data: data.value.map((t) => t[5]),
-      },
-    ])
     return {
       isLoading,
-      series,
-      chartOptions,
-      localTab,
       startAt,
       endAt,
       onSearch,
+      myChart,
     }
   },
-  components: { SectionPanel, Spinner },
+  components: { Spinner },
 })
 </script>
 
 <template>
-  <SectionPanel class="lg:col-span-2" title="用戶生命週期">
-    <Spinner v-if="isLoading" />
-    <div v-else class="mt-3">
-      <div class="flex space-x-2 mb-3">
-        <el-date-picker
-          type="date"
-          size="small"
-          v-model="startAt"
-          placeholder="開始日期"
-        ></el-date-picker>
-        <span>~</span>
-        <el-date-picker
-          type="date"
-          size="small"
-          v-model="endAt"
-          placeholder="結束日期"
-        ></el-date-picker>
-        <el-button type="primary" size="small" @click="onSearch">
-          查詢
-        </el-button>
-      </div>
-      <div class="h-[380px]">
-        <apexchart
-          type="line"
-          :options="chartOptions"
-          :series="series"
-          height="100%"
-        ></apexchart>
-      </div>
+  <Spinner v-if="isLoading" />
+  <div v-else class="mt-3">
+    <div class="flex space-x-2 mb-3">
+      <el-date-picker
+        type="date"
+        size="small"
+        v-model="startAt"
+        placeholder="開始日期"
+      ></el-date-picker>
+      <span>~</span>
+      <el-date-picker
+        type="date"
+        size="small"
+        v-model="endAt"
+        placeholder="結束日期"
+      ></el-date-picker>
+      <el-button type="primary" size="small" @click="onSearch">
+        查詢
+      </el-button>
     </div>
-    <template v-slot:plus>
-      <el-radio-group class="mb-3" v-model="localTab">
-        <el-radio :label="1">用戶數據</el-radio>
-        <el-radio :label="2">區間數據</el-radio>
-      </el-radio-group>
-    </template>
-  </SectionPanel>
+    <div class="h-[380px]">
+      <div ref="myChart" class="w-full h-full"></div>
+    </div>
+  </div>
 </template>
