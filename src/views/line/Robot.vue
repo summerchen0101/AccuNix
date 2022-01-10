@@ -1,16 +1,37 @@
 <script lang="ts">
 import CardPanel from '@/components/CardPanel.vue'
 import { useGlobalState } from '@/providers/globalProvider'
-import { defineComponent, ref } from 'vue'
+import { useLayoutState } from '@/providers/layoutProvider'
+import useRichmenuOpts from '@/service/useInboxOpts'
+import { defineComponent, onMounted, ref, watch, watchEffect } from 'vue'
+import LoadingCover from '@/components/LoadingCover.vue'
 
 export default defineComponent({
   components: {
     CardPanel,
+    LoadingCover,
   },
   setup() {
-    const { botInfo } = useGlobalState()
+    const { botInfo, botGuid } = useGlobalState()
+    const { activePage } = useLayoutState()
+    const { fetchData, isLoading, list } = useRichmenuOpts()
+
+    onMounted(() => {
+      activePage.value = 'lineRichmenu'
+      fetchData()
+    })
+    watch(
+      () => botGuid.value,
+      () => {
+        fetchData()
+      },
+    )
     const selected = ref(1)
-    return { selected, botInfo }
+
+    watchEffect(() => {
+      selected.value = botInfo.value.default_richmenu_id
+    })
+    return { selected, botInfo, isLoading, list }
   },
 })
 </script>
@@ -50,19 +71,33 @@ export default defineComponent({
         <a href="#" class="text-primary-500"> 編輯 </a>
       </div>
     </div>
-    <CardPanel
-      title="機器人主選單"
-      icon="far fa-caret-square-left"
-      desc="此為預設顯示於聊天室供用戶點選的圖文選單，若用戶有指定主選單，將以指定主選單為主"
-      @setting="() => $router.push({ name: 'InboxList' })"
-    >
-      <div>
-        <p class="text-gray-500 text-sm mb-1 font-bold">切換預設主選單:</p>
-        <el-select v-model="selected" placeholder="請選擇主選單" size="small">
-          <el-option :value="1" label="不設定主選單" />
-        </el-select>
-      </div>
-    </CardPanel>
+    <LoadingCover :is-loading="isLoading">
+      <CardPanel
+        title="機器人主選單"
+        icon="far fa-caret-square-left"
+        desc="此為預設顯示於聊天室供用戶點選的圖文選單，若用戶有指定主選單，將以指定主選單為主"
+        @setting="() => $router.push({ name: 'InboxList' })"
+      >
+        <div>
+          <p class="text-gray-500 text-sm mb-1 font-bold">切換預設主選單:</p>
+          <el-select v-model="selected" placeholder="請選擇主選單" size="small">
+            <el-option
+              v-for="opt in list"
+              :key="opt.id"
+              :value="opt.id"
+              :label="opt.name"
+            >
+              <img
+                :src="opt.image.path"
+                class="rounded-full w-7 h-7 inline-block mr-2"
+                alt=""
+              />
+              {{ opt.name }}
+            </el-option>
+          </el-select>
+        </div>
+      </CardPanel>
+    </LoadingCover>
     <CardPanel
       title="自動回應設定"
       icon="far fa-caret-square-left"
