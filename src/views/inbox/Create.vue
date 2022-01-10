@@ -1,13 +1,11 @@
 <script lang="ts">
-import { BreadcrumbItem } from '@/providers/globalProvider'
 import actionForms from '@/components/inbox/form'
 import InboxLayout, { toLayoutBoxs } from '@/components/inbox/InboxLayout.vue'
 import LayoutSelectorPopup from '@/components/inbox/popups/LayoutSelectorPopup.vue'
-import Layout from '@/components/Layout/Layout.vue'
 import LoadingCover from '@/components/LoadingCover.vue'
 import PageIconBtn from '@/components/PageIconBtn.vue'
 import useAlert from '@/hooks/useAlert'
-import { useGlobalState } from '@/providers/globalProvider'
+import { BreadcrumbItem, useGlobalState } from '@/providers/globalProvider'
 import { useLayoutState } from '@/providers/layoutProvider'
 import useImgUpload from '@/service/useImgUpload'
 import useInboxCreate, { InboxCreateReq } from '@/service/useInboxCreate'
@@ -40,7 +38,6 @@ interface IState {
 
 export default defineComponent({
   components: {
-    Layout,
     LayoutSelectorPopup,
     ...actionForms,
     InboxLayout,
@@ -311,183 +308,173 @@ export default defineComponent({
 </script>
 
 <template>
-  <Layout>
-    <div class="p-3 h-full">
-      <div class="bg-white rounded-md h-full p-4 overflow-y-auto">
-        <div class="flex justify-between mb-7">
-          <h3 class="text-gray-700 text-xl">
-            <i class="fab fa-slack-hash mr-2"></i>
-            新增主選單
-          </h3>
-        </div>
-        <LoadingCover :is-loading="isLoading || isUploadLoading">
-          <div class="px-3 flex flex-col lg:flex-row">
-            <div class="flex-1">
-              <el-form
-                :model="data"
-                ref="form"
-                label-position="top"
-                label-width="80px"
-              >
-                <el-form-item label="主選單名稱" required>
-                  <el-input v-model="data.name"></el-input>
-                </el-form-item>
-                <el-form-item label="主選單說明">
-                  <el-input v-model="data.desc"></el-input>
-                </el-form-item>
-                <el-form-item label="訊息欄文字">
-                  <el-input v-model="data.msg"></el-input>
-                </el-form-item>
-                <el-form-item label="主選單顯示">
-                  <el-radio-group v-model="data.defaultOpen">
-                    <el-radio :label="1">預設展開選單</el-radio>
-                    <el-radio :label="2">預設隱藏選單</el-radio>
-                  </el-radio-group>
-                </el-form-item>
-                <el-form-item label="主選單尺寸">
-                  <el-radio-group v-model="data.size">
-                    <el-radio label="2500x1686">2500x1686 大型</el-radio>
-                    <el-radio label="2500x843">2500x843 小型</el-radio>
-                  </el-radio-group>
-                </el-form-item>
-                <div class="flex gap-8">
-                  <div class="text-gray-500 text-sm">
-                    <div
-                      class="relative"
-                      :style="{
-                        height: sizeInfo.h / 7 + 'px',
-                        width: sizeInfo.w / 7 + 'px',
-                      }"
-                    >
-                      <div class="absolute w-full h-full">
-                        <InboxLayout
-                          :height="sizeInfo.h / 7"
-                          :width="sizeInfo.w / 7"
-                          :layout="selectedLayout"
-                          v-model:activeBox="activeBox"
-                        />
-                      </div>
-                      <img
-                        :hidden="!layoutImgSrc"
-                        :src="layoutImgSrc"
-                        alt=""
-                        class="h-full w-full"
+  <div class="p-3 h-full">
+    <div class="bg-white rounded-md h-full p-4 overflow-y-auto">
+      <div class="flex justify-between mb-7">
+        <h3 class="text-gray-700 text-xl">
+          <i class="fab fa-slack-hash mr-2"></i>
+          新增主選單
+        </h3>
+      </div>
+      <LoadingCover :is-loading="isLoading || isUploadLoading">
+        <div class="px-3 flex flex-col lg:flex-row">
+          <div class="flex-1">
+            <el-form
+              :model="data"
+              ref="form"
+              label-position="top"
+              label-width="80px"
+            >
+              <el-form-item label="主選單名稱" required>
+                <el-input v-model="data.name"></el-input>
+              </el-form-item>
+              <el-form-item label="主選單說明">
+                <el-input v-model="data.desc"></el-input>
+              </el-form-item>
+              <el-form-item label="訊息欄文字">
+                <el-input v-model="data.msg"></el-input>
+              </el-form-item>
+              <el-form-item label="主選單顯示">
+                <el-radio-group v-model="data.defaultOpen">
+                  <el-radio :label="1">預設展開選單</el-radio>
+                  <el-radio :label="2">預設隱藏選單</el-radio>
+                </el-radio-group>
+              </el-form-item>
+              <el-form-item label="主選單尺寸">
+                <el-radio-group v-model="data.size">
+                  <el-radio label="2500x1686">2500x1686 大型</el-radio>
+                  <el-radio label="2500x843">2500x843 小型</el-radio>
+                </el-radio-group>
+              </el-form-item>
+              <div class="flex gap-8">
+                <div class="text-gray-500 text-sm">
+                  <div
+                    class="relative"
+                    :style="{
+                      height: sizeInfo.h / 7 + 'px',
+                      width: sizeInfo.w / 7 + 'px',
+                    }"
+                  >
+                    <div class="absolute w-full h-full">
+                      <InboxLayout
+                        :height="sizeInfo.h / 7"
+                        :width="sizeInfo.w / 7"
+                        :layout="selectedLayout"
+                        v-model:activeBox="activeBox"
                       />
                     </div>
-                    <div class="leading-5 mt-3">
-                      檔案格式：JPG、JPEG、PNG <br />
-                      檔案容量：1MB以下 <br />
-                      圖片尺寸：{{ sizeInfo.w }}px {{ sizeInfo.h }}px
-                    </div>
-                    <div class="space-y-2 mt-3">
-                      <input hidden type="file" @change="handleFileChanged" />
-                      <el-button
-                        class="w-full m-0"
-                        @click="
-                          (e) => e.currentTarget.previousElementSibling.click()
-                        "
-                        >上傳圖片</el-button
-                      >
-                      <el-button
-                        class="w-full m-0"
-                        @click="layoutSelectorVisible = true"
-                        >選擇版型</el-button
-                      >
-                    </div>
-                  </div>
-                  <div class="flex-1 max-w-[300px]">
-                    <el-form-item :label="`按鈕${activeBox}動作設定`">
-                      <el-select
-                        v-model="data.areas[activeBox].type"
-                        @change="initActionForm"
-                        class="w-full"
-                      >
-                        <el-option
-                          v-for="t in actionTypes"
-                          :key="t.value"
-                          :label="t.label"
-                          :value="t.value"
-                        >
-                        </el-option>
-                      </el-select>
-                    </el-form-item>
-                    <component
-                      v-if="data.areas[activeBox].type"
-                      :is="data.areas[activeBox].type"
-                      v-model:form-data="data.areas[activeBox]"
-                    />
-                    <el-button class="mt-5" type="primary" @click="onSubmit"
-                      >套用設定</el-button
-                    >
-                  </div>
-                </div>
-              </el-form>
-            </div>
-            <div class="p-10">
-              <div
-                class="
-                  bg-mobile
-                  h-[574px]
-                  w-[278px]
-                  px-[7px]
-                  pt-[47px]
-                  pb-[67px]
-                  mx-auto
-                "
-              >
-                <div
-                  class="
-                    overflow-y-auto overflow-x-hidden
-                    h-full
-                    flex flex-col
-                    justify-end
-                  "
-                >
-                  <div
-                    class="
-                      bg-gray-100
-                      flex
-                      justify-center
-                      items-center
-                      relative
-                    "
-                    :class="
-                      data.size === '2500x1686' ? 'h-[178px]' : 'h-[89px]'
-                    "
-                  >
-                    <i
-                      class="far fa-image text-gray-300"
-                      :class="data.size === '2500x1686' ? 'fa-9x' : 'fa-5x'"
-                    ></i>
                     <img
                       :hidden="!layoutImgSrc"
                       :src="layoutImgSrc"
                       alt=""
-                      class="h-full w-full absolute left-0"
+                      class="h-full w-full"
                     />
                   </div>
-                  <div
-                    class="
-                      bg-gray-200
-                      text-gray-500 text-center
-                      py-1.5
-                      cursor-default
-                      text-sm
-                    "
-                  >
-                    {{ data.msg }}
+                  <div class="leading-5 mt-3">
+                    檔案格式：JPG、JPEG、PNG <br />
+                    檔案容量：1MB以下 <br />
+                    圖片尺寸：{{ sizeInfo.w }}px {{ sizeInfo.h }}px
                   </div>
+                  <div class="space-y-2 mt-3">
+                    <input hidden type="file" @change="handleFileChanged" />
+                    <el-button
+                      class="w-full m-0"
+                      @click="
+                        (e) => e.currentTarget.previousElementSibling.click()
+                      "
+                      >上傳圖片</el-button
+                    >
+                    <el-button
+                      class="w-full m-0"
+                      @click="layoutSelectorVisible = true"
+                      >選擇版型</el-button
+                    >
+                  </div>
+                </div>
+                <div class="flex-1 max-w-[300px]">
+                  <el-form-item :label="`按鈕${activeBox}動作設定`">
+                    <el-select
+                      v-model="data.areas[activeBox].type"
+                      @change="initActionForm"
+                      class="w-full"
+                    >
+                      <el-option
+                        v-for="t in actionTypes"
+                        :key="t.value"
+                        :label="t.label"
+                        :value="t.value"
+                      >
+                      </el-option>
+                    </el-select>
+                  </el-form-item>
+                  <component
+                    v-if="data.areas[activeBox].type"
+                    :is="data.areas[activeBox].type"
+                    v-model:form-data="data.areas[activeBox]"
+                  />
+                  <el-button class="mt-5" type="primary" @click="onSubmit"
+                    >套用設定</el-button
+                  >
+                </div>
+              </div>
+            </el-form>
+          </div>
+          <div class="p-10">
+            <div
+              class="
+                bg-mobile
+                h-[574px]
+                w-[278px]
+                px-[7px]
+                pt-[47px]
+                pb-[67px]
+                mx-auto
+              "
+            >
+              <div
+                class="
+                  overflow-y-auto overflow-x-hidden
+                  h-full
+                  flex flex-col
+                  justify-end
+                "
+              >
+                <div
+                  class="bg-gray-100 flex justify-center items-center relative"
+                  :class="data.size === '2500x1686' ? 'h-[178px]' : 'h-[89px]'"
+                >
+                  <i
+                    class="far fa-image text-gray-300"
+                    :class="data.size === '2500x1686' ? 'fa-9x' : 'fa-5x'"
+                  ></i>
+                  <img
+                    :hidden="!layoutImgSrc"
+                    :src="layoutImgSrc"
+                    alt=""
+                    class="h-full w-full absolute left-0"
+                  />
+                </div>
+                <div
+                  class="
+                    bg-gray-200
+                    text-gray-500 text-center
+                    py-1.5
+                    cursor-default
+                    text-sm
+                  "
+                >
+                  {{ data.msg }}
                 </div>
               </div>
             </div>
           </div>
-        </LoadingCover>
-      </div>
+        </div>
+      </LoadingCover>
     </div>
-    <LayoutSelectorPopup
-      v-model:visible="layoutSelectorVisible"
-      :size="data.size"
-      v-model:selected="selectedLayout"
-    />
-  </Layout>
+  </div>
+  <LayoutSelectorPopup
+    v-model:visible="layoutSelectorVisible"
+    :size="data.size"
+    v-model:selected="selectedLayout"
+  />
 </template>
