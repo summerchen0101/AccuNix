@@ -40,7 +40,7 @@ export default defineComponent({
       fetchData(req)
     }
     onMounted(() => {
-      activePage.value = 'lineRichmenu'
+      activePage.value = 'richmenu'
       fetchData(req)
     })
     watch(

@@ -12,6 +12,7 @@ import useInboxCreate, { InboxCreateReq } from '@/service/useInboxCreate'
 import { OptionsType } from '@/types'
 import { getImageInfo } from '@/utils'
 import { computed, defineComponent, onMounted, reactive, ref, watch } from 'vue'
+import { useRouter } from 'vue-router'
 // import { MsgBtnFields } from '@/components/types'
 
 export interface ActionForm {
@@ -49,6 +50,7 @@ export default defineComponent({
     const layoutImgSrc = ref('')
     const imgFile = ref<File>()
     const alert = useAlert()
+    const router = useRouter()
     const { botGuid, orgGuid } = useGlobalState()
     const layoutSelectorVisible = ref(false)
     const activeBox = ref<number>(1)
@@ -64,7 +66,7 @@ export default defineComponent({
     const { doCreate, isLoading } = useInboxCreate()
 
     onMounted(() => {
-      activePage.value = 'Line'
+      activePage.value = 'richmenu'
     })
 
     const data = reactive<IState>({
@@ -83,6 +85,7 @@ export default defineComponent({
           original: false,
           couponGuid: '',
           keyword: '',
+          message: '',
         },
       },
     })
@@ -116,6 +119,7 @@ export default defineComponent({
         original: false,
         couponGuid: '',
         keyword: '',
+        message: '',
       }
     }
 
@@ -183,6 +187,7 @@ export default defineComponent({
               original: false,
               couponGuid: '',
               keyword: '',
+              message: '',
             }
 
             switch (action.type) {
@@ -211,7 +216,7 @@ export default defineComponent({
               case 'Text':
                 action = {
                   type: 'message',
-                  message: action.keyword,
+                  message: action.message,
                 }
                 break
               case 'Keyword':
@@ -255,6 +260,7 @@ export default defineComponent({
         },
       }
       const res = await doCreate(bodyData)
+      router.back()
     }
 
     watch(

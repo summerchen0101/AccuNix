@@ -30,7 +30,7 @@ export default defineComponent({
     ]
 
     onMounted(() => {
-      activePage.value = 'fbBasic'
+      activePage.value = 'basic'
     })
 
     watchEffect(() => {

@@ -1,10 +1,9 @@
 <script lang="ts">
 import CardPanel from '@/components/CardPanel.vue'
+import LoadingCover from '@/components/LoadingCover.vue'
 import { useGlobalState } from '@/providers/globalProvider'
-import { useLayoutState } from '@/providers/layoutProvider'
 import useRichmenuOpts from '@/service/useInboxOpts'
 import { defineComponent, onMounted, ref, watch, watchEffect } from 'vue'
-import LoadingCover from '@/components/LoadingCover.vue'
 
 export default defineComponent({
   components: {
@@ -13,11 +12,9 @@ export default defineComponent({
   },
   setup() {
     const { botInfo, botGuid } = useGlobalState()
-    const { activePage } = useLayoutState()
     const { fetchData, isLoading, list } = useRichmenuOpts()
 
     onMounted(() => {
-      activePage.value = 'lineRichmenu'
       fetchData()
     })
     watch(

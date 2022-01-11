@@ -30,7 +30,7 @@ export default defineComponent({
     ]
 
     onMounted(() => {
-      activePage.value = 'lineBasic'
+      activePage.value = 'basic'
     })
 
     watchEffect(() => {
