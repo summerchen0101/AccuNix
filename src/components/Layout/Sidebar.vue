@@ -116,14 +116,14 @@ export default defineComponent({
             : loginInfo.value?.organization.permissions[m.code]?.read,
         ),
     )
-    watch(
-      () => perBotMenus.value,
-      () => {
-        if (perBotMenus.value.length) {
-          router.push(perBotMenus.value[0].path)
-        }
-      },
-    )
+    // watch(
+    //   () => perBotMenus.value,
+    //   () => {
+    //     if (perBotMenus.value.length) {
+    //       router.push(perBotMenus.value[0].path)
+    //     }
+    //   },
+    // )
     return {
       isMiniSidebar,
       perOrgMenus,
