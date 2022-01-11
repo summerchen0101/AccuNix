@@ -53,16 +53,6 @@ const routes: Array<RouteRecordRaw> = [
         ],
       },
       {
-        path: '/keywords/list',
-        name: 'KeywordList',
-        component: () => import('@/views/keywords/List.vue'),
-      },
-      {
-        path: '/keywords/Create',
-        name: 'KeywordCreate',
-        component: () => import('@/views/keywords/Create.vue'),
-      },
-      {
         path: '/inbox/list',
         name: 'InboxList',
         component: () => import('@/views/inbox/List.vue'),
