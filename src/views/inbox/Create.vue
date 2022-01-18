@@ -11,7 +11,15 @@ import useImgUpload from '@/service/useImgUpload'
 import useInboxCreate, { InboxCreateReq } from '@/service/useInboxCreate'
 import { OptionsType } from '@/types'
 import { getImageInfo } from '@/utils'
-import { computed, defineComponent, onMounted, reactive, ref, watch } from 'vue'
+import {
+  computed,
+  defineComponent,
+  onMounted,
+  reactive,
+  ref,
+  watch,
+  watchEffect,
+} from 'vue'
 import { useRouter } from 'vue-router'
 // import { MsgBtnFields } from '@/components/types'
 
@@ -54,7 +62,10 @@ export default defineComponent({
     const { botGuid, orgGuid } = useGlobalState()
     const layoutSelectorVisible = ref(false)
     const activeBox = ref<number>(1)
+    const boxCount = ref<number>(6)
     const selectedLayout = ref<number>(1)
+
+    // 當選擇的排版改變時 預設選回第一個BOX
     watch(
       () => selectedLayout.value,
       () => {
@@ -75,19 +86,7 @@ export default defineComponent({
       msg: '點開選單',
       defaultOpen: 1,
       size: '2500x1686',
-      areas: {
-        1: {
-          tags: [],
-          type: '',
-          richmenuGuid: '',
-          messageGuid: '',
-          uri: '',
-          original: false,
-          couponGuid: '',
-          keyword: '',
-          message: '',
-        },
-      },
+      areas: {},
     })
 
     const sizeInfo = computed(() => {
@@ -107,21 +106,35 @@ export default defineComponent({
       { label: '開啟票券券夾', value: 'OpenTicket' },
       { label: '發送票券活動', value: 'TicketActivity' },
       { label: '發送票券券庫', value: 'TicketBox' },
+      { label: '開啟會員中心', value: 'MemberCenter' },
     ]
 
-    const initActionForm = (type) => {
-      data.areas[activeBox.value] = {
-        tags: [],
-        type,
-        richmenuGuid: '',
-        messageGuid: '',
-        uri: '',
-        original: false,
-        couponGuid: '',
-        keyword: '',
-        message: '',
-      }
-    }
+    watchEffect(() => {
+      Array(boxCount.value)
+        .fill('')
+        .forEach((_, i) => {
+          data.areas[i + 1] = {
+            tags: [],
+            type: '',
+            richmenuGuid: '',
+            messageGuid: '',
+            uri: '',
+            original: false,
+            couponGuid: '',
+            keyword: '',
+            message: '',
+          }
+        })
+    })
+
+    // 當規格改變時 自動選擇該規格下的第一個排版(Layout)
+    watch(
+      () => data.size,
+      () => {
+        selectedLayout.value = data.size === '2500x1686' ? 1 : 13
+        layoutImgSrc.value = ''
+      },
+    )
 
     const handleFileChanged = async (e: Event) => {
       const file = (e.target as HTMLInputElement).files[0]
@@ -178,17 +191,7 @@ export default defineComponent({
             height: sizeInfo.value.h,
           },
           areas: areas.map((bounds, i) => {
-            let action = d.areas[i + 1] || {
-              tags: [],
-              type: '',
-              richmenuGuid: '',
-              messageGuid: '',
-              uri: '',
-              original: false,
-              couponGuid: '',
-              keyword: '',
-              message: '',
-            }
+            let action = d.areas[i + 1]
 
             switch (action.type) {
               case 'Link':
@@ -244,8 +247,13 @@ export default defineComponent({
                 break
               case 'TicketBox':
                 action = {
-                  type: 'coupon_campaign',
+                  type: 'coupon',
                   couponGuid: action.couponGuid,
+                }
+                break
+              case 'MemberCenter':
+                action = {
+                  type: 'member_center',
                 }
                 break
 
@@ -263,30 +271,6 @@ export default defineComponent({
       router.back()
     }
 
-    watch(
-      () => activeBox.value,
-      () => {
-        data.areas[activeBox.value] = data.areas[activeBox.value] || {
-          tags: [],
-          type: '',
-          richmenuGuid: '',
-          messageGuid: '',
-          uri: '',
-          original: false,
-          couponGuid: '',
-          keyword: '',
-        }
-      },
-    )
-
-    watch(
-      () => data.size,
-      () => {
-        selectedLayout.value = data.size === '2500x1686' ? 1 : 13
-        layoutImgSrc.value = ''
-      },
-    )
-
     const breadcrumb: BreadcrumbItem[] = [
       { name: '聊天機器人' },
       { name: 'LINE' },
@@ -300,9 +284,9 @@ export default defineComponent({
       data,
       onSubmit,
       activeBox,
+      boxCount,
       selectedLayout,
       layoutSelectorVisible,
-      initActionForm,
       sizeInfo,
       handleFileChanged,
       layoutImgSrc,
@@ -367,6 +351,7 @@ export default defineComponent({
                         :width="sizeInfo.w / 7"
                         :layout="selectedLayout"
                         v-model:activeBox="activeBox"
+                        v-model:boxCount="boxCount"
                       />
                     </div>
                     <img
@@ -401,7 +386,6 @@ export default defineComponent({
                   <el-form-item :label="`按鈕${activeBox}動作設定`">
                     <el-select
                       v-model="data.areas[activeBox].type"
-                      @change="initActionForm"
                       class="w-full"
                     >
                       <el-option
@@ -419,7 +403,7 @@ export default defineComponent({
                     v-model:form-data="data.areas[activeBox]"
                   />
                   <el-button class="mt-5" type="primary" @click="onSubmit"
-                    >套用設定</el-button
+                    >套用選單</el-button
                   >
                 </div>
               </div>

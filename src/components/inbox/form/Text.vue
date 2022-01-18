@@ -31,7 +31,7 @@ export default defineComponent({
       type="textarea"
       :modelValue="formData.message"
       @update:modelValue="
-        (val) => $emit('update:formData', { ...formData, value: val })
+        (val) => $emit('update:formData', { ...formData, message: val })
       "
       :rows="3"
       placeholder="輸入回覆文字"

@@ -5,12 +5,13 @@ export default defineComponent({
   props: {
     isDemo: Boolean,
     activeBox: Number,
+    boxCount: Number,
     height: Number,
     width: Number,
     layout: Number,
   },
-  emits: ['update:activeBox'],
-  setup(props) {
+  emits: ['update:activeBox', 'update:boxCount'],
+  setup(props, { emit }) {
     const boxs = ref<BoxProps[]>([])
     const { height, width, layout } = toRefs(props)
     watchEffect(() => {
@@ -19,6 +20,9 @@ export default defineComponent({
         w: width.value,
         layout: layout.value,
       })
+    })
+    watchEffect(() => {
+      emit('update:boxCount', boxs.value.length)
     })
     return { boxs }
   },

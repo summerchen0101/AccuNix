@@ -9,17 +9,17 @@ export default defineComponent({
       type: Object as PropType<ActionForm>,
       default: () => ({
         type: 'coupon',
-        couponGuid: '',
+        campaignGuid: '',
       }),
     },
   },
   emits: ['update:formData'],
   setup(props) {
-    const friends: OptionType<number>[] = [
-      { label: '機器人一', value: 1 },
-      { label: '機器人二', value: 2 },
+    const activitys: OptionType<number>[] = [
+      { label: '愛酷歡慶春節(1)', value: 1 },
+      { label: '愛酷虎年賀吉祥(2)', value: 2 },
     ]
-    return { friends }
+    return { activitys }
   },
 })
 </script>
@@ -27,13 +27,14 @@ export default defineComponent({
 <template>
   <el-form-item required>
     <el-select
-      :modelValue="formData.couponGuid"
+      :modelValue="formData.campaignGuid"
+      class="w-full"
       @update:modelValue="
-        (val) => $emit('update:formData', { ...formData, value: val })
+        (val) => $emit('update:formData', { ...formData, campaignGuid: val })
       "
       placeholder="選擇票券活動"
       ><el-option
-        v-for="t in friends"
+        v-for="t in activitys"
         :key="t.value"
         :label="t.label"
         :value="t.value"
