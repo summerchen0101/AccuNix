@@ -9,6 +9,7 @@ import { BreadcrumbItem, useGlobalState } from '@/providers/globalProvider'
 import { useLayoutState } from '@/providers/layoutProvider'
 import useImgUpload from '@/service/useImgUpload'
 import useInboxCreate, { InboxCreateReq } from '@/service/useInboxCreate'
+import useTagOpts from '@/service/useTagOpts'
 import { OptionsType } from '@/types'
 import { getImageInfo } from '@/utils'
 import {
@@ -21,6 +22,7 @@ import {
   watchEffect,
 } from 'vue'
 import { useRouter } from 'vue-router'
+import TagPopup from '@/components/inbox/popups/TagPopup.vue'
 // import { MsgBtnFields } from '@/components/types'
 
 export interface ActionForm {
@@ -52,6 +54,7 @@ export default defineComponent({
     InboxLayout,
     LoadingCover,
     PageIconBtn,
+    TagPopup,
   },
   setup() {
     const { activePage } = useLayoutState()
@@ -75,9 +78,15 @@ export default defineComponent({
 
     const { doUpload, isLoading: isUploadLoading } = useImgUpload()
     const { doCreate, isLoading } = useInboxCreate()
+    const {
+      fetchData: fetchTagOpts,
+      list: tagOpts,
+      isLoading: isTagOptsLoading,
+    } = useTagOpts()
 
     onMounted(() => {
       activePage.value = 'richmenu'
+      fetchTagOpts()
     })
 
     const data = reactive<IState>({
@@ -280,6 +289,7 @@ export default defineComponent({
 
     return {
       breadcrumb,
+      tagOpts,
       actionTypes,
       data,
       onSubmit,
@@ -292,6 +302,7 @@ export default defineComponent({
       layoutImgSrc,
       isLoading,
       isUploadLoading,
+      fetchTagOpts,
     }
   },
 })
@@ -401,6 +412,7 @@ export default defineComponent({
                     v-if="data.areas[activeBox].type"
                     :is="data.areas[activeBox].type"
                     v-model:form-data="data.areas[activeBox]"
+                    :tagOpts="tagOpts"
                   />
                   <el-button class="mt-5" type="primary" @click="onSubmit"
                     >套用選單</el-button
@@ -467,4 +479,5 @@ export default defineComponent({
     :size="data.size"
     v-model:selected="selectedLayout"
   />
+  <TagPopup @finishd="fetchTagOpts" />
 </template>

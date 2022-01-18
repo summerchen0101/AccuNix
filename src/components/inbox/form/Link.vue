@@ -1,5 +1,6 @@
 <script lang="ts">
-import { OptionsType } from '@/types'
+import { useGlobalState } from '@/providers/globalProvider'
+import { TagOpt } from '@/service/useTagOpts'
 import { ActionForm } from '@/views/inbox/Create.vue'
 import { defineComponent, PropType } from 'vue'
 
@@ -14,14 +15,15 @@ export default defineComponent({
         tags: [],
       }),
     },
+    tagOpts: {
+      type: Array as PropType<TagOpt[]>,
+      default: () => [],
+    },
   },
   emits: ['update:formData'],
   setup(props) {
-    const tags: OptionsType<number> = [
-      { label: '標籤一', value: 1 },
-      { label: '標籤二', value: 2 },
-    ]
-    return { tags }
+    const { isShowTagPopup } = useGlobalState()
+    return { replaceStr: '{{user_token}}', isShowTagPopup }
   },
 })
 </script>
@@ -43,8 +45,17 @@ export default defineComponent({
         (val) => $emit('update:formData', { ...formData, uri: val })
       "
     ></el-input>
+    <div class="help">可使用 {{ replaceStr }} 替換 LINE 好友 userId</div>
   </el-form-item>
-  <el-form-item label="標籤設定">
+  <el-form-item>
+    <template v-slot:label>
+      <div class="flex items-center justify-between">
+        <span>標籤設定</span>
+        <el-button size="mini" type="warning" @click="isShowTagPopup = true"
+          >新增標籤 +</el-button
+        >
+      </div>
+    </template>
     <el-select
       :modelValue="formData.tags"
       @update:modelValue="
@@ -54,16 +65,20 @@ export default defineComponent({
       multiple
     >
       <el-option
-        v-for="tag in tags"
-        :key="tag.value"
-        :label="tag.label"
-        :value="tag.value"
+        v-for="tag in tagOpts"
+        :key="tag.id"
+        :label="tag.name"
+        :value="tag.id"
       >
       </el-option
     ></el-select>
-    <div class="text-xs text-primary-400 mt-2 leading-4">
-      <div class="">＊標籤設定最多 3 個，目前額度： 0/3</div>
-      <div class="">＊標籤不能使用以下特殊符號：¥[]~' "/\#?,*+及空白</div>
+    <div class="">
+      <div class="help info">
+        標籤設定最多 3 個，目前額度： {{ 3 - formData.tags.length }}/3
+      </div>
+      <div class="help info">
+        標籤不能使用以下特殊符號： ¥[]~' "/\#?,*+及空白
+      </div>
     </div>
   </el-form-item>
 </template>

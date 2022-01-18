@@ -130,3 +130,19 @@ body,
 .fade-leave-to {
   opacity: 0;
 }
+
+.el-form-item {
+  margin-bottom: 10px;
+}
+
+.help {
+  @apply text-xs text-primary-400 mt-2 leading-4;
+  &.info {
+    &::before {
+      font-family: "FontAwesome";
+      content: "\f05a";
+      display: inline-block;
+      margin-right: 0.1rem;
+    }
+  }
+}

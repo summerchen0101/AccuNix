@@ -16,11 +16,8 @@ const botType = computed<ProductType>(
 )
 const botGuid = computed<string>(() => botGuidWithType.value.split('_')[1])
 
-// watchEffect(() => {
-//   console.log(botType.value)
-//   console.log(productApiPathMap)
-//   console.log(productApiPathMap[botType.value])
-// })
+const isShowTagPopup = ref(false)
+
 const state = {
   orgGuid: ref(''),
   botGuidWithType,
@@ -36,6 +33,7 @@ const state = {
   ),
   breadcrumb: ref<BreadcrumbItem[]>([]),
   loginInfo,
+  isShowTagPopup,
 }
 
 export const useGlobalProvider = function () {

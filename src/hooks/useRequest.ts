@@ -30,7 +30,7 @@ const useRequest = async function <
     ...config,
   })
 
-  if (res.data.message) {
+  if (res.data.message && !res.data.message.includes('success')) {
     throw new Error(res.data.message)
   }
   const newToken = res.headers.authorization?.replace('Bearer ', '')
