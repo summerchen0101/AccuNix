@@ -1,5 +1,5 @@
 <template>
-  <li class="border-white/10 text-gray-100 hover:text-opacity-80">
+  <li class="border-white/10 text-gray-500 hover:text-opacity-80">
     <template v-if="menu.subs">
       <a
         href="#"
@@ -10,10 +10,10 @@
           <i class="w-10" :class="menu.icon"></i>
           <span class="transition-all text-sm">{{ menu.label }}</span>
         </div>
-        <i class="el-icon-arrow-up" :class="isSubOpen && 'rotate-180'"></i>
+        <i class="el-icon-arrow-down" :class="isSubOpen && 'rotate-180'"></i>
       </a>
       <ul
-        class="transition-all max-h-0 overflow-y-hidden bg-primary-500"
+        class="transition-all max-h-0 overflow-y-hidden bg-white-500"
         :class="isSubOpen && 'show'"
       >
         <MenuItem v-for="m in menu.subs" :key="m.label" :menu="m" />
@@ -22,7 +22,7 @@
     <router-link
       v-else-if="menu.path"
       class="px-3.5 h-10 flex items-center"
-      :class="isActive && 'bg-secondary-500 text-white'"
+      :class="isActive && 'bg-primary-gradient text-white'"
       :to="menu.path"
     >
       <i class="w-10" :class="menu.icon"></i>

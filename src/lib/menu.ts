@@ -11,7 +11,7 @@ export interface Menu {
 export const botMenus: Record<ProductType, Menu[]> = {
   [ProductType.LINE]: [
     {
-      label: '儀表板',
+      label: '數據總覽',
       path: '/line/chart',
       icon: 'fas fa-chart-bar',
       code: 'basic',
@@ -56,7 +56,7 @@ export const botMenus: Record<ProductType, Menu[]> = {
   ],
   [ProductType.FB]: [
     {
-      label: '儀表板',
+      label: '數據總覽',
       path: '/fb/chart',
       icon: 'fas fa-chart-bar',
       code: 'basic',

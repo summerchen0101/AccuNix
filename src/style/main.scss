@@ -146,3 +146,6 @@ body,
     }
   }
 }
+.bg-primary-gradient {
+  @apply bg-gradient-to-br from-primary-500 to-primary-700
+}

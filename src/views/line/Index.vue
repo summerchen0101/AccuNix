@@ -25,7 +25,7 @@ export default defineComponent({
         })),
     )
     const tabOptions: OptionType<string>[] = [
-      { label: '儀表板', value: 'LineChart' },
+      { label: '數據總覽', value: 'LineChart' },
       { label: '機器人設定', value: 'LineRobot' },
     ]
 
@@ -41,7 +41,7 @@ export default defineComponent({
               name: `${productTypeMap[botType.value]}-${botGuid.value}`,
               mobileShow: true,
             },
-            { name: '儀表板', mobileShow: true },
+            { name: '數據總覽', mobileShow: true },
           ]
         : []
     })

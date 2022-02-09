@@ -1,29 +1,43 @@
 <template>
-  <div class="fixed h-full pt-24 z-10 group">
+  <!-- sidebar cover背景 -->
+  <div
+    class="
+      fixed
+      h-full
+      w-full
+      top-0
+      left-0
+      bg-black/20
+      transition-all
+      md:hidden
+      z-30
+    "
+    :class="isMiniSidebar ? 'opacity-0 invisible' : 'opacity-100 visible'"
+    @click="isMiniSidebar = !isMiniSidebar"
+  ></div>
+  <!-- menu本體 -->
+  <div class="bg-white fixed h-full z-30 group shadow-xl">
+    <div class="flex gap-3 items-center justify-center h-16 relative">
+      <div class="absolute left-0 ml-4">
+        <i
+          class="fas fa-bars text-xl cursor-pointer text-gray-500"
+          @click="isMiniSidebar = !isMiniSidebar"
+        >
+        </i>
+      </div>
+      <router-link :hidden="isMiniSidebar" to="/"
+        ><img class="w-28 h-auto" src="@/assets/logo.png" alt=""
+      /></router-link>
+    </div>
     <div
-      class="
-        bg-primary-500
-        transition-all
-        relative
-        z-20
-        group-hover:w-52
-        sidebar
-        h-full
-        overflow-x-hidden
-      "
+      class="relative z-20 sidebar h-full overflow-x-hidden"
       :class="isMiniSidebar ? 'w-0 md:w-12 mini' : 'w-52 md:w-52'"
     >
       <div class="w-52 flex flex-col h-full">
         <div class="p-2">
           <el-select
             :class="isMiniSidebar && 'invisible opacity-0 -translate-x-full'"
-            class="
-              w-full
-              transition-all
-              group-hover:visible
-              group-hover:opacity-100
-              group-hover:translate-x-0
-            "
+            class="w-full transition-all"
             size="small"
             v-model="botGuidWithType"
           >
@@ -44,28 +58,10 @@
         </div>
         <ul class="flex-1">
           <MenuItem v-for="m in botMenus" :key="m.label" :menu="m" />
-        </ul>
-        <ul class="bg-primary-600">
           <MenuItem v-for="m in perOrgMenus" :key="m.label" :menu="m" />
         </ul>
       </div>
     </div>
-    <!-- sidebar cover背景 -->
-    <div
-      class="
-        fixed
-        h-full
-        w-full
-        top-0
-        left-0
-        bg-black/20
-        transition-all
-        md:hidden
-        z-0
-      "
-      :class="isMiniSidebar ? 'opacity-0 invisible' : 'opacity-100 visible'"
-      @click="isMiniSidebar = !isMiniSidebar"
-    ></div>
   </div>
 </template>
 

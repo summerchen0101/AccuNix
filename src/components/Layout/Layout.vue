@@ -1,6 +1,5 @@
 <template>
   <div class="flex flex-col h-full">
-    <Header />
     <Sidebar />
     <div
       class="
@@ -8,12 +7,12 @@
         relative
         flex flex-col
         ml-0
-        mt-24
         h-full
         overflow-y-hidden
       "
       :class="isMiniSidebar ? 'md:ml-12' : 'md:ml-52'"
     >
+      <Header />
       <div class="bg-gray-100 flex-1 overflow-y-auto static">
         <transition name="fade">
           <slot v-if="botApiPath"></slot>

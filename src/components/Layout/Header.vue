@@ -1,11 +1,6 @@
 <template>
-  <div class="fixed top-0 w-screen z-30">
+  <div class="transition-all relative z-10">
     <div class="bg-white flex items-center h-14">
-      <div class="w-52 p-3">
-        <router-link to="/"
-          ><img class="w-36 h-auto" src="@/assets/logo.png" alt=""
-        /></router-link>
-      </div>
       <div class="flex-1 flex items-center justify-end h-full">
         <div
           class="
@@ -70,33 +65,6 @@
         </div>
       </div>
     </div>
-    <div
-      class="
-        h-10
-        bg-gradient-to-r
-        from-primary-500
-        to-primary-600
-        text-white
-        flex
-        items-center
-        shadow-lg
-      "
-    >
-      <div
-        class="sm:w-52 flex items-center justify-between px-4 text-primary-100"
-      >
-        <span :hidden="isMiniSidebar" class="text-sm hidden sm:inline-block"
-          >功能選單</span
-        >
-        <i
-          class="fas fa-bars cursor-pointer"
-          @click="isMiniSidebar = !isMiniSidebar"
-        >
-        </i>
-      </div>
-      <div class="flex-1"></div>
-      <div class="px-4"><Breadcrumb /></div>
-    </div>
   </div>
 </template>
 
@@ -128,7 +96,6 @@ export default defineComponent({
       loginInfo,
     }
   },
-  components: { Breadcrumb },
 })
 </script>
 
