@@ -45,18 +45,7 @@ export default defineComponent({
             Username
           </label>
           <input
-            class="
-              shadow
-              appearance-none
-              border
-              rounded
-              w-full
-              py-2
-              px-3
-              text-gray-700
-              leading-tight
-              focus:outline-none focus:shadow-outline
-            "
+            class="shadow w-full form-control"
             type="text"
             v-model="loginForm.username"
           />
@@ -69,19 +58,7 @@ export default defineComponent({
             Password
           </label>
           <input
-            class="
-              shadow
-              appearance-none
-              border
-              rounded
-              w-full
-              py-2
-              px-3
-              text-gray-700
-              mb-3
-              leading-tight
-              focus:outline-none focus:shadow-outline
-            "
+            class="shadow w-full form-control"
             type="password"
             v-model="loginForm.password"
           />
