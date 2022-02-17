@@ -1,6 +1,6 @@
 <script lang="ts">
 import { useGlobalState } from '@/providers/globalProvider'
-import useHoursOverview from '@/service/useHoursOverview'
+import useHoursOverview from '@/service/api/useHoursOverview'
 import * as am4charts from '@amcharts/amcharts4/charts'
 import * as am4core from '@amcharts/amcharts4/core'
 import am4themes_animated from '@amcharts/amcharts4/themes/animated'

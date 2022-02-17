@@ -1,4 +1,4 @@
-import { LoginInfoRes } from './../service/useLoginInfo'
+import { LoginInfoRes } from './../service/api/useLoginInfo'
 import { computed, inject, provide, ref, watchEffect } from 'vue'
 import { ProductType } from '@/lib/enum'
 import { productApiPathMap } from '@/lib/maps'

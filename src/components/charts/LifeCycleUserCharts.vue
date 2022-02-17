@@ -1,6 +1,6 @@
 <script lang="ts">
 import DoughnutChart from '@/components/DoughnutChart.vue'
-import { LifeCycle } from '@/service/useLifeCycleOverview'
+import { LifeCycle } from '@/service/api/useLifeCycleOverview'
 import { defineComponent, PropType } from 'vue'
 
 export default defineComponent({

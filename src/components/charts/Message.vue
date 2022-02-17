@@ -12,7 +12,7 @@ import {
 import useMessageTrand, {
   MessageTrand,
   MessageTrandReq,
-} from '../../service/useMessageTrend'
+} from '../../service/api/useMessageTrend'
 import SectionPanel from '../SectionPanel.vue'
 import Spinner from '../Spinner.vue'
 import * as am4charts from '@amcharts/amcharts4/charts'

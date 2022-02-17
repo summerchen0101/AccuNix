@@ -1,41 +1,38 @@
 import { useApiErrHandler } from '@/hooks/useApiErrHandler'
 import useRequest from '@/hooks/useRequest'
-import { BotType } from '@/lib/enum'
 import { ref } from 'vue'
-import { useGlobalState } from '../providers/globalProvider'
+import { useGlobalState } from '@/providers/globalProvider'
 
-export interface ScriptOverviewReq {
-  startAt?: string
-  endAt?: string
+export interface Image {
+  id: number
+  path: string
 }
 
-export interface Script {
+export interface RichmenuOpt {
   id: number
   name: string
-  total: number
-  finish: string
+  image_id: number
+  image: Image
 }
 
-export interface ScriptOverviewRes {
-  data: Script[]
+export interface InboxListRes {
+  data: RichmenuOpt[]
   message?: string
 }
 
-function useScriptOverview() {
+function useRichmenuOpts() {
   const apiErrHandler = useApiErrHandler()
   const { botApiPath } = useGlobalState()
   const isLoading = ref(false)
   const isError = ref(false)
-  const list = ref<ScriptOverviewRes['data']>([])
-
-  const fetchData = async (req: ScriptOverviewReq) => {
+  const list = ref<RichmenuOpt[]>([])
+  const fetchData = async () => {
     isLoading.value = true
     isError.value = false
     try {
-      const res = await useRequest<ScriptOverviewRes>({
+      const res = await useRequest<InboxListRes>({
         method: 'get',
-        url: `${botApiPath.value}/Dashboard/script-overview`,
-        config: { params: req },
+        url: `${botApiPath.value}/Richmenu/getAll`,
       })
       list.value = res.data
     } catch (err) {
@@ -49,4 +46,4 @@ function useScriptOverview() {
   return { list, fetchData, isLoading }
 }
 
-export default useScriptOverview
+export default useRichmenuOpts

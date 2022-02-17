@@ -1,6 +1,6 @@
 <script lang="ts">
 import { useGlobalState } from '@/providers/globalProvider'
-import useTagOverview from '@/service/useTagOverview'
+import useTagOverview from '@/service/api/useTagOverview'
 import { defineComponent, onMounted, ref, watch } from 'vue'
 import SectionPanel from '../SectionPanel.vue'
 import Spinner from '../Spinner.vue'

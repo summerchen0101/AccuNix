@@ -1,7 +1,8 @@
 import { useApiErrHandler } from '@/hooks/useApiErrHandler'
 import useRequest from '@/hooks/useRequest'
 import { ref } from 'vue'
-import { useGlobalState } from '../providers/globalProvider'
+import { useGlobalState } from '@/providers/globalProvider'
+
 
 export interface Tag {
   name: string

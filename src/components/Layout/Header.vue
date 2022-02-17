@@ -72,7 +72,7 @@
 import useAlert from '@/hooks/useAlert'
 import { useGlobalState } from '@/providers/globalProvider'
 import { useLayoutState } from '@/providers/layoutProvider'
-import useLogout from '@/service/useLogout'
+import useLogout from '@/service/api/useLogout'
 import { defineComponent, ref } from '@vue/runtime-core'
 import { useRouter } from 'vue-router'
 import Breadcrumb from '../Breadcrumb.vue'

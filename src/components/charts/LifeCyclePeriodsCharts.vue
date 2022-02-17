@@ -3,7 +3,7 @@ import { BotType } from '@/lib/enum'
 import { useGlobalState } from '@/providers/globalProvider'
 import useLifeCycleTrand, {
   LifeCycleTrandReq,
-} from '@/service/useLifeCycleTrend'
+} from '@/service/api/useLifeCycleTrend'
 import { format, subDays } from 'date-fns'
 import {
   computed,
@@ -20,7 +20,7 @@ import * as am4charts from '@amcharts/amcharts4/charts'
 import * as am4core from '@amcharts/amcharts4/core'
 import am4themes_animated from '@amcharts/amcharts4/themes/animated'
 import am4lang_zh_Hant from '@amcharts/amcharts4/lang/zh_Hant'
-import { LifeCycle } from '@/service/useLifeCycleOverview'
+import { LifeCycle } from '@/service/api/useLifeCycleOverview'
 import { keyBy } from 'lodash'
 
 am4core.useTheme(am4themes_animated)

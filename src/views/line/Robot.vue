@@ -2,7 +2,7 @@
 import CardPanel from '@/components/CardPanel.vue'
 import LoadingCover from '@/components/LoadingCover.vue'
 import { useGlobalState } from '@/providers/globalProvider'
-import useRichmenuOpts from '@/service/useInboxOpts'
+import useRichmenuOpts from '@/service/api/useInboxOpts'
 import { defineComponent, onMounted, ref, watch, watchEffect } from 'vue'
 
 export default defineComponent({

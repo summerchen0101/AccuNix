@@ -1,6 +1,6 @@
 <script lang="ts">
 import { useGlobalState } from '@/providers/globalProvider'
-import useLifeCycleOverview from '@/service/useLifeCycleOverview'
+import useLifeCycleOverview from '@/service/api/useLifeCycleOverview'
 import { defineComponent, onMounted, ref, watch } from 'vue'
 import DoughnutChart from '../DoughnutChart.vue'
 import SectionPanel from '../SectionPanel.vue'

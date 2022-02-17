@@ -3,7 +3,7 @@ import PageIconBtn from '@/components/PageIconBtn.vue'
 import { orderTypeMap, productTypeMap } from '@/lib/maps'
 import { useGlobalState } from '@/providers/globalProvider'
 import { useLayoutState } from '@/providers/layoutProvider'
-import useInboxList, { InboxListReq } from '@/service/useInboxList'
+import useInboxList, { InboxListReq } from '@/service/api/useInboxList'
 import { defineComponent, onMounted, reactive, watch, watchEffect } from 'vue'
 
 export default defineComponent({
