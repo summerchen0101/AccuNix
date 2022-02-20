@@ -28,7 +28,7 @@ import Header from '@/components/Layout/Header.vue'
 import Sidebar from '@/components/Layout/Sidebar.vue'
 import { useGlobalState } from '@/providers/globalProvider'
 import { useLayoutState } from '@/providers/layoutProvider'
-import useLoginInfo from '@/service/useLoginInfo'
+import useLoginInfo from '@/service/api/useLoginInfo'
 import { defineComponent, onMounted } from 'vue'
 import Spinner from '../Spinner.vue'
 

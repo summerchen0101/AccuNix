@@ -1,6 +1,6 @@
 <script lang="ts">
 import { useGlobalState } from '@/providers/globalProvider'
-import { TagOpt } from '@/service/useTagOpts'
+import { TagOpt } from '@/service/api/useTagOpts'
 import { ActionForm } from '@/views/inbox/Create.vue'
 import { defineComponent, PropType } from 'vue'
 

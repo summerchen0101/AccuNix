@@ -1,6 +1,6 @@
 <script lang="ts">
 import { useGlobalState } from '@/providers/globalProvider'
-import useTagOptCreate, { TagOptCreateReq } from '@/service/useCreateTagOpt'
+import useTagOptCreate, { TagOptCreateReq } from '@/service/api/useCreateTagOpt'
 import { defineComponent, reactive, ref, watchEffect } from 'vue'
 enum DayType {
   Forever,

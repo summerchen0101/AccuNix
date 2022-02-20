@@ -1,41 +1,42 @@
 import { useApiErrHandler } from '@/hooks/useApiErrHandler'
 import useRequest from '@/hooks/useRequest'
+import { BotType } from '@/lib/enum'
 import { ref } from 'vue'
-import { useGlobalState } from '../providers/globalProvider'
+import { useRouter } from 'vue-router'
+import { useGlobalState } from '@/providers/globalProvider'
 
-export interface LifeCycleTrandReq {
+export interface KeywordTrandReq {
   startAt?: string
   endAt?: string
 }
 
-export interface LifeCycleTrand {
-  '1': number
-  '2': number
-  '3': number
-  '4': number
-  '5': number
-  date: Date
+export interface KeywordTrand {
+  id: number
+  keyword: string
+  totalActiveCount: number
+  overall: number
+  compared: number
 }
 
-export interface LifeCycleTrandRes {
-  data: LifeCycleTrand[]
+export interface KeywordTrandRes {
+  data: KeywordTrand[]
   message?: string
 }
 
-function useLifeCycleTrand() {
+function useKeywordTrand() {
   const apiErrHandler = useApiErrHandler()
   const { botApiPath } = useGlobalState()
   const isLoading = ref(false)
   const isError = ref(false)
-  const list = ref<LifeCycleTrand[]>([])
+  const list = ref<KeywordTrand[]>([])
 
-  const fetchData = async (req: LifeCycleTrandReq) => {
+  const fetchData = async (req: KeywordTrandReq) => {
     isLoading.value = true
     isError.value = false
     try {
-      const res = await useRequest<LifeCycleTrandRes>({
+      const res = await useRequest<KeywordTrandRes>({
         method: 'get',
-        url: `${botApiPath.value}/Dashboard/lifecycle-trend`,
+        url: `${botApiPath.value}/Dashboard/keyword-trend`,
         config: { params: req },
       })
       list.value = res.data
@@ -50,4 +51,4 @@ function useLifeCycleTrand() {
   return { list, fetchData, isLoading }
 }
 
-export default useLifeCycleTrand
+export default useKeywordTrand

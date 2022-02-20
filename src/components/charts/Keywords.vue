@@ -1,7 +1,7 @@
 <script lang="ts">
 import { BotType } from '@/lib/enum'
 import { useGlobalState } from '@/providers/globalProvider'
-import useKeywordTrand from '@/service/useKeywordTrend'
+import useKeywordTrand from '@/service/api/useKeywordTrend'
 import { format, subDays } from 'date-fns'
 import { defineComponent, onMounted, ref, PropType, watch } from 'vue'
 import SectionPanel from '../SectionPanel.vue'

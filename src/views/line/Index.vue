@@ -19,7 +19,7 @@ import Message from '@/components/inbox/form/Message.vue'
 import Labels from '@/components/charts/Labels.vue'
 import Keywords from '@/components/charts/Keywords.vue'
 import Scripts from '@/components/charts/Scripts.vue'
-import useRichmenuOpts from '@/service/useInboxOpts'
+import useRichmenuOpts from '@/service/api/useInboxOpts'
 import BotAssistant from '@/components/BotAssistant.vue'
 
 export default defineComponent({

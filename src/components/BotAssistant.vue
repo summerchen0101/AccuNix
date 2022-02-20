@@ -1,6 +1,6 @@
 <script lang="ts">
-import useBotUpdate from '@/service/useBotUpdate'
-import { Bot } from '@/service/useLoginInfo'
+import useBotUpdate from '@/service/api/useBotUpdate'
+import { Bot } from '@/service/api/useLoginInfo'
 import { defineComponent, PropType, ref, watchEffect } from 'vue'
 
 export default defineComponent({

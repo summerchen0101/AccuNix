@@ -1,5 +1,5 @@
 <script lang="ts">
-import useLogin from '@/service/useLogin'
+import useLogin from '@/service/api/useLogin'
 import { defineComponent, reactive } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import logo from '@/assets/logo.png'

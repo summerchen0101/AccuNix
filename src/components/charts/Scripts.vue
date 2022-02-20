@@ -1,6 +1,6 @@
 <script lang="ts">
 import { useGlobalState } from '@/providers/globalProvider'
-import useScriptOverview from '@/service/useScriptOverview'
+import useScriptOverview from '@/service/api/useScriptOverview'
 import { format, subDays } from 'date-fns'
 import { defineComponent, onMounted, ref, watch } from 'vue'
 import SectionPanel from '../SectionPanel.vue'
