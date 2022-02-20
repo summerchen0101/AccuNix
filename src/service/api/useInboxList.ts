@@ -1,8 +1,8 @@
 import { useApiErrHandler } from '@/hooks/useApiErrHandler'
 import useRequest from '@/hooks/useRequest'
 import { ref } from 'vue'
-import { useGlobalState } from '../providers/globalProvider'
-import { ListBaseReq, ListMeta } from './../types/index'
+import { useGlobalState } from '@/providers/globalProvider'
+import { ListBaseReq, ListMeta } from '@/types/index'
 
 export interface InboxListReq extends ListBaseReq {
   search?: string

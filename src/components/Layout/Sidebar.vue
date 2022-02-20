@@ -1,17 +1,7 @@
 <template>
   <!-- sidebar cover背景 -->
   <div
-    class="
-      fixed
-      h-full
-      w-full
-      top-0
-      left-0
-      bg-black/20
-      transition-all
-      md:hidden
-      z-30
-    "
+    class="fixed h-full w-full top-0 left-0 bg-black/20 transition-all md:hidden z-30"
     :class="isMiniSidebar ? 'opacity-0 invisible' : 'opacity-100 visible'"
     @click="isMiniSidebar = !isMiniSidebar"
   ></div>
@@ -19,11 +9,7 @@
   <div class="bg-white fixed h-full z-30 group shadow-xl">
     <div class="flex gap-3 items-center justify-center h-16 relative">
       <div class="absolute left-0 ml-4">
-        <i
-          class="fas fa-bars text-xl cursor-pointer text-gray-500"
-          @click="isMiniSidebar = !isMiniSidebar"
-        >
-        </i>
+        <i class="fas fa-bars text-xl cursor-pointer text-gray-500" @click="isMiniSidebar = !isMiniSidebar"> </i>
       </div>
       <router-link :hidden="isMiniSidebar" to="/"
         ><img class="w-28 h-auto" src="@/assets/logo.png" alt=""
@@ -41,24 +27,14 @@
             size="small"
             v-model="botGuidWithType"
           >
-            <el-option
-              v-for="opt in botOpts"
-              :key="opt.value"
-              :label="opt.label"
-              :value="opt.value"
-            >
-              <img
-                :src="opt.img"
-                class="rounded-full w-7 h-7 inline-block mr-2"
-                alt=""
-              />
+            <el-option v-for="opt in botOpts" :key="opt.value" :label="opt.label" :value="opt.value">
+              <img :src="opt.img" class="rounded-full w-7 h-7 inline-block mr-2" alt="" />
               {{ opt.label }}
             </el-option>
           </el-select>
         </div>
         <ul class="flex-1">
-          <MenuItem v-for="m in botMenus" :key="m.label" :menu="m" />
-          <MenuItem v-for="m in perOrgMenus" :key="m.label" :menu="m" />
+          <MenuItem v-for="m in filterdMenu" :key="m.label" :menu="m" />
         </ul>
       </div>
     </div>
@@ -67,7 +43,7 @@
 
 <script lang="ts">
 import MenuItem from '@/components/Layout/MenuItem.vue'
-import { botMenus, menuList } from '@/lib/menu'
+import { menuList } from '@/lib/menu'
 import { useGlobalState } from '@/providers/globalProvider'
 import { useLayoutState } from '@/providers/layoutProvider'
 import { computed, defineComponent, watch } from 'vue'
@@ -91,26 +67,15 @@ export default defineComponent({
       })),
     )
 
-    const perBotMenus = computed(() =>
-      botMenus[botType.value]?.filter(
-        (m) => botInfo.value?.permissions[m.code]?.read,
-      ),
-    )
-    const perOrgMenus = computed(() =>
-      menuList
-        .map((m) => {
-          return {
-            ...m,
-            subs: m.subs?.filter(
-              (n) => loginInfo.value?.organization.permissions[n.code]?.read,
-            ),
-          }
-        })
-        .filter((m) =>
-          m.subs
-            ? m.subs?.length > 0
-            : loginInfo.value?.organization.permissions[m.code]?.read,
-        ),
+    const filterdMenu = computed(
+      () => menuList,
+      // .map((m) => {
+      //   return {
+      //     ...m,
+      //     subs: m.subs?.filter((n) => loginInfo.value?.organization.permissions[n.code]?.read),
+      //   }
+      // })
+      // .filter((m) => (m.subs ? m.subs?.length > 0 : loginInfo.value?.organization.permissions[m.code]?.read)),
     )
     // watch(
     //   () => perBotMenus.value,
@@ -122,8 +87,7 @@ export default defineComponent({
     // )
     return {
       isMiniSidebar,
-      perOrgMenus,
-      botMenus: perBotMenus,
+      filterdMenu,
       botOpts,
       botGuidWithType,
       botInfo,

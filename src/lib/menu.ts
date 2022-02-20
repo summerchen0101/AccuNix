@@ -8,137 +8,85 @@ export interface Menu {
   code?: string
 }
 
-export const botMenus: Record<ProductType, Menu[]> = {
-  [ProductType.LINE]: [
-    {
-      label: '數據總覽',
-      path: '/line/chart',
-      icon: 'fas fa-chart-bar',
-      code: 'basic',
-    },
-    {
-      label: '機器人主選單',
-      path: '/inbox/list',
-      icon: 'fas fa-border-all',
-      code: 'richmenu',
-    },
-    {
-      label: '自動回應設定',
-      path: '/',
-      icon: 'far fa-caret-square-left',
-      code: 'autoResponse',
-    },
-    {
-      label: '關鍵字庫',
-      path: '/',
-      icon: 'fab fa-slack-hash',
-      code: 'keyword',
-    },
-    {
-      label: '排程任務',
-      path: '/',
-      icon: 'far fa-clock',
-      code: 'lineSchedule',
-    },
-    { label: '好友管理', path: '/', icon: 'far fa-user', code: 'lineUser' },
-    {
-      label: '常用訊息庫',
-      path: '/',
-      icon: 'far fa-comments',
-      code: 'message',
-    },
-    {
-      label: '問券腳本',
-      path: '/',
-      icon: 'far fa-sticky-note',
-      code: 'form',
-    },
-  ],
-  [ProductType.FB]: [
-    {
-      label: '數據總覽',
-      path: '/fb/chart',
-      icon: 'fas fa-chart-bar',
-      code: 'basic',
-    },
-    {
-      label: '機器人主選單',
-      path: '/inbox/list',
-      icon: 'fas fa-border-all',
-      code: 'richmenu',
-    },
-    {
-      label: '自動回應設定',
-      path: '/',
-      icon: 'far fa-caret-square-left',
-      code: 'autoResponse',
-    },
-    {
-      label: '關鍵字庫',
-      path: '/',
-      icon: 'fab fa-slack-hash',
-      code: 'keyword',
-    },
-    {
-      label: '排程任務',
-      path: '/',
-      icon: 'far fa-clock',
-      code: 'lineSchedule',
-    },
-    { label: '好友管理', path: '/', icon: 'far fa-user', code: 'lineUser' },
-    {
-      label: '常用訊息庫',
-      path: '/',
-      icon: 'far fa-comments',
-      code: 'message',
-    },
-    {
-      label: '問券腳本',
-      path: '/',
-      icon: 'far fa-sticky-note',
-      code: 'form',
-    },
-  ],
-}
-
 export const menuList: Menu[] = [
-  // { label: '首頁', path: '/', icon: 'fa-home', code: 'Home' },
   {
-    label: '組織管理',
+    label: '數據總覽',
+    path: '/line/chart',
+    icon: 'fas fa-chart-bar',
+    code: 'basic',
+  },
+  {
+    label: '好友管理',
     path: null,
-    icon: 'fas fa-users',
+    icon: 'fas fa-user-friends',
     subs: [
-      { label: '編輯組織', path: '/', code: 'managerOrganization' },
-      { label: '角色管理', path: '/', code: 'managerRole' },
-      { label: '使用者管理', path: '/', code: 'managerUser' },
+      { label: '好友管理', code: 'xx', path: '/' },
+      { label: '標籤管理', code: 'xx', path: '/' },
+      { label: '身份認證', code: 'xx', path: '/' },
+      { label: 'Line受眾管理(Beta)', code: 'xx', path: '/' },
+      { label: '會員中心(Beta)', code: 'xx', path: '/' },
     ],
   },
-  // {
-  //   label: '聊天機器人',
-  //   path: null,
-  //   icon: 'fas fa-comments',
-  //   subs: [
-  //     { label: 'Line', path: '/line', code: 'Line' },
-  //     { label: 'Facebook', path: '/facebook', code: 'Facebook' },
-  //     { label: 'API Token', path: '/token', code: 'Token' },
-  //   ],
-  // },
+  {
+    label: '訊息與選單',
+    path: null,
+    icon: 'far fa-file-alt',
+    subs: [
+      { label: '機器人主選單', code: 'xx', path: '/' },
+      { label: '排程任務', code: 'xx', path: '/' },
+      { label: '關鍵字庫', code: 'xx', path: '/' },
+      { label: '常用訊息庫', code: 'xx', path: '/' },
+      { label: '自動回應設定', code: 'xx', path: '/' },
+    ],
+  },
+  {
+    label: '行銷與活動',
+    path: null,
+    icon: 'fas fa-search-dollar',
+    subs: [
+      { label: '賀卡製作模組', code: 'xx', path: '/' },
+      { label: '票券活動(Beta)', code: 'xx', path: '/' },
+      { label: '好友推薦活動', code: 'xx', path: '/' },
+      { label: '好有渠道導流活動', code: 'xx', path: '/' },
+      { label: '問券管理', code: 'xx', path: '/' },
+      { label: '自動化行銷', code: 'xx', path: '/' },
+      { label: '粉絲頁貼文回覆', code: 'xx', path: '/' },
+    ],
+  },
   {
     label: '一對一聊天',
     path: '/',
-    icon: 'fas fa-comment-dots',
+    icon: 'far fa-comment-dots',
     code: 'managerOneToOne',
-  },
-  {
-    label: '問卷管理',
-    path: '/',
-    icon: 'fas fa-file-signature',
-    code: 'managerForm',
   },
   {
     label: '智慧客服',
     path: null,
-    icon: 'fas fa-headset',
-    subs: [{ label: '知識庫列表', path: '/', code: 'managerQnAMaker' }],
+    icon: 'fas fa-robot',
+    subs: [
+      { label: '智慧客服腳本', code: 'xx', path: '/' },
+      { label: '知識庫腳本', code: 'xx', path: '/' },
+    ],
+  },
+  {
+    label: 'API',
+    path: null,
+    icon: 'fas fa-code-branch',
+    subs: [
+      { label: 'Open API', code: 'xx', path: '/' },
+      { label: 'Callback API 腳本', code: 'xx', path: '/' },
+      { label: 'API Token', code: 'xx', path: '/' },
+    ],
+  },
+  {
+    label: '組織管理',
+    path: null,
+    icon: 'fas fa-users-cog',
+    subs: [
+      { label: '編輯組織', path: '/', code: 'managerOrganization' },
+      { label: '使用者管理', path: '/', code: 'managerUser' },
+      { label: '角色管理', path: '/', code: 'managerRole' },
+      { label: '簡訊用量', path: '/', code: 'xx' },
+    ],
   },
 ]
