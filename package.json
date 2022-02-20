@@ -35,7 +35,8 @@
     "vue-router": "^4.0.10",
     "vue3-apexcharts": "^1.4.1",
     "vue3-chart-v2": "^0.8.2",
-    "vue3-charts": "^1.1.18"
+    "vue3-charts": "^1.1.18",
+    "vuex": "^4.0.2"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.172",

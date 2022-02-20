@@ -1,17 +1,16 @@
-import { createApp } from 'vue'
-import App from './App.vue'
-import router from './router'
-import ElementPlus from 'element-plus'
-import VueApexCharts from 'vue3-apexcharts'
 import ApexCharts from 'apexcharts'
+import ElementPlus from 'element-plus'
 import 'element-plus/lib/theme-chalk/index.css'
-import './style/tailwind.scss'
-import './style/main.scss'
-import { toCurrency } from './utils'
-
+import { createApp } from 'vue'
 import { createI18n } from 'vue-i18n'
+import VueApexCharts from 'vue3-apexcharts'
+import App from './App.vue'
 import en from './locales/en.json'
 import zh from './locales/zh.json'
+import router from './router'
+import './style/main.scss'
+import './style/tailwind.scss'
+import { store, key } from '@/service/store'
 
 declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {
@@ -38,6 +37,7 @@ app.use(i18n)
 app.use(ElementPlus)
 app.use(router)
 app.use(VueApexCharts)
+app.use(store, key)
 
 app.config.globalProperties.$apexcharts = ApexCharts
 
