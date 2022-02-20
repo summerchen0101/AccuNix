@@ -11,9 +11,9 @@ export interface Menu {
 export const menuList: Menu[] = [
   {
     label: '數據總覽',
-    path: '/line/chart',
+    path: '/dashboard',
     icon: 'fas fa-chart-bar',
-    code: 'basic',
+    code: 'dashboard',
   },
   {
     label: '好友管理',

@@ -4,7 +4,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'Home',
-    redirect: { name: 'LineRobot' },
+    redirect: { name: 'LineDashboard' },
   },
   {
     path: '/login',
@@ -14,53 +14,11 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/dashboard',
     component: () => import('@/views/Dashboard.vue'),
-    redirect: { name: 'LineRobot' },
     children: [
       {
         path: '/line',
-        name: 'Line',
+        name: 'LineDashboard',
         component: () => import('@/views/line/Index.vue'),
-        redirect: { name: 'LineChart' },
-        children: [
-          {
-            path: '/line/chart',
-            name: 'LineChart',
-            component: () => import('@/views/line/Charts.vue'),
-          },
-          {
-            path: '/line/robot',
-            name: 'LineRobot',
-            component: () => import('@/views/line/Robot.vue'),
-          },
-        ],
-      },
-      {
-        path: '/fb',
-        name: 'Facebook',
-        component: () => import('@/views/fb/Index.vue'),
-        redirect: { name: 'FbChart' },
-        children: [
-          {
-            path: '/fb/chart',
-            name: 'FbChart',
-            component: () => import('@/views/fb/Charts.vue'),
-          },
-          {
-            path: '/fb/robot',
-            name: 'FbRobot',
-            component: () => import('@/views/fb/Robot.vue'),
-          },
-        ],
-      },
-      {
-        path: '/inbox/list',
-        name: 'InboxList',
-        component: () => import('@/views/inbox/List.vue'),
-      },
-      {
-        path: '/inbox/Create',
-        name: 'InboxCreate',
-        component: () => import('@/views/inbox/Create.vue'),
       },
     ],
   },

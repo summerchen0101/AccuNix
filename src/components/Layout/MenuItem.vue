@@ -1,21 +1,14 @@
 <template>
   <li class="border-white/10 text-gray-500 hover:text-opacity-80">
     <template v-if="menu.subs">
-      <a
-        href="#"
-        class="px-3.5 h-10 flex items-center menu-item"
-        @click="isSubOpen = !isSubOpen"
-      >
+      <a href="#" class="px-3.5 h-10 flex items-center menu-item" @click="isSubOpen = !isSubOpen">
         <div class="flex-1">
           <i class="w-10" :class="menu.icon"></i>
           <span class="transition-all text-sm">{{ menu.label }}</span>
         </div>
         <i class="el-icon-arrow-down" :class="isSubOpen && 'rotate-180'"></i>
       </a>
-      <ul
-        class="transition-all max-h-0 overflow-y-hidden bg-white-500"
-        :class="isSubOpen && 'show'"
-      >
+      <ul class="transition-all max-h-0 overflow-y-hidden bg-white-500" :class="isSubOpen && 'show'">
         <MenuItem v-for="m in menu.subs" :key="m.label" :menu="m" />
       </ul>
     </template>

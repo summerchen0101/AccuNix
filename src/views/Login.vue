@@ -38,38 +38,15 @@ export default defineComponent({
       <img class="mx-auto w-52 mb-10" :src="logo" alt="" />
       <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
         <div class="mb-4">
-          <label
-            class="block text-gray-700 text-sm font-bold mb-2"
-            for="username"
-          >
-            Username
-          </label>
-          <input
-            class="shadow w-full form-control"
-            type="text"
-            v-model="loginForm.username"
-          />
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="username"> Username </label>
+          <input class="shadow w-full form-control" type="text" v-model="loginForm.username" />
         </div>
         <div class="mb-6">
-          <label
-            class="block text-gray-700 text-sm font-bold mb-2"
-            for="password"
-          >
-            Password
-          </label>
-          <input
-            class="shadow w-full form-control"
-            type="password"
-            v-model="loginForm.password"
-          />
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="password"> Password </label>
+          <input class="shadow w-full form-control" type="password" v-model="loginForm.password" />
         </div>
         <div class="flex items-center justify-between">
-          <button
-            v-if="isLoading"
-            class="bg-gray-500 text-white font-bold py-2 px-4 rounded"
-            type="button"
-            disabled
-          >
+          <button v-if="isLoading" class="bg-gray-500 text-white font-bold py-2 px-4 rounded" type="button" disabled>
             Loading
             <i class="fas fa-sync-alt animate-spin ml-2"></i>
           </button>
@@ -90,23 +67,12 @@ export default defineComponent({
           >
             Sign In
           </button>
-          <a
-            class="
-              inline-block
-              align-baseline
-              font-bold
-              text-sm text-primary-500
-              hover:text-primary-800
-            "
-            href="#"
-          >
+          <a class="inline-block align-baseline font-bold text-sm text-primary-500 hover:text-primary-800" href="#">
             Forgot Password?
           </a>
         </div>
       </form>
-      <p class="text-center text-gray-500 text-xs">
-        &copy;2021 AccuNix. All rights reserved.
-      </p>
+      <p class="text-center text-gray-500 text-xs">&copy;2021 AccuNix. All rights reserved.</p>
     </div>
   </div>
 </template>
