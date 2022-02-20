@@ -3,7 +3,7 @@ import useRequest from '@/hooks/useRequest'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useGlobalState } from '@/providers/globalProvider'
-
+import { MutationTypes, useStore } from '../store'
 
 export interface LoginInfoRes {
   id: number
@@ -58,6 +58,7 @@ export interface Organization {
 function useLoginInfo() {
   const apiErrHandler = useApiErrHandler()
   const { loginInfo, botGuidWithType } = useGlobalState()
+  const store = useStore()
   const isLoading = ref(false)
   const isError = ref(false)
   const data = ref<LoginInfoRes>()
@@ -74,6 +75,7 @@ function useLoginInfo() {
       loginInfo.value = res
       const _bot = res.bots[0]
       botGuidWithType.value = `${_bot.product_type_id}_${_bot?.GUID}`
+      store.commit(MutationTypes.SET_ORG, res.organization)
     } catch (err) {
       apiErrHandler(err)
       isError.value = true

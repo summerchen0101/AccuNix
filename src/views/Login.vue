@@ -4,13 +4,14 @@ import { defineComponent, reactive } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import logo from '@/assets/logo.png'
 import { useGlobalState } from '@/providers/globalProvider'
+import { MutationTypes, useStore } from '@/service/store'
 
 export default defineComponent({
   name: 'LoginPage',
   setup() {
     const router = useRouter()
     const route = useRoute()
-    const { orgGuid } = useGlobalState()
+    const store = useStore()
     const loginForm = reactive({
       username: 'accunix@test',
       password: '50085008',
@@ -23,7 +24,7 @@ export default defineComponent({
         redirectUrl: 'https://www.google.com',
       })
       if (res?.id) {
-        orgGuid.value = res.organization.GUID
+        store.commit(MutationTypes.SET_ORG, res.organization)
         router.push((route.query.from as string) || '/')
       }
     }

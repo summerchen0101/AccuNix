@@ -11,17 +11,19 @@ export interface LoginReq {
   redirectUrl: string
 }
 
+export type LoginRes = LoginInfoRes
+
 function useLogin() {
   const apiErrHandler = useApiErrHandler()
   const isLoading = ref(false)
   const isError = ref(false)
-  const data = ref<LoginInfoRes>(null)
+  const data = ref<LoginRes>(null)
   const { loginInfo, botGuidWithType } = useGlobalState()
   const doLogin = async (req: LoginReq) => {
     isLoading.value = true
     isError.value = false
     try {
-      const res = await useRequest<LoginInfoRes>({
+      const res = await useRequest<LoginRes>({
         method: 'post',
         url: 'login',
         data: req,
