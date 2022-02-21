@@ -1,7 +1,13 @@
 <template>
-  <li class="border-white/10 text-gray-500 hover:text-opacity-80">
+  <li class="border-white/10 text-gray-500 hover:text-primary-400">
+    <!-- 有子項目 -->
     <template v-if="menu.subs">
-      <a href="#" class="px-3.5 h-10 flex items-center menu-item" @click="isSubOpen = !isSubOpen">
+      <a
+        href="#"
+        class="px-3.5 h-10 flex items-center menu-item"
+        @click="isSubOpen = !isSubOpen"
+        :class="checkActive(menu) && 'bg-primary-gradient text-white'"
+      >
         <div class="flex-1">
           <i class="w-10" :class="menu.icon"></i>
           <span class="transition-all text-sm">{{ menu.label }}</span>
@@ -9,13 +15,17 @@
         <i class="el-icon-arrow-down" :class="isSubOpen && 'rotate-180'"></i>
       </a>
       <ul class="transition-all max-h-0 overflow-y-hidden bg-white-500" :class="isSubOpen && 'show'">
-        <MenuItem v-for="m in menu.subs" :key="m.label" :menu="m" />
+        <MenuItem v-for="m in menu.subs" :key="m.label" :menu="m" :stage="2" />
       </ul>
     </template>
+    <!-- 無子項目 -->
     <router-link
-      v-else-if="menu.path"
+      v-else
       class="px-3.5 h-10 flex items-center"
-      :class="isActive && 'bg-primary-gradient text-white'"
+      :class="{
+        'text-primary-400 bg-gray-100': isActive && stage !== 1,
+        'bg-primary-gradient text-white': isActive && stage === 1,
+      }"
       :to="menu.path"
     >
       <i class="w-10" :class="menu.icon"></i>
@@ -37,6 +47,10 @@ export default defineComponent({
       type: Object as PropType<Menu>,
       default: () => ({}),
     },
+    stage: {
+      type: Number,
+      default: 1,
+    },
   },
   setup(props) {
     const { isMiniSidebar, activePage } = useLayoutState()
@@ -56,7 +70,7 @@ export default defineComponent({
       }
     })
 
-    return { isSubOpen, isMiniSidebar, isActive }
+    return { isSubOpen, isMiniSidebar, isActive, checkActive }
   },
 })
 </script>

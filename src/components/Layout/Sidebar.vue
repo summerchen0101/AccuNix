@@ -34,7 +34,7 @@
           </el-select>
         </div>
         <ul class="flex-1">
-          <MenuItem v-for="m in filterdMenu" :key="m.label" :menu="m" />
+          <MenuItem v-for="m in filterdMenu" :key="m.label" :menu="m" :stage="1" />
         </ul>
       </div>
     </div>

@@ -11,9 +11,9 @@ export interface Menu {
 export const menuList: Menu[] = [
   {
     label: '數據總覽',
-    path: '/dashboard',
+    path: '/line/dashboard',
     icon: 'fas fa-chart-bar',
-    code: 'dashboard',
+    code: 'LineDashboard',
   },
   {
     label: '好友管理',
@@ -32,7 +32,7 @@ export const menuList: Menu[] = [
     path: null,
     icon: 'far fa-file-alt',
     subs: [
-      { label: '機器人主選單', code: 'xx', path: '/' },
+      { label: '機器人主選單', code: 'LineRichmenu', path: '/line/richmenu' },
       { label: '排程任務', code: 'xx', path: '/' },
       { label: '關鍵字庫', code: 'xx', path: '/' },
       { label: '常用訊息庫', code: 'xx', path: '/' },

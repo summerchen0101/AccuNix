@@ -7,20 +7,19 @@ import Labels from '@/components/charts/Labels.vue'
 import LifeCycle from '@/components/charts/LifeCycle.vue'
 import Message from '@/components/charts/Message.vue'
 import Scripts from '@/components/charts/Scripts.vue'
+import useActiveMenu from '@/hooks/useActiveMenu'
 import { useGlobalState } from '@/providers/globalProvider'
-import { useLayoutState } from '@/providers/layoutProvider'
 import useRichmenuOpts from '@/service/api/useInboxOpts'
 import { defineComponent, onMounted, ref, watch, watchEffect } from 'vue'
 
 export default defineComponent({
   setup() {
     const { botInfo, botGuid } = useGlobalState()
-    const { activePage } = useLayoutState()
+    useActiveMenu()
     const { fetchData, isLoading, list } = useRichmenuOpts()
 
     onMounted(() => {
       fetchData()
-      activePage.value = 'dashboard'
     })
     watch(
       () => botGuid.value,
