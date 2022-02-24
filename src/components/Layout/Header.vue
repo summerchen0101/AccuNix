@@ -58,16 +58,13 @@ import useAlert from '@/hooks/useAlert'
 import { useGlobalState } from '@/providers/globalProvider'
 import { useLayoutState } from '@/providers/layoutProvider'
 import useLogout from '@/service/api/useLogout'
-import { defineComponent, ref } from '@vue/runtime-core'
+import { vStore } from '@/service/store'
+import { defineComponent } from '@vue/runtime-core'
 import { useRouter } from 'vue-router'
-import { useStore } from '@/service/store'
-import Breadcrumb from '../Breadcrumb.vue'
-import { ActionTypes } from '@/service/store/bot/types'
 
 export default defineComponent({
   setup(props) {
     const router = useRouter()
-    const store = useStore()
     const { isMiniSidebar } = useLayoutState()
     const { loginInfo } = useGlobalState()
     const { doLogout, isLoading: isLogoutLoading } = useLogout()
@@ -82,7 +79,7 @@ export default defineComponent({
       handleLogout,
       isLogoutLoading,
       loginInfo,
-      onSetName: (name: string) => store.dispatch(`bot/${ActionTypes.GOT_NAME}`, name),
+      onSetName: vStore.bot.gotName,
     }
   },
 })
