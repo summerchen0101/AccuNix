@@ -1,39 +1,24 @@
 <template>
   <div class="transition-all relative z-10">
-    <div class="bg-white flex items-center h-14">
+    <div class="bg-white flex items-center h-14 shadow-md">
       <div class="flex-1 flex items-center justify-end h-full">
-        <div
-          class="
-            flex
-            items-center
-            justify-center
-            border-l
-            h-full
-            cursor-pointer
-            relative
-            group
-            w-40
-            sm:w-52
-          "
-        >
-          <span class="el-avatar el-avatar--circle hidden sm:block"
+        <div class="flex items-center justify-center h-full cursor-pointer relative group">
+          <span class="el-avatar el-avatar--circle"
             ><img src="https://blb.accubot.com.tw/uploads/!logged-user.jpg"
           /></span>
           <div class="text-center w-28">
             <div class="">{{ loginInfo?.name }}</div>
             <div class="text-gray-500 text-sm">maintainer</div>
           </div>
-          <i class="el-icon-arrow-down"></i>
-          <div
-            class="pt-14 invisible absolute top-0 right-0 group-hover:visible"
-          >
+          <i class="el-icon-arrow-down mr-3"></i>
+          <div class="pt-14 invisible absolute top-0 right-0 group-hover:visible">
             <div
               class="
                 border
                 bg-white
                 h-32
                 w-40
-                sm:w-52
+                sm:w-48
                 transition-all
                 scale-y-0
                 group-hover:scale-y-100
@@ -55,10 +40,7 @@
               <div class="hover:text-gray-500" @click="handleLogout">
                 <i class="fas fa-power-off mr-1"></i>
                 登出
-                <i
-                  :hidden="!isLogoutLoading"
-                  class="fas fa-sync-alt animate-spin ml-2"
-                ></i>
+                <i :hidden="!isLogoutLoading" class="fas fa-sync-alt animate-spin ml-2"></i>
               </div>
             </div>
           </div>

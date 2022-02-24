@@ -12,15 +12,15 @@
         <span v-if="!isMiniSidebar" class="transition-all text-sm">{{ menu.label }}</span>
         <div class="flex-1"></div>
         <i v-if="!isMiniSidebar" class="el-icon-arrow-down" :class="isSubOpen && 'rotate-180'"></i>
-        <!-- Mini模式時的浮動窗 -->
-        <div class="relative hidden float-sub">
+        <!-- Mini模式的浮動窗 -->
+        <div class="relative hidden float-sub text-sm">
           <div class="absolute left-0 top-0 -mt-5 pl-5">
             <ul class="bg-white rounded text-gray-500 whitespace-nowrap shadow-md p-3 space-y-2 w-44">
               <li>{{ menu.label }}</li>
               <li
                 v-for="(m, i) in menu.subs"
                 :key="i"
-                class="ml-3 hover:text-blue-400"
+                class="ml-4 hover:text-blue-400"
                 :class="checkActive(m) && 'text-blue-400'"
               >
                 {{ m.label }}
@@ -44,7 +44,8 @@
       :to="menu.path"
     >
       <i class="w-10" :class="menu.icon"></i>
-      <div class="relative hidden float-sub">
+      <!-- Mini模式的浮動窗 -->
+      <div class="relative hidden float-sub text-sm">
         <div class="absolute left-0 top-0 -mt-3 ml-5">
           <div class="bg-black/70 text-white whitespace-nowrap px-3 py-1 rounded">
             {{ menu.label }}
