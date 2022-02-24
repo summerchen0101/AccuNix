@@ -1,6 +1,6 @@
 <script lang="ts">
 import { OptionType } from '@/types'
-import { ActionForm } from '@/views/inbox/Create.vue'
+import { ActionForm } from '@/views/richmenu/Create.vue'
 import { defineComponent, PropType } from 'vue'
 
 export default defineComponent({
@@ -29,17 +29,9 @@ export default defineComponent({
     <el-select
       :modelValue="formData.campaignGuid"
       class="w-full"
-      @update:modelValue="
-        (val) => $emit('update:formData', { ...formData, campaignGuid: val })
-      "
+      @update:modelValue="(val) => $emit('update:formData', { ...formData, campaignGuid: val })"
       placeholder="選擇票券活動"
-      ><el-option
-        v-for="t in activitys"
-        :key="t.value"
-        :label="t.label"
-        :value="t.value"
-      >
-      </el-option
+      ><el-option v-for="t in activitys" :key="t.value" :label="t.label" :value="t.value"> </el-option
     ></el-select>
   </el-form-item>
 </template>

@@ -1,6 +1,6 @@
 <script lang="ts">
 import { OptionType } from '@/types'
-import { ActionForm } from '@/views/inbox/Create.vue'
+import { ActionForm } from '@/views/richmenu/Create.vue'
 import { defineComponent, PropType } from 'vue'
 
 export default defineComponent({
@@ -22,18 +22,10 @@ export default defineComponent({
   <el-form-item required>
     <el-select
       :modelValue="formData.keyword"
-      @update:modelValue="
-        (val) => $emit('update:formData', { ...formData, keyword: val })
-      "
+      @update:modelValue="(val) => $emit('update:formData', { ...formData, keyword: val })"
       class="w-full"
       placeholder="請選擇關鍵字"
-      ><el-option
-        v-for="t in keywords"
-        :key="t.value"
-        :label="t.label"
-        :value="t.value"
-      >
-      </el-option
+      ><el-option v-for="t in keywords" :key="t.value" :label="t.label" :value="t.value"> </el-option
     ></el-select>
   </el-form-item>
 </template>

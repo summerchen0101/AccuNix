@@ -1,5 +1,5 @@
 <script lang="ts">
-import { ActionForm } from '@/views/inbox/Create.vue'
+import { ActionForm } from '@/views/richmenu/Create.vue'
 import { defineComponent, PropType, watch, watchEffect } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
@@ -30,9 +30,7 @@ export default defineComponent({
     <el-input
       type="textarea"
       :modelValue="formData.message"
-      @update:modelValue="
-        (val) => $emit('update:formData', { ...formData, message: val })
-      "
+      @update:modelValue="(val) => $emit('update:formData', { ...formData, message: val })"
       :rows="3"
       placeholder="輸入回覆文字"
     ></el-input>

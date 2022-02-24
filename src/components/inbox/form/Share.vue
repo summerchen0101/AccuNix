@@ -1,6 +1,6 @@
 <script lang="ts">
 import { OptionType } from '@/types'
-import { ActionForm } from '@/views/inbox/Create.vue'
+import { ActionForm } from '@/views/richmenu/Create.vue'
 import { defineComponent, PropType } from 'vue'
 
 export default defineComponent({
@@ -28,18 +28,10 @@ export default defineComponent({
   <el-form-item required>
     <el-select
       :modelValue="formData"
-      @update:modelValue="
-        (val) => $emit('update:formData', { ...formData, value: val })
-      "
+      @update:modelValue="(val) => $emit('update:formData', { ...formData, value: val })"
       class="w-full"
       placeholder="選擇要分享的機器人"
-      ><el-option
-        v-for="t in friends"
-        :key="t.value"
-        :label="t.label"
-        :value="t.value"
-      >
-      </el-option
+      ><el-option v-for="t in friends" :key="t.value" :label="t.label" :value="t.value"> </el-option
     ></el-select>
   </el-form-item>
 </template>
