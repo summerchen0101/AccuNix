@@ -10,9 +10,14 @@
       >
         <div class="flex-1">
           <i class="w-10" :class="menu.icon"></i>
-          <span class="transition-all text-sm">{{ menu.label }}</span>
+          <span v-if="!isMiniSidebar" class="transition-all text-sm">{{ menu.label }}</span>
         </div>
-        <i class="el-icon-arrow-down" :class="isSubOpen && 'rotate-180'"></i>
+        <div class="relative hidden float-sub">
+          <div class="absolute left-0 top-0 bg-black/70 text-white whitespace-nowrap px-3 py-1 rounded -mt-5">
+            {{ menu.label }}
+          </div>
+        </div>
+        <i v-if="!isMiniSidebar" class="el-icon-arrow-down" :class="isSubOpen && 'rotate-180'"></i>
       </a>
       <ul class="transition-all max-h-0 overflow-y-hidden bg-white-500" :class="isSubOpen && 'show'">
         <MenuItem v-for="m in menu.subs" :key="m.label" :menu="m" :stage="2" />
@@ -29,7 +34,7 @@
       :to="menu.path"
     >
       <i class="w-10" :class="menu.icon"></i>
-      <span class="transition-all text-sm">{{ menu.label }}</span>
+      <span v-if="!isMiniSidebar" class="transition-all text-sm">{{ menu.label }}</span>
     </router-link>
   </li>
 </template>

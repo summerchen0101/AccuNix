@@ -49,6 +49,7 @@ export default defineComponent({
 
 <template>
   <div class="p-3">
+    <div class="text-xl text-gray-600 tracking-wider py-3">數據總覽</div>
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
       <div class="bg-white flex items-start rounded-md p-7 shadow-md text-sm text-gray-600 gap-x-3">
         <div class="bg-gray-300 h-14 w-14 rounded-full"></div>

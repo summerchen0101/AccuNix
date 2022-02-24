@@ -19,6 +19,9 @@ body,
   ul.show {
     @apply max-h-80;
   }
+  .float-sub {
+    @apply hidden;
+  }
   &.mini {
     ul.show {
       @apply max-h-0;
@@ -26,6 +29,14 @@ body,
     &:hover {
       ul.show {
         @apply max-h-80;
+      }
+    }
+
+    .menu-item {
+      &:hover {
+        .float-sub {
+          @apply block
+        }
       }
     }
   }

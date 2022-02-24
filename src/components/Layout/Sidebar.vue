@@ -15,11 +15,8 @@
         ><img class="w-28 h-auto" src="@/assets/logo.png" alt=""
       /></router-link>
     </div>
-    <div
-      class="relative z-20 sidebar h-full overflow-x-hidden"
-      :class="isMiniSidebar ? 'w-0 md:w-12 mini' : 'w-52 md:w-52'"
-    >
-      <div class="w-52 flex flex-col h-full">
+    <div class="relative z-20 sidebar h-full" :class="isMiniSidebar ? 'w-0 md:w-12 mini' : 'w-52 md:w-52'">
+      <div class="w-full flex flex-col h-full">
         <div class="p-2">
           <el-select
             :class="isMiniSidebar && 'invisible opacity-0 -translate-x-full'"
