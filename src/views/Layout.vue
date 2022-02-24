@@ -3,7 +3,7 @@
     <Sidebar />
     <div
       class="transition-all relative flex flex-col ml-0 h-full overflow-y-hidden"
-      :class="isMiniSidebar ? 'md:ml-12' : 'md:ml-52'"
+      :class="isMiniSidebar ? 'ml-12' : 'md:ml-52'"
     >
       <Header />
       <div class="bg-gray-100 flex-1 overflow-y-auto static">
