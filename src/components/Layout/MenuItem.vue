@@ -1,23 +1,33 @@
 <template>
-  <li class="border-white/10 text-gray-500 hover:text-primary-400">
+  <li class="border-white/10 text-gray-500 hover:text-primary-400 menu-item">
     <!-- 有子項目 -->
     <template v-if="menu.subs">
       <a
         href="#"
-        class="px-3.5 h-10 flex items-center menu-item"
+        class="px-3.5 h-10 flex items-center"
         @click="isSubOpen = !isSubOpen"
         :class="checkActive(menu) && 'bg-primary-gradient text-white'"
       >
-        <div class="flex-1">
-          <i class="w-10" :class="menu.icon"></i>
-          <span v-if="!isMiniSidebar" class="transition-all text-sm">{{ menu.label }}</span>
-        </div>
+        <i class="w-10" :class="menu.icon"></i>
+        <span v-if="!isMiniSidebar" class="transition-all text-sm">{{ menu.label }}</span>
+        <div class="flex-1"></div>
+        <i v-if="!isMiniSidebar" class="el-icon-arrow-down" :class="isSubOpen && 'rotate-180'"></i>
+        <!-- Mini模式時的浮動窗 -->
         <div class="relative hidden float-sub">
-          <div class="absolute left-0 top-0 bg-black/70 text-white whitespace-nowrap px-3 py-1 rounded -mt-5">
-            {{ menu.label }}
+          <div class="absolute left-0 top-0 -mt-5 pl-5">
+            <ul class="bg-white rounded text-gray-500 whitespace-nowrap shadow-md p-3 space-y-2 w-44">
+              <li>{{ menu.label }}</li>
+              <li
+                v-for="(m, i) in menu.subs"
+                :key="i"
+                class="ml-3 hover:text-blue-400"
+                :class="checkActive(m) && 'text-blue-400'"
+              >
+                {{ m.label }}
+              </li>
+            </ul>
           </div>
         </div>
-        <i v-if="!isMiniSidebar" class="el-icon-arrow-down" :class="isSubOpen && 'rotate-180'"></i>
       </a>
       <ul class="transition-all max-h-0 overflow-y-hidden bg-white-500" :class="isSubOpen && 'show'">
         <MenuItem v-for="m in menu.subs" :key="m.label" :menu="m" :stage="2" />
@@ -34,6 +44,13 @@
       :to="menu.path"
     >
       <i class="w-10" :class="menu.icon"></i>
+      <div class="relative hidden float-sub">
+        <div class="absolute left-0 top-0 -mt-3 ml-5">
+          <div class="bg-black/70 text-white whitespace-nowrap px-3 py-1 rounded">
+            {{ menu.label }}
+          </div>
+        </div>
+      </div>
       <span v-if="!isMiniSidebar" class="transition-all text-sm">{{ menu.label }}</span>
     </router-link>
   </li>

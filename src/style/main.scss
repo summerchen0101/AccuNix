@@ -26,11 +26,11 @@ body,
     ul.show {
       @apply max-h-0;
     }
-    &:hover {
-      ul.show {
-        @apply max-h-80;
-      }
-    }
+    // &:hover {
+    //   ul.show {
+    //     @apply max-h-80;
+    //   }
+    // }
 
     .menu-item {
       &:hover {
