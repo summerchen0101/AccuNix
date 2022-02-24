@@ -1,7 +1,8 @@
 import { LoginInfoRes } from '@/service/api/useLoginInfo'
-import { ActionTree, ActionContext } from 'vuex'
+import { ActionContext, ActionTree } from 'vuex'
+import { botMutations } from '.'
 import { BotState } from './state'
-import { ActionTypes, MutationTypes } from './types'
+import { ActionTypes } from './types'
 
 export type BotActions<S = BotState, R = {}> = {
   [ActionTypes.GOT_LOGIN_INFO]({ commit }: ActionContext<S, R>, payload: LoginInfoRes): void
@@ -9,11 +10,11 @@ export type BotActions<S = BotState, R = {}> = {
 }
 
 const actions: ActionTree<BotState, {}> & BotActions = {
-  [ActionTypes.GOT_LOGIN_INFO]({ commit }, loginInfo) {
-    commit(MutationTypes.SET_BOT, loginInfo.bots[0])
+  [ActionTypes.GOT_LOGIN_INFO](_, loginInfo) {
+    botMutations.setBot(loginInfo.bots[0])
   },
-  [ActionTypes.GOT_NAME]({ commit }, name) {
-    commit(MutationTypes.SET_NAME, name)
+  [ActionTypes.GOT_NAME](_, name) {
+    botMutations.setName(name)
   },
 }
 
