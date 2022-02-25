@@ -5,7 +5,7 @@ import * as am4charts from '@amcharts/amcharts4/charts'
 import * as am4core from '@amcharts/amcharts4/core'
 import am4themes_animated from '@amcharts/amcharts4/themes/animated'
 import { defineComponent, onMounted, ref, watch, watchEffect } from 'vue'
-import SectionPanel from '../SectionPanel.vue'
+import SectionPanel from '@/views/Dashboard/components/SectionPanel.vue'
 
 am4core.useTheme(am4themes_animated)
 

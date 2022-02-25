@@ -39,7 +39,7 @@
 </template>
 
 <script lang="ts">
-import MenuItem from '@/components/Layout/MenuItem.vue'
+import MenuItem from '@/views/Layout/components/MenuItem.vue'
 import { menuList } from '@/lib/menu'
 import { useGlobalState } from '@/providers/globalProvider'
 import { useLayoutState } from '@/providers/layoutProvider'

@@ -35,15 +35,7 @@ interface BoxProps {
   height: number
 }
 
-export function toLayoutBoxs({
-  h,
-  w,
-  layout,
-}: {
-  h: number
-  w: number
-  layout: number
-}) {
+export function toLayoutBoxs({ h, w, layout }: { h: number; w: number; layout: number }) {
   const _map: Record<number, BoxProps[]> = {
     1: [
       { x: 0, y: 0, height: h / 2, width: w / 3 },

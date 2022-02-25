@@ -1,11 +1,12 @@
 <script lang="ts">
 import { useGlobalState } from '@/providers/globalProvider'
-import useTagOptCreate, { TagOptCreateReq } from '@/service/api/useCreateTagOpt'
-import { defineComponent, reactive, ref, watchEffect } from 'vue'
+import useTagOptCreate from '@/service/api/useCreateTagOpt'
+import { defineComponent, reactive } from 'vue'
 enum DayType {
   Forever,
   Limit,
 }
+
 export default defineComponent({
   emits: ['finishd'],
   setup(props, { emit }) {
@@ -54,19 +55,8 @@ export default defineComponent({
 </script>
 
 <template>
-  <el-dialog
-    :modelValue="isShowTagPopup"
-    @close="handleClose"
-    title="建立標籤"
-    :width="400"
-  >
-    <el-form
-      v-loading="isLoading"
-      :model="data"
-      ref="form"
-      label-position="top"
-      label-width="80px"
-    >
+  <el-dialog :modelValue="isShowTagPopup" @close="handleClose" title="建立標籤" :width="400">
+    <el-form v-loading="isLoading" :model="data" ref="form" label-position="top" label-width="80px">
       <el-form-item label="標籤名稱" required>
         <el-input v-model="data.name"></el-input>
         <div class="help info">
@@ -78,11 +68,8 @@ export default defineComponent({
         <el-input v-model="data.description"></el-input>
       </el-form-item>
       <el-form-item label="有效期限">
-        <el-radio v-model="data.dayType" :label="DayType.Forever">永久</el-radio
-        ><br />
-        <el-radio v-model="data.dayType" :label="DayType.Limit">
-          有效天數 (可設定範圍為 1~365 天)
-        </el-radio>
+        <el-radio v-model="data.dayType" :label="DayType.Forever">永久</el-radio><br />
+        <el-radio v-model="data.dayType" :label="DayType.Limit"> 有效天數 (可設定範圍為 1~365 天) </el-radio>
         <div class="pl-7">
           <el-input v-model="data.days">
             <template #suffix><span class="mr-2">天</span></template></el-input

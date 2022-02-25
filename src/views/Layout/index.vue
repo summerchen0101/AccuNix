@@ -17,8 +17,8 @@
 </template>
 
 <script lang="ts">
-import Header from '@/components/Layout/Header.vue'
-import Sidebar from '@/components/Layout/Sidebar.vue'
+import Header from '@/views/Layout/components/Header.vue'
+import Sidebar from '@/views/Layout/components/Sidebar.vue'
 import { useGlobalState } from '@/providers/globalProvider'
 import { useLayoutState } from '@/providers/layoutProvider'
 import useLoginInfo from '@/service/api/useLoginInfo'

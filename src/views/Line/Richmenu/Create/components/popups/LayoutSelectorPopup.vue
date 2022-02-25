@@ -35,12 +35,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <el-dialog
-    :modelValue="visible"
-    @close="handleCancel"
-    title="選擇版型"
-    :width="750"
-  >
+  <el-dialog :modelValue="visible" @close="handleCancel" title="選擇版型" :width="750">
     <div v-if="size === '2500x1686'" class="grid grid-cols-4 gap-6">
       <div
         v-for="(t, i) in layouts.slice(0, 12)"

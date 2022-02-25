@@ -1,21 +1,11 @@
 <script lang="ts">
 import { BotType } from '@/lib/enum'
 import { useGlobalState } from '@/providers/globalProvider'
-import useLifeCycleTrand, {
-  LifeCycleTrandReq,
-} from '@/service/api/useLifeCycleTrend'
+import useLifeCycleTrand, { LifeCycleTrandReq } from '@/service/api/useLifeCycleTrend'
 import { format, subDays } from 'date-fns'
-import {
-  computed,
-  defineComponent,
-  onMounted,
-  ref,
-  PropType,
-  watch,
-  watchEffect,
-} from 'vue'
-import SectionPanel from '../SectionPanel.vue'
-import Spinner from '../Spinner.vue'
+import { computed, defineComponent, onMounted, ref, PropType, watch, watchEffect } from 'vue'
+import SectionPanel from '@/views/Dashboard/components/SectionPanel.vue'
+import Spinner from '@/components/Spinner.vue'
 import * as am4charts from '@amcharts/amcharts4/charts'
 import * as am4core from '@amcharts/amcharts4/core'
 import am4themes_animated from '@amcharts/amcharts4/themes/animated'
@@ -39,9 +29,7 @@ export default defineComponent({
     const { fetchData, isLoading, list } = useLifeCycleTrand()
     const onSearch = () => {
       const search: LifeCycleTrandReq = {
-        startAt: startAt.value
-          ? format(startAt.value, 'yyyy-MM-dd')
-          : undefined,
+        startAt: startAt.value ? format(startAt.value, 'yyyy-MM-dd') : undefined,
         endAt: endAt.value ? format(endAt.value, 'yyyy-MM-dd') : undefined,
       }
       fetchData(search)
@@ -137,22 +125,10 @@ export default defineComponent({
   <Spinner v-if="isLoading" />
   <div v-else class="mt-3">
     <div class="flex space-x-2 mb-3">
-      <el-date-picker
-        type="date"
-        size="small"
-        v-model="startAt"
-        placeholder="開始日期"
-      ></el-date-picker>
+      <el-date-picker type="date" size="small" v-model="startAt" placeholder="開始日期"></el-date-picker>
       <span>~</span>
-      <el-date-picker
-        type="date"
-        size="small"
-        v-model="endAt"
-        placeholder="結束日期"
-      ></el-date-picker>
-      <el-button type="primary" size="small" @click="onSearch">
-        查詢
-      </el-button>
+      <el-date-picker type="date" size="small" v-model="endAt" placeholder="結束日期"></el-date-picker>
+      <el-button type="primary" size="small" @click="onSearch"> 查詢 </el-button>
     </div>
     <div class="h-[380px]">
       <div ref="myChart" class="w-full h-full"></div>
