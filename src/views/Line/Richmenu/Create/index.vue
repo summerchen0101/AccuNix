@@ -15,7 +15,7 @@ import { getImageInfo } from '@/utils'
 import { computed, defineComponent, onMounted, reactive, ref, watch, watchEffect } from 'vue'
 import { useRouter } from 'vue-router'
 import TagPopup from '@/components/inbox/popups/TagPopup.vue'
-import { useStore } from '@/service/store'
+import { store } from '@/service/store'
 // import { MsgBtnFields } from '@/components/types'
 
 export interface ActionForm {
@@ -56,7 +56,6 @@ export default defineComponent({
     const alert = useAlert()
     const router = useRouter()
     const { botGuid } = useGlobalState()
-    const store = useStore()
 
     const layoutSelectorVisible = ref(false)
     const activeBox = ref<number>(1)
@@ -152,7 +151,7 @@ export default defineComponent({
       const formData = new FormData()
       formData.append('type', 'file')
       formData.append('from', 'richmenu')
-      formData.append('path', `org/${store.state.org.GUID}/line/${botGuid.value}/richmenu`)
+      formData.append('path', `org/${store.state.bot.orgGuid}/line/${botGuid.value}/Richmenu`)
       formData.append('file', file)
       return doUpload(formData)
     }

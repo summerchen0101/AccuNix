@@ -9,7 +9,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/login',
     name: 'Login',
-    component: () => import('@/views/Login.vue'),
+    component: () => import('@/views/Login/index.vue'),
   },
   {
     path: '/layout',
@@ -18,17 +18,17 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: '/line/dashboard',
         name: 'LineDashboard',
-        component: () => import('@/views/Dashboard.vue'),
+        component: () => import('@/views/Dashboard/index.vue'),
       },
       {
-        path: '/line/richmenu',
+        path: '/line/Richmenu',
         name: 'LineRichmenu',
-        component: () => import('@/views/richmenu/List.vue'),
+        component: () => import('@/views/Line/Richmenu/List/index.vue'),
       },
       {
-        path: '/line/richmenu/create',
+        path: '/line/Richmenu/create',
         name: 'LineRichmenuCreate',
-        component: () => import('@/views/richmenu/Create.vue'),
+        component: () => import('@/views/Line/Richmenu/Create/index.vue'),
       },
     ],
   },
@@ -39,7 +39,7 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: '/dashboard',
         name: 'Dashboard',
-        component: () => import('@/views/Dashboard.vue'),
+        component: () => import('@/views/Dashboard/index.vue'),
       },
     ],
   },

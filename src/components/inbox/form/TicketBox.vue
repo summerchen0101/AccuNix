@@ -1,6 +1,6 @@
 <script lang="ts">
 import { OptionType } from '@/types'
-import { ActionForm } from '@/views/richmenu/Create.vue'
+import { ActionForm } from '@/views/Line/Richmenu/Create/index.vue'
 import { defineComponent, PropType, ref } from 'vue'
 
 export default defineComponent({

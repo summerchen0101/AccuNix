@@ -32,7 +32,7 @@ export const menuList: Menu[] = [
     path: null,
     icon: 'far fa-file-alt',
     subs: [
-      { label: '機器人主選單', code: 'LineRichmenu', path: '/line/richmenu' },
+      { label: '機器人主選單', code: 'LineRichmenu', path: '/line/Richmenu' },
       { label: '排程任務', code: 'xx', path: '/' },
       { label: '關鍵字庫', code: 'xx', path: '/' },
       { label: '常用訊息庫', code: 'xx', path: '/' },
