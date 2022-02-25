@@ -23,7 +23,7 @@
                 class="ml-4 hover:text-blue-400"
                 :class="checkActive(m) && 'text-blue-400'"
               >
-                {{ m.label }}
+                <router-link :to="m.path || '#'">{{ m.label }}</router-link>
               </li>
             </ul>
           </div>
