@@ -2,10 +2,7 @@
   <div class="transition-all relative z-10">
     <div class="bg-white flex items-center h-14 shadow-md">
       <div class="flex-1 flex items-center justify-end h-full">
-        <div
-          class="flex items-center justify-center h-full cursor-pointer relative group"
-          @click="onSetName(loginInfo?.name)"
-        >
+        <div class="flex items-center justify-center h-full cursor-pointer relative group">
           <span class="el-avatar el-avatar--circle"
             ><img src="https://blb.accubot.com.tw/uploads/!logged-user.jpg"
           /></span>
@@ -58,14 +55,11 @@ import useAlert from '@/hooks/useAlert'
 import { useGlobalState } from '@/providers/globalProvider'
 import { useLayoutState } from '@/providers/layoutProvider'
 import useLogout from '@/service/api/useLogout'
-import { vStore } from '@/service/store'
-import { useBotStore } from '@/service/store/botStore'
 import { defineComponent } from '@vue/runtime-core'
 import { useRouter } from 'vue-router'
 
 export default defineComponent({
   setup(props) {
-    const botStore = useBotStore()
     const router = useRouter()
     const { isMiniSidebar } = useLayoutState()
     const { loginInfo } = useGlobalState()
@@ -81,7 +75,6 @@ export default defineComponent({
       handleLogout,
       isLogoutLoading,
       loginInfo,
-      onSetName: botStore.gotName,
     }
   },
 })

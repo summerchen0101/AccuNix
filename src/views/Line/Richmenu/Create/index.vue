@@ -15,7 +15,7 @@ import { getImageInfo } from '@/utils'
 import { computed, defineComponent, onMounted, reactive, ref, watch, watchEffect } from 'vue'
 import { useRouter } from 'vue-router'
 import TagPopup from '@/views/Line/Richmenu/Create/components/popups/TagPopup.vue'
-import { store } from '@/service/store'
+import { useBotStore } from '@/service/store/botStore'
 // import { MsgBtnFields } from '@/components/types'
 
 export interface ActionForm {
@@ -56,6 +56,7 @@ export default defineComponent({
     const alert = useAlert()
     const router = useRouter()
     const { botGuid } = useGlobalState()
+    const botStore = useBotStore()
 
     const layoutSelectorVisible = ref(false)
     const activeBox = ref<number>(1)
@@ -151,7 +152,7 @@ export default defineComponent({
       const formData = new FormData()
       formData.append('type', 'file')
       formData.append('from', 'richmenu')
-      formData.append('path', `org/${store.state.bot.orgGuid}/line/${botGuid.value}/Richmenu`)
+      formData.append('path', `org/${botStore.orgGuid}/line/${botGuid.value}/Richmenu`)
       formData.append('file', file)
       return doUpload(formData)
     }
@@ -350,10 +351,11 @@ export default defineComponent({
                     圖片尺寸：{{ sizeInfo.w }}px {{ sizeInfo.h }}px
                   </div>
                   <div class="space-y-2 mt-3">
-                    <input hidden type="file" @change="handleFileChanged" />
-                    <el-button class="w-full m-0" @click="(e) => e.currentTarget.previousElementSibling.click()"
-                      >上傳圖片</el-button
-                    >
+                    <label>
+                      <input hidden type="file" @change="handleFileChanged" />
+                      <el-button class="w-full m-0">上傳圖片</el-button>
+                    </label>
+
                     <el-button class="w-full m-0" @click="layoutSelectorVisible = true">選擇版型</el-button>
                   </div>
                 </div>

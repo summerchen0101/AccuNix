@@ -1,9 +1,8 @@
-import { useBotStore } from './../store/botStore'
 import { useApiErrHandler } from '@/hooks/useApiErrHandler'
 import useRequest from '@/hooks/useRequest'
 import { useGlobalState } from '@/providers/globalProvider'
 import { ref } from 'vue'
-import { vStore } from '../store'
+import { useBotStore } from './../store/botStore'
 
 export interface LoginInfoRes {
   id: number

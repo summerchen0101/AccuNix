@@ -10,7 +10,6 @@ import zh from './locales/zh.json'
 import router from './router'
 import './style/main.scss'
 import './style/tailwind.scss'
-import { store, key } from '@/service/store'
 import { createPinia } from 'pinia'
 
 declare module '@vue/runtime-core' {
@@ -39,7 +38,6 @@ app.use(i18n)
 app.use(ElementPlus)
 app.use(router)
 app.use(VueApexCharts)
-app.use(store, key)
 
 app.config.globalProperties.$apexcharts = ApexCharts
 
