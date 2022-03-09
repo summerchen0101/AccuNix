@@ -1,3 +1,4 @@
+import { useBotStore } from './../store/botStore'
 import { useApiErrHandler } from '@/hooks/useApiErrHandler'
 import useRequest from '@/hooks/useRequest'
 import { useGlobalState } from '@/providers/globalProvider'
@@ -60,6 +61,7 @@ function useLoginInfo() {
   const isLoading = ref(false)
   const isError = ref(false)
   const data = ref<LoginInfoRes>()
+  const botStore = useBotStore()
 
   const fetchData = async () => {
     isLoading.value = true
@@ -73,7 +75,7 @@ function useLoginInfo() {
       loginInfo.value = res
       const _bot = res.bots[0]
       botGuidWithType.value = `${_bot.product_type_id}_${_bot?.GUID}`
-      vStore.bot.setLoginInfo(res)
+      botStore.setLoginInfo(res)
     } catch (err) {
       apiErrHandler(err)
       isError.value = true

@@ -59,11 +59,13 @@ import { useGlobalState } from '@/providers/globalProvider'
 import { useLayoutState } from '@/providers/layoutProvider'
 import useLogout from '@/service/api/useLogout'
 import { vStore } from '@/service/store'
+import { useBotStore } from '@/service/store/botStore'
 import { defineComponent } from '@vue/runtime-core'
 import { useRouter } from 'vue-router'
 
 export default defineComponent({
   setup(props) {
+    const botStore = useBotStore()
     const router = useRouter()
     const { isMiniSidebar } = useLayoutState()
     const { loginInfo } = useGlobalState()
@@ -79,7 +81,7 @@ export default defineComponent({
       handleLogout,
       isLogoutLoading,
       loginInfo,
-      onSetName: vStore.bot.gotName,
+      onSetName: botStore.gotName,
     }
   },
 })
