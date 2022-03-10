@@ -16,7 +16,7 @@ import { storeToRefs } from 'pinia'
 export default defineComponent({
   setup() {
     const botStore = useBotStore()
-    const { botInfo, botGuid } = storeToRefs(botStore)
+    const { bot, botGuid } = storeToRefs(botStore)
     useActiveMenu()
     const { fetchData, isLoading, list } = useRichmenuOpts()
 
@@ -32,9 +32,9 @@ export default defineComponent({
     const selected = ref(1)
 
     watchEffect(() => {
-      selected.value = botInfo.value.default_richmenu_id
+      selected.value = bot.value.default_richmenu_id
     })
-    return { selected, botInfo, isLoading, list }
+    return { selected, bot, isLoading, list }
   },
   components: {
     LifeCycle,
@@ -55,13 +55,13 @@ export default defineComponent({
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
       <div class="bg-white flex items-start rounded-md p-7 shadow-md text-sm text-gray-600 gap-x-3">
         <div class="bg-gray-300 h-14 w-14 rounded-full"></div>
-        <BotAssistant :botInfo="botInfo" />
+        <BotAssistant :bot="bot" />
       </div>
 
       <div class="bg-white rounded-md shadow-md text-sm text-gray-600 flex flex-col gap-y-4 p-7">
         <div class="flex space-x-5">
-          <div>Webhook 狀態：{{ botInfo?.webhook.active ? '啟用中' : '未啟用' }}</div>
-          <div>串接狀態：{{ botInfo?.webhook.endpoint ? '已串接' : '未串接' }}</div>
+          <div>Webhook 狀態：{{ bot?.webhook.active ? '啟用中' : '未啟用' }}</div>
+          <div>串接狀態：{{ bot?.webhook.endpoint ? '已串接' : '未串接' }}</div>
         </div>
         <div class="flex items-center">
           Webhook 轉發：

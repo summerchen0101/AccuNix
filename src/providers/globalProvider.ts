@@ -1,7 +1,4 @@
-import { LoginInfoRes } from './../service/api/useLoginInfo'
-import { computed, inject, provide, ref, watchEffect } from 'vue'
-import { ProductType } from '@/lib/enum'
-import { productApiPathMap } from '@/lib/maps'
+import { inject, provide, ref } from 'vue'
 
 export interface BreadcrumbItem {
   name: string
@@ -9,21 +6,10 @@ export interface BreadcrumbItem {
   mobileShow?: boolean
 }
 
-const botGuidWithType = ref('')
-const loginInfo = ref<LoginInfoRes>()
-const botType = computed<ProductType>(() => +botGuidWithType.value.split('_')[0])
-const botGuid = computed<string>(() => botGuidWithType.value.split('_')[1])
-
 const isShowTagPopup = ref(false)
 
 const state = {
-  botGuidWithType,
-  botType,
-  botGuid,
-  botInfo: computed(() => loginInfo.value?.bots.find((t) => t.GUID === botGuid.value)),
-  botApiPath: computed(() => (botGuid.value ? `${productApiPathMap[botType.value]}/${botGuid.value}` : null)),
   breadcrumb: ref<BreadcrumbItem[]>([]),
-  loginInfo,
   isShowTagPopup,
 }
 

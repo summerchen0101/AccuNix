@@ -22,7 +22,7 @@
             :class="isMiniSidebar && 'invisible opacity-0 -translate-x-full'"
             class="w-full transition-all"
             size="small"
-            v-model="botInfo"
+            v-model="bot"
           >
             <el-option v-for="opt in botOpts" :key="opt.value" :label="opt.label" :value="opt.value">
               <img :src="opt.img" class="rounded-full w-7 h-7 inline-block mr-2" alt="" />
@@ -31,7 +31,7 @@
           </el-select>
         </div>
         <ul class="flex-1">
-          <MenuItem v-for="m in filterdMenu" :key="m.label" :menu="m" :stage="1" />
+          <MenuItem v-for="m in menuList" :key="m.label" :menu="m" :stage="1" />
         </ul>
       </div>
     </div>
@@ -39,12 +39,11 @@
 </template>
 
 <script lang="ts">
-import MenuItem from '@/views/Layout/components/MenuItem.vue'
 import { menuList } from '@/lib/menu'
-import { useBotStore } from '@/service/store/botStore'
 import { useLayoutState } from '@/providers/layoutProvider'
-import { computed, defineComponent, watch } from 'vue'
-import { useRouter } from 'vue-router'
+import { useBotStore } from '@/service/store/botStore'
+import MenuItem from '@/views/Layout/components/MenuItem.vue'
+import { computed, defineComponent } from 'vue'
 
 export default defineComponent({
   name: 'Sidebar',
@@ -52,11 +51,10 @@ export default defineComponent({
     MenuItem,
   },
   setup(props) {
-    const router = useRouter()
     const { isMiniSidebar } = useLayoutState()
     const botStore = useBotStore()
     const botOpts = computed(() =>
-      botStore.loginInfo?.bots.map((t) => ({
+      botStore.botList.map((t) => ({
         guid: t.GUID,
         label: `${t.name}`,
         value: `${t.product_type_id}_${t.GUID}`,
@@ -64,29 +62,11 @@ export default defineComponent({
       })),
     )
 
-    const filterdMenu = computed(
-      () => menuList,
-      // .map((m) => {
-      //   return {
-      //     ...m,
-      //     subs: m.subs?.filter((n) => loginInfo.value?.organization.permissions[n.code]?.read),
-      //   }
-      // })
-      // .filter((m) => (m.subs ? m.subs?.length > 0 : loginInfo.value?.organization.permissions[m.code]?.read)),
-    )
-    // watch(
-    //   () => perBotMenus.value,
-    //   () => {
-    //     if (perBotMenus.value.length) {
-    //       router.push(perBotMenus.value[0].path)
-    //     }
-    //   },
-    // )
     return {
       isMiniSidebar,
-      filterdMenu,
+      menuList,
       botOpts,
-      botInfo: botStore.botInfo,
+      bot: botStore.bot,
     }
   },
 })

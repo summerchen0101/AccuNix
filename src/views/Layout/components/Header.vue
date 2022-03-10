@@ -7,7 +7,7 @@
             ><img src="https://blb.accubot.com.tw/uploads/!logged-user.jpg"
           /></span>
           <div class="text-center w-28">
-            <div class="">{{ loginInfo?.name }}</div>
+            <div class="">{{ user?.name }}</div>
             <div class="text-gray-500 text-sm">maintainer</div>
           </div>
           <i class="el-icon-arrow-down mr-3"></i>
@@ -65,7 +65,7 @@ export default defineComponent({
     const { isMiniSidebar } = useLayoutState()
     const { doLogout, isLoading: isLogoutLoading } = useLogout()
     const alert = useAlert()
-    const { loginInfo } = storeToRefs(useBotStore())
+    const { user } = storeToRefs(useBotStore())
     const handleLogout = async () => {
       await doLogout()
       alert('登出成功', 'success')
@@ -75,7 +75,7 @@ export default defineComponent({
       isMiniSidebar,
       handleLogout,
       isLogoutLoading,
-      loginInfo,
+      user,
     }
   },
 })

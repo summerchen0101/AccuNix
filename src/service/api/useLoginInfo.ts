@@ -69,7 +69,7 @@ function useLoginInfo() {
         url: `/auth/getInfo`,
       })
       data.value = res
-      botStore.setLoginInfo(res)
+      botStore.gotLoginInfo(res)
     } catch (err) {
       apiErrHandler(err)
       isError.value = true

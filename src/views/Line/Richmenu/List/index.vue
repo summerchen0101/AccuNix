@@ -17,11 +17,11 @@ export default defineComponent({
     const { breadcrumb } = useGlobalState()
     const botStore = useBotStore()
     watchEffect(() => {
-      breadcrumb.value = botStore.productType
+      breadcrumb.value = botStore.botType
         ? [
             { name: '機器人管理' },
             {
-              name: `${productTypeMap[botStore.productType]}-${botStore.productType}`,
+              name: `${productTypeMap[botStore.botType]}-${botStore.botType}`,
               mobileShow: true,
             },
             { name: '主選單列表', mobileShow: true },
