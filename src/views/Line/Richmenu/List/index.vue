@@ -2,9 +2,10 @@
 import PageIconBtn from '@/components/PageIconBtn.vue'
 import useActiveMenu from '@/hooks/useActiveMenu'
 import { orderTypeMap, productTypeMap } from '@/lib/maps'
-import { useGlobalState } from '@/providers/globalProvider'
+import { useBotStore } from '@/service/store/botStore'
 import useInboxList, { InboxListReq } from '@/service/api/useInboxList'
 import { defineComponent, onMounted, reactive, watch, watchEffect } from 'vue'
+import { useGlobalState } from '@/providers/globalProvider'
 
 export default defineComponent({
   name: 'InboxList',
@@ -13,13 +14,14 @@ export default defineComponent({
   },
   setup() {
     useActiveMenu()
-    const { breadcrumb, botType, botGuid } = useGlobalState()
+    const { breadcrumb } = useGlobalState()
+    const botStore = useBotStore()
     watchEffect(() => {
-      breadcrumb.value = botType.value
+      breadcrumb.value = botStore.productType
         ? [
             { name: '機器人管理' },
             {
-              name: `${productTypeMap[botType.value]}-${botGuid.value}`,
+              name: `${productTypeMap[botStore.productType]}-${botStore.productType}`,
               mobileShow: true,
             },
             { name: '主選單列表', mobileShow: true },
@@ -43,7 +45,7 @@ export default defineComponent({
       fetchData(req)
     })
     watch(
-      () => botGuid.value,
+      () => botStore.botGuid,
       () => {
         fetchData(req)
       },

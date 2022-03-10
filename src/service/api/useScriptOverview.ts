@@ -2,7 +2,7 @@ import { useApiErrHandler } from '@/hooks/useApiErrHandler'
 import useRequest from '@/hooks/useRequest'
 import { BotType } from '@/lib/enum'
 import { ref } from 'vue'
-import { useGlobalState } from '@/providers/globalProvider'
+import { useBotStore } from '@/service/store/botStore'
 
 export interface ScriptOverviewReq {
   startAt?: string
@@ -23,7 +23,7 @@ export interface ScriptOverviewRes {
 
 function useScriptOverview() {
   const apiErrHandler = useApiErrHandler()
-  const { botApiPath } = useGlobalState()
+  const botStore = useBotStore()
   const isLoading = ref(false)
   const isError = ref(false)
   const list = ref<ScriptOverviewRes['data']>([])
@@ -34,7 +34,7 @@ function useScriptOverview() {
     try {
       const res = await useRequest<ScriptOverviewRes>({
         method: 'get',
-        url: `${botApiPath.value}/Dashboard/script-overview`,
+        url: `${botStore.botApiPath}/Dashboard/script-overview`,
         config: { params: req },
       })
       list.value = res.data

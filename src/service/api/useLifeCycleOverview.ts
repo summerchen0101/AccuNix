@@ -1,7 +1,7 @@
 import { useApiErrHandler } from '@/hooks/useApiErrHandler'
 import useRequest from '@/hooks/useRequest'
 import { ref } from 'vue'
-import { useGlobalState } from '@/providers/globalProvider'
+import { useBotStore } from '@/service/store/botStore'
 
 export interface LifeCycleOverviewRes {
   data: Data
@@ -24,7 +24,7 @@ export interface LifeCycle {
 
 function useLifeCycleOverview() {
   const apiErrHandler = useApiErrHandler()
-  const { botApiPath } = useGlobalState()
+  const botStore = useBotStore()
   const isLoading = ref(false)
   const isError = ref(false)
   const data = ref<LifeCycleOverviewRes['data']>(null)
@@ -35,7 +35,7 @@ function useLifeCycleOverview() {
     try {
       const res = await useRequest<LifeCycleOverviewRes>({
         method: 'get',
-        url: `${botApiPath.value}/Dashboard/lifecycle-overview`,
+        url: `${botStore.botApiPath}/Dashboard/lifecycle-overview`,
       })
       data.value = res.data
     } catch (err) {

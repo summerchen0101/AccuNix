@@ -52,19 +52,20 @@
 
 <script lang="ts">
 import useAlert from '@/hooks/useAlert'
-import { useGlobalState } from '@/providers/globalProvider'
 import { useLayoutState } from '@/providers/layoutProvider'
 import useLogout from '@/service/api/useLogout'
+import { useBotStore } from '@/service/store/botStore'
 import { defineComponent } from '@vue/runtime-core'
+import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
 
 export default defineComponent({
   setup(props) {
     const router = useRouter()
     const { isMiniSidebar } = useLayoutState()
-    const { loginInfo } = useGlobalState()
     const { doLogout, isLoading: isLogoutLoading } = useLogout()
     const alert = useAlert()
+    const { loginInfo } = storeToRefs(useBotStore())
     const handleLogout = async () => {
       await doLogout()
       alert('登出成功', 'success')

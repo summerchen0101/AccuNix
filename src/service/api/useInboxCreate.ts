@@ -1,7 +1,7 @@
 import { useApiErrHandler } from '@/hooks/useApiErrHandler'
 import useRequest from '@/hooks/useRequest'
 import { ref } from 'vue'
-import { useGlobalState } from '@/providers/globalProvider'
+import { useBotStore } from '@/service/store/botStore';
 
 export interface Action {
   tags?: string[]
@@ -49,7 +49,7 @@ export interface InboxCreateReq {
 
 function useInboxCreate() {
   const apiErrHandler = useApiErrHandler()
-  const { botApiPath } = useGlobalState()
+  const botStore = useBotStore()
   const isLoading = ref(false)
   const isError = ref(false)
   const doCreate = async (data: InboxCreateReq) => {
@@ -58,7 +58,7 @@ function useInboxCreate() {
     try {
       const res = await useRequest({
         method: 'post',
-        url: `${botApiPath.value}/Richmenu/store`,
+        url: `${botStore.botApiPath}/Richmenu/store`,
         data,
       })
     } catch (err) {

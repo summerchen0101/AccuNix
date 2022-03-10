@@ -1,8 +1,7 @@
 import { useApiErrHandler } from '@/hooks/useApiErrHandler'
 import useRequest from '@/hooks/useRequest'
-import { useGlobalState } from '@/providers/globalProvider'
+import { useBotStore } from '@/service/store/botStore'
 import { ref } from 'vue'
-import { useBotStore } from './../store/botStore'
 
 export interface LoginInfoRes {
   id: number
@@ -56,7 +55,6 @@ export interface Organization {
 
 function useLoginInfo() {
   const apiErrHandler = useApiErrHandler()
-  const { loginInfo, botGuidWithType } = useGlobalState()
   const isLoading = ref(false)
   const isError = ref(false)
   const data = ref<LoginInfoRes>()
@@ -71,9 +69,6 @@ function useLoginInfo() {
         url: `/auth/getInfo`,
       })
       data.value = res
-      loginInfo.value = res
-      const _bot = res.bots[0]
-      botGuidWithType.value = `${_bot.product_type_id}_${_bot?.GUID}`
       botStore.setLoginInfo(res)
     } catch (err) {
       apiErrHandler(err)

@@ -1,7 +1,7 @@
 import { useApiErrHandler } from '@/hooks/useApiErrHandler'
 import useRequest from '@/hooks/useRequest'
 import { ref } from 'vue'
-import { useGlobalState } from '@/providers/globalProvider'
+import { useBotStore } from '@/service/store/botStore'
 
 export interface BotUpdateReq {
   description: string
@@ -9,7 +9,7 @@ export interface BotUpdateReq {
 
 function useBotUpdate() {
   const apiErrHandler = useApiErrHandler()
-  const { botApiPath } = useGlobalState()
+  const botStore = useBotStore()
   const isLoading = ref(false)
   const isError = ref(false)
   const doUpdate = async (data: BotUpdateReq) => {
@@ -18,7 +18,7 @@ function useBotUpdate() {
     try {
       const res = await useRequest({
         method: 'patch',
-        url: `${botApiPath.value}/updateData`,
+        url: `${botStore.botApiPath}/updateData`,
         data,
       })
     } catch (err) {

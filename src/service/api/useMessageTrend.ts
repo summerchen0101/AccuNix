@@ -1,7 +1,7 @@
 import { useApiErrHandler } from '@/hooks/useApiErrHandler'
 import useRequest from '@/hooks/useRequest'
 import { ref } from 'vue'
-import { useGlobalState } from '@/providers/globalProvider'
+import { useBotStore } from '@/service/store/botStore'
 
 export interface MessageTrandReq {
   startAt?: string
@@ -21,7 +21,7 @@ export interface MessageTrandRes {
 
 function useMessageTrand() {
   const apiErrHandler = useApiErrHandler()
-  const { botApiPath } = useGlobalState()
+  const botStore = useBotStore()
   const isLoading = ref(false)
   const isError = ref(false)
   const list = ref<MessageTrand[]>([])
@@ -32,7 +32,7 @@ function useMessageTrand() {
     try {
       const res = await useRequest<MessageTrandRes>({
         method: 'get',
-        url: `${botApiPath.value}/Dashboard/message-trend`,
+        url: `${botStore.botApiPath}/Dashboard/message-trend`,
         config: { params: req },
       })
       list.value = res.data

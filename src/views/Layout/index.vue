@@ -8,7 +8,7 @@
       <Header />
       <div class="bg-gray-100 flex-1 overflow-y-auto static">
         <transition name="fade">
-          <router-view v-if="botApiPath"></router-view>
+          <router-view v-if="botStore.botApiPath"></router-view>
           <Spinner v-else />
         </transition>
       </div>
@@ -19,10 +19,10 @@
 <script lang="ts">
 import Header from '@/views/Layout/components/Header.vue'
 import Sidebar from '@/views/Layout/components/Sidebar.vue'
-import { useGlobalState } from '@/providers/globalProvider'
+import { useBotStore } from '@/service/store/botStore'
 import { useLayoutState } from '@/providers/layoutProvider'
 import useLoginInfo from '@/service/api/useLoginInfo'
-import { defineComponent, onMounted } from 'vue'
+import { defineComponent, onMounted, watchEffect } from 'vue'
 import Spinner from '@/components/Spinner.vue'
 
 export default defineComponent({
@@ -34,12 +34,12 @@ export default defineComponent({
   },
   setup(props) {
     const { isMiniSidebar } = useLayoutState()
-    const { botApiPath } = useGlobalState()
+    const botStore = useBotStore()
     const { fetchData } = useLoginInfo()
     onMounted(() => {
       fetchData()
     })
-    return { isMiniSidebar, botApiPath }
+    return { isMiniSidebar, botStore }
   },
 })
 </script>

@@ -1,5 +1,5 @@
 <script lang="ts">
-import { useGlobalState } from '@/providers/globalProvider'
+import { useBotStore } from '@/service/store/botStore'
 import useHoursOverview from '@/service/api/useHoursOverview'
 import * as am4charts from '@amcharts/amcharts4/charts'
 import * as am4core from '@amcharts/amcharts4/core'
@@ -15,12 +15,12 @@ export default defineComponent({
   },
   setup(props) {
     const { fetchData, isLoading, list } = useHoursOverview()
-    const { botGuid } = useGlobalState()
+    const botStore = useBotStore()
     onMounted(() => {
       fetchData()
     })
     watch(
-      () => botGuid.value,
+      () => botStore.botGuid,
       () => {
         fetchData()
       },

@@ -1,7 +1,7 @@
 import { useApiErrHandler } from '@/hooks/useApiErrHandler'
 import useRequest from '@/hooks/useRequest'
 import { ref } from 'vue'
-import { useGlobalState } from '@/providers/globalProvider'
+import { useBotStore } from '@/service/store/botStore';
 import { ListBaseReq, ListMeta } from '@/types/index'
 
 export interface InboxListReq extends ListBaseReq {
@@ -41,7 +41,7 @@ export interface Links {
 
 function useInboxList() {
   const apiErrHandler = useApiErrHandler()
-  const { botApiPath } = useGlobalState()
+  const botStore = useBotStore()
   const isLoading = ref(false)
   const isError = ref(false)
   const list = ref<Inbox[]>([])
@@ -52,7 +52,7 @@ function useInboxList() {
     try {
       const res = await useRequest<InboxListRes>({
         method: 'get',
-        url: `${botApiPath.value}/Richmenu/getIndexList`,
+        url: `${botStore.botApiPath}/Richmenu/getIndexList`,
         config: { params: req },
       })
       list.value = res.data.rows

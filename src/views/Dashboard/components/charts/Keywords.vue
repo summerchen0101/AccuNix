@@ -1,6 +1,6 @@
 <script lang="ts">
 import Spinner from '@/components/Spinner.vue'
-import { useGlobalState } from '@/providers/globalProvider'
+import { useBotStore } from '@/service/store/botStore'
 import useKeywordTrand from '@/service/api/useKeywordTrend'
 import SectionPanel from '@/views/Dashboard/components/SectionPanel.vue'
 import { format, subDays } from 'date-fns'
@@ -11,7 +11,7 @@ export default defineComponent({
     const startAt = ref(subDays(new Date(), 8))
     const endAt = ref(subDays(new Date(), 1))
     const { list, fetchData, isLoading } = useKeywordTrand()
-    const { botGuid } = useGlobalState()
+    const botStore = useBotStore()
     const onSearch = () => {
       const search = {
         startAt: startAt.value ? format(startAt.value, 'yyyy-MM-dd') : undefined,
@@ -23,7 +23,7 @@ export default defineComponent({
       onSearch()
     })
     watch(
-      () => botGuid.value,
+      () => botStore.botGuid,
       () => {
         onSearch()
       },

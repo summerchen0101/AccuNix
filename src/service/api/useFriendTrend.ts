@@ -1,8 +1,7 @@
 import { useApiErrHandler } from '@/hooks/useApiErrHandler'
 import useRequest from '@/hooks/useRequest'
-import { useGlobalState } from '@/providers/globalProvider'
+import { useBotStore } from '@/service/store/botStore'
 import { ref } from 'vue'
-
 
 export interface FriendTrandReq {
   startAt?: string
@@ -24,7 +23,7 @@ export interface FriendTrandRes {
 
 function useFriendTrand() {
   const apiErrHandler = useApiErrHandler()
-  const { botApiPath } = useGlobalState()
+  const botStore = useBotStore()
   const isLoading = ref(false)
   const isError = ref(false)
   const list = ref<FriendTrand[]>([])
@@ -34,7 +33,7 @@ function useFriendTrand() {
     try {
       const res = await useRequest<FriendTrandRes>({
         method: 'get',
-        url: `${botApiPath.value}/Dashboard/friend-trend`,
+        url: `${botStore.botApiPath}/Dashboard/friend-trend`,
         config: { params: req },
       })
       list.value = res.data

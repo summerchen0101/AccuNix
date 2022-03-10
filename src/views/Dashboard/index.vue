@@ -8,13 +8,15 @@ import LifeCycle from '@/views/Dashboard/components/charts/LifeCycle.vue'
 import Message from '@/views/Dashboard/components/charts/Message.vue'
 import Scripts from '@/views/Dashboard/components/charts/Scripts.vue'
 import useActiveMenu from '@/hooks/useActiveMenu'
-import { useGlobalState } from '@/providers/globalProvider'
+import { useBotStore } from '@/service/store/botStore'
 import useRichmenuOpts from '@/service/api/useInboxOpts'
 import { defineComponent, onMounted, ref, watch, watchEffect } from 'vue'
+import { storeToRefs } from 'pinia'
 
 export default defineComponent({
   setup() {
-    const { botInfo, botGuid } = useGlobalState()
+    const botStore = useBotStore()
+    const { botInfo, botGuid } = storeToRefs(botStore)
     useActiveMenu()
     const { fetchData, isLoading, list } = useRichmenuOpts()
 
@@ -22,7 +24,7 @@ export default defineComponent({
       fetchData()
     })
     watch(
-      () => botGuid.value,
+      () => botGuid,
       () => {
         fetchData()
       },

@@ -1,4 +1,4 @@
-import { useGlobalState } from '@/providers/globalProvider'
+import { useBotStore } from '@/service/store/botStore'
 import { useApiErrHandler } from '@/hooks/useApiErrHandler'
 import useRequest from '@/hooks/useRequest'
 import { ref } from 'vue'
@@ -21,7 +21,7 @@ export interface Data {
 
 function useTagOptCreate() {
   const apiErrHandler = useApiErrHandler()
-  const { botApiPath } = useGlobalState()
+  const botStore = useBotStore()
   const isLoading = ref(false)
   const isError = ref(false)
 
@@ -31,7 +31,7 @@ function useTagOptCreate() {
     try {
       const res = await useRequest<TagOptCreateRes>({
         method: 'post',
-        url: `${botApiPath.value}/Tag`,
+        url: `${botStore.botApiPath}/Tag`,
         data,
       })
       if (res.message !== 'success') {

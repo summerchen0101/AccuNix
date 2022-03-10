@@ -1,6 +1,6 @@
 <script lang="ts">
 import { BotType } from '@/lib/enum'
-import { useGlobalState } from '@/providers/globalProvider'
+import { useBotStore } from '@/service/store/botStore'
 import useLifeCycleTrand, { LifeCycleTrandReq } from '@/service/api/useLifeCycleTrend'
 import { format, subDays } from 'date-fns'
 import { computed, defineComponent, onMounted, ref, PropType, watch, watchEffect } from 'vue'
@@ -25,7 +25,7 @@ export default defineComponent({
   setup(props, { emit }) {
     const startAt = ref(subDays(new Date(), 8))
     const endAt = ref(subDays(new Date(), 1))
-    const { botGuid } = useGlobalState()
+    const botStore = useBotStore()
     const { fetchData, isLoading, list } = useLifeCycleTrand()
     const onSearch = () => {
       const search: LifeCycleTrandReq = {
@@ -38,7 +38,7 @@ export default defineComponent({
       onSearch()
     })
     watch(
-      () => botGuid.value,
+      () => botStore.botGuid,
       () => {
         onSearch()
       },

@@ -3,7 +3,7 @@ import useRequest from '@/hooks/useRequest'
 import { BotType } from '@/lib/enum'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { useGlobalState } from '@/providers/globalProvider'
+import { useBotStore } from '@/service/store/botStore';
 
 export interface KeywordTrandReq {
   startAt?: string
@@ -25,7 +25,7 @@ export interface KeywordTrandRes {
 
 function useKeywordTrand() {
   const apiErrHandler = useApiErrHandler()
-  const { botApiPath } = useGlobalState()
+  const botStore = useBotStore()
   const isLoading = ref(false)
   const isError = ref(false)
   const list = ref<KeywordTrand[]>([])
@@ -36,7 +36,7 @@ function useKeywordTrand() {
     try {
       const res = await useRequest<KeywordTrandRes>({
         method: 'get',
-        url: `${botApiPath.value}/Dashboard/keyword-trend`,
+        url: `${botStore.botApiPath}/Dashboard/keyword-trend`,
         config: { params: req },
       })
       list.value = res.data

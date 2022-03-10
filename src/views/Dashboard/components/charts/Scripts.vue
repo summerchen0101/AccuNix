@@ -1,5 +1,5 @@
 <script lang="ts">
-import { useGlobalState } from '@/providers/globalProvider'
+import { useBotStore } from '@/service/store/botStore'
 import useScriptOverview from '@/service/api/useScriptOverview'
 import { format, subDays } from 'date-fns'
 import { defineComponent, onMounted, ref, watch } from 'vue'
@@ -14,7 +14,7 @@ export default defineComponent({
   setup(props) {
     const startAt = ref(subDays(new Date(), 8))
     const endAt = ref(subDays(new Date(), 1))
-    const { botGuid } = useGlobalState()
+    const botStore = useBotStore()
     const { list, fetchData, isLoading } = useScriptOverview()
 
     const onSearch = () => {
@@ -29,7 +29,7 @@ export default defineComponent({
       onSearch()
     })
     watch(
-      () => botGuid.value,
+      () => botStore.botGuid,
       () => {
         onSearch()
       },

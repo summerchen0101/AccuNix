@@ -1,6 +1,6 @@
 import { useApiErrHandler } from '@/hooks/useApiErrHandler'
 import useRequest from '@/hooks/useRequest'
-import { useGlobalState } from '@/providers/globalProvider'
+import { useBotStore } from '@/service/store/botStore'
 import { ref } from 'vue'
 import { LoginInfoRes } from './useLoginInfo'
 
@@ -18,7 +18,7 @@ function useLogin() {
   const isLoading = ref(false)
   const isError = ref(false)
   const data = ref<LoginRes>(null)
-  const { loginInfo, botGuidWithType } = useGlobalState()
+  const botStore = useBotStore()
   const doLogin = async (req: LoginReq) => {
     isLoading.value = true
     isError.value = false
@@ -29,9 +29,7 @@ function useLogin() {
         data: req,
       })
       data.value = res
-      loginInfo.value = res
-      const _bot = res.bots[0]
-      botGuidWithType.value = `${_bot.product_type_id}_${_bot?.GUID}`
+      botStore.setLoginInfo(res)
     } catch (err) {
       apiErrHandler(err)
       isError.value = true

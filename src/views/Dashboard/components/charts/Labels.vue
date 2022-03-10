@@ -1,5 +1,5 @@
 <script lang="ts">
-import { useGlobalState } from '@/providers/globalProvider'
+import { useBotStore } from '@/service/store/botStore'
 import useTagOverview from '@/service/api/useTagOverview'
 import { defineComponent, onMounted, ref, watch } from 'vue'
 import SectionPanel from '@/views/Dashboard/components/SectionPanel.vue'
@@ -12,13 +12,13 @@ export default defineComponent({
   setup(props) {
     const selected = ref('user_count')
     const limit = ref(10)
-    const { botGuid } = useGlobalState()
+    const botStore = useBotStore()
     const { list, fetchData, isLoading } = useTagOverview()
     onMounted(() => {
       fetchData()
     })
     watch(
-      () => botGuid.value,
+      () => botStore.botGuid,
       () => {
         fetchData()
       },

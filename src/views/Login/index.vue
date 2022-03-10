@@ -1,7 +1,6 @@
 <script lang="ts">
 import logo from '@/assets/logo.png'
 import useLogin from '@/service/api/useLogin'
-import { useBotStore } from '@/service/store/botStore'
 import { defineComponent, reactive } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
@@ -14,7 +13,6 @@ export default defineComponent({
       username: 'accunix@test',
       password: '50085008',
     })
-    const botStore = useBotStore()
     const { doLogin, isLoading } = useLogin()
     const handleSubmit = async () => {
       const res = await doLogin({
@@ -23,7 +21,6 @@ export default defineComponent({
         redirectUrl: 'https://www.google.com',
       })
       if (res?.id) {
-        botStore.$state.orgGuid = res.organization.GUID
         router.push((route.query.from as string) || '/')
       }
     }

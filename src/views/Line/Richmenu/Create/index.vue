@@ -55,7 +55,6 @@ export default defineComponent({
     const imgFile = ref<File>()
     const alert = useAlert()
     const router = useRouter()
-    const { botGuid } = useGlobalState()
     const botStore = useBotStore()
 
     const layoutSelectorVisible = ref(false)
@@ -152,7 +151,7 @@ export default defineComponent({
       const formData = new FormData()
       formData.append('type', 'file')
       formData.append('from', 'richmenu')
-      formData.append('path', `org/${botStore.orgGuid}/line/${botGuid.value}/Richmenu`)
+      formData.append('path', `org/${botStore.orgGuid}/line/${botStore.botGuid}/Richmenu`)
       formData.append('file', file)
       return doUpload(formData)
     }

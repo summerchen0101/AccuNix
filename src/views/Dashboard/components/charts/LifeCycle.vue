@@ -1,5 +1,5 @@
 <script lang="ts">
-import { useGlobalState } from '@/providers/globalProvider'
+import { useBotStore } from '@/service/store/botStore'
 import useLifeCycleOverview from '@/service/api/useLifeCycleOverview'
 import { defineComponent, onMounted, ref, watch } from 'vue'
 import DoughnutChart from '../DoughnutChart.vue'
@@ -10,13 +10,13 @@ import LifeCycleUserCharts from './LifeCycleUserCharts.vue'
 
 export default defineComponent({
   setup() {
-    const { botGuid } = useGlobalState()
+    const botStore = useBotStore()
     const { fetchData, isLoading, data } = useLifeCycleOverview()
     onMounted(() => {
       fetchData()
     })
     watch(
-      () => botGuid.value,
+      () => botStore.botGuid,
       () => {
         fetchData()
       },

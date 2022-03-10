@@ -1,5 +1,5 @@
 <script lang="ts">
-import { useGlobalState } from '@/providers/globalProvider'
+import { useBotStore } from '@/service/store/botStore'
 import { format, subDays } from 'date-fns'
 import { computed, defineComponent, onMounted, ref, watch, watchEffect } from 'vue'
 import useMessageTrand, { MessageTrand, MessageTrandReq } from '@/service/api/useMessageTrend'
@@ -17,7 +17,7 @@ export default defineComponent({
   setup(props) {
     const startAt = ref(subDays(new Date(), 8))
     const endAt = ref(subDays(new Date(), 1))
-    const { botGuid } = useGlobalState()
+    const botStore = useBotStore()
     const { fetchData, isLoading, list } = useMessageTrand()
     const onSearch = () => {
       const search: MessageTrandReq = {
@@ -30,7 +30,7 @@ export default defineComponent({
       onSearch()
     })
     watch(
-      () => botGuid.value,
+      () => botStore.botGuid,
       () => {
         onSearch()
       },

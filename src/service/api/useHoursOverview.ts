@@ -1,7 +1,7 @@
 import { useApiErrHandler } from '@/hooks/useApiErrHandler'
 import useRequest from '@/hooks/useRequest'
 import { BotType } from '@/lib/enum'
-import { useGlobalState } from '@/providers/globalProvider'
+import { useBotStore } from '@/service/store/botStore'
 import { ref } from 'vue'
 
 export interface HourData {
@@ -15,7 +15,7 @@ export interface HoursOverviewRes {
 
 function useHoursOverview() {
   const apiErrHandler = useApiErrHandler()
-  const { botApiPath } = useGlobalState()
+  const botStore = useBotStore()
   const isLoading = ref(false)
   const isError = ref(false)
   const list = ref<HoursOverviewRes['data']>([])
@@ -26,7 +26,7 @@ function useHoursOverview() {
     try {
       const res = await useRequest<HoursOverviewRes>({
         method: 'get',
-        url: `${botApiPath.value}/Dashboard/freqhour-overview`,
+        url: `${botStore.botApiPath}/Dashboard/freqhour-overview`,
       })
       list.value = res.data
     } catch (err) {

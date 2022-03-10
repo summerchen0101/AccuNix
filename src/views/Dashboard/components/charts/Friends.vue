@@ -1,6 +1,6 @@
 <script lang="ts">
 import Spinner from '@/components/Spinner.vue'
-import { useGlobalState } from '@/providers/globalProvider'
+import { useBotStore } from '@/service/store/botStore'
 import useFriendTrand, { FriendTrand, FriendTrandReq } from '@/service/api/useFriendTrend'
 import * as am4charts from '@amcharts/amcharts4/charts'
 import * as am4core from '@amcharts/amcharts4/core'
@@ -23,7 +23,7 @@ export default defineComponent({
     const startAt = ref(subDays(new Date(), 8))
     const endAt = ref(subDays(new Date(), 1))
     const { fetchData, isLoading, list } = useFriendTrand()
-    const { botGuid } = useGlobalState()
+    const botStore = useBotStore()
 
     const onSearch = () => {
       const search: FriendTrandReq = {
@@ -37,7 +37,7 @@ export default defineComponent({
       onSearch()
     })
     watch(
-      () => botGuid.value,
+      () => botStore.botGuid,
       () => {
         onSearch()
       },

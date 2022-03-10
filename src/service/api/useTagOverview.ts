@@ -1,8 +1,7 @@
 import { useApiErrHandler } from '@/hooks/useApiErrHandler'
 import useRequest from '@/hooks/useRequest'
 import { ref } from 'vue'
-import { useGlobalState } from '@/providers/globalProvider'
-
+import { useBotStore } from '@/service/store/botStore'
 
 export interface Tag {
   name: string
@@ -19,7 +18,7 @@ export interface TagOverviewRes {
 
 function useTagOverview() {
   const apiErrHandler = useApiErrHandler()
-  const { botApiPath } = useGlobalState()
+  const botStore = useBotStore()
   const isLoading = ref(false)
   const isError = ref(false)
   const list = ref<TagOverviewRes['data']>([])
@@ -29,7 +28,7 @@ function useTagOverview() {
     try {
       const res = await useRequest<TagOverviewRes>({
         method: 'get',
-        url: `${botApiPath.value}/Dashboard/tag-overview`,
+        url: `${botStore.botApiPath}/Dashboard/tag-overview`,
       })
       list.value = res.data
     } catch (err) {

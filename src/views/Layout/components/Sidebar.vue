@@ -22,7 +22,7 @@
             :class="isMiniSidebar && 'invisible opacity-0 -translate-x-full'"
             class="w-full transition-all"
             size="small"
-            v-model="botGuidWithType"
+            v-model="botInfo"
           >
             <el-option v-for="opt in botOpts" :key="opt.value" :label="opt.label" :value="opt.value">
               <img :src="opt.img" class="rounded-full w-7 h-7 inline-block mr-2" alt="" />
@@ -41,7 +41,7 @@
 <script lang="ts">
 import MenuItem from '@/views/Layout/components/MenuItem.vue'
 import { menuList } from '@/lib/menu'
-import { useGlobalState } from '@/providers/globalProvider'
+import { useBotStore } from '@/service/store/botStore'
 import { useLayoutState } from '@/providers/layoutProvider'
 import { computed, defineComponent, watch } from 'vue'
 import { useRouter } from 'vue-router'
@@ -54,9 +54,9 @@ export default defineComponent({
   setup(props) {
     const router = useRouter()
     const { isMiniSidebar } = useLayoutState()
-    const { loginInfo, botGuidWithType, botType, botInfo } = useGlobalState()
+    const botStore = useBotStore()
     const botOpts = computed(() =>
-      loginInfo.value?.bots.map((t) => ({
+      botStore.loginInfo?.bots.map((t) => ({
         guid: t.GUID,
         label: `${t.name}`,
         value: `${t.product_type_id}_${t.GUID}`,
@@ -86,8 +86,7 @@ export default defineComponent({
       isMiniSidebar,
       filterdMenu,
       botOpts,
-      botGuidWithType,
-      botInfo,
+      botInfo: botStore.botInfo,
     }
   },
 })

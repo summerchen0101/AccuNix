@@ -1,7 +1,7 @@
 import { useApiErrHandler } from '@/hooks/useApiErrHandler'
 import useRequest from '@/hooks/useRequest'
 import { ref } from 'vue'
-import { useGlobalState } from '@/providers/globalProvider'
+import { useBotStore } from '@/service/store/botStore'
 
 export interface Image {
   id: number
@@ -22,7 +22,7 @@ export interface InboxListRes {
 
 function useRichmenuOpts() {
   const apiErrHandler = useApiErrHandler()
-  const { botApiPath } = useGlobalState()
+  const botStore = useBotStore()
   const isLoading = ref(false)
   const isError = ref(false)
   const list = ref<RichmenuOpt[]>([])
@@ -32,7 +32,7 @@ function useRichmenuOpts() {
     try {
       const res = await useRequest<InboxListRes>({
         method: 'get',
-        url: `${botApiPath.value}/Richmenu/getAll`,
+        url: `${botStore.botApiPath}/Richmenu/getAll`,
       })
       list.value = res.data
     } catch (err) {

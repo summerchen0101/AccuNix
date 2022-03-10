@@ -1,7 +1,7 @@
 import { useApiErrHandler } from '@/hooks/useApiErrHandler'
 import useRequest from '@/hooks/useRequest'
 import { ref } from 'vue'
-import { useGlobalState } from '@/providers/globalProvider'
+import { useBotStore } from '@/service/store/botStore'
 
 export interface LifeCycleTrandReq {
   startAt?: string
@@ -24,7 +24,7 @@ export interface LifeCycleTrandRes {
 
 function useLifeCycleTrand() {
   const apiErrHandler = useApiErrHandler()
-  const { botApiPath } = useGlobalState()
+  const botStore = useBotStore()
   const isLoading = ref(false)
   const isError = ref(false)
   const list = ref<LifeCycleTrand[]>([])
@@ -35,7 +35,7 @@ function useLifeCycleTrand() {
     try {
       const res = await useRequest<LifeCycleTrandRes>({
         method: 'get',
-        url: `${botApiPath.value}/Dashboard/lifecycle-trend`,
+        url: `${botStore.botApiPath}/Dashboard/lifecycle-trend`,
         config: { params: req },
       })
       list.value = res.data

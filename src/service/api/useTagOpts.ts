@@ -1,7 +1,7 @@
 import { useApiErrHandler } from '@/hooks/useApiErrHandler'
 import useRequest from '@/hooks/useRequest'
 import { ref } from 'vue'
-import { useGlobalState } from '@/providers/globalProvider'
+import { useBotStore } from '@/service/store/botStore'
 
 export interface TagOptsRes {
   message: string
@@ -20,7 +20,7 @@ export interface TagOpt {
 
 function useTagOpts() {
   const apiErrHandler = useApiErrHandler()
-  const { botApiPath } = useGlobalState()
+  const botStore = useBotStore()
   const isLoading = ref(false)
   const isError = ref(false)
   const list = ref<TagOpt[]>([])
@@ -31,7 +31,7 @@ function useTagOpts() {
     try {
       const res = await useRequest<TagOptsRes>({
         method: 'get',
-        url: `${botApiPath.value}/Tag/getData`,
+        url: `${botStore.botApiPath}/Tag/getData`,
       })
       list.value = res.data.rows
       total.value = res.data.total

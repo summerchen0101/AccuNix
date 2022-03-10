@@ -1,21 +1,37 @@
+import { ProductType } from '@/lib/enum'
+import { productApiPathMap } from '@/lib/maps'
 import { defineStore } from 'pinia'
-import { LoginInfoRes } from '../api/useLoginInfo'
+import { Bot, LoginInfoRes } from '../api/useLoginInfo'
 
 interface BotState {
-  orgGuid: string
   botGuid: string
+  productType: ProductType
+  loginInfo: LoginInfoRes | null
+  botInfo: Bot | null
 }
 
 export const useBotStore = defineStore('botStore', {
   state: (): BotState => ({
-    orgGuid: '',
     botGuid: '',
+    productType: ProductType.LINE,
+    loginInfo: null,
+    botInfo: null,
   }),
+  getters: {
+    orgGuid: (state) => state.loginInfo.organization.GUID,
+    botGuidWithType: (state) => `${state.productType}_${state.botGuid}`,
+    botApiPath: (state) => (state.botGuid ? `${productApiPathMap[state.productType]}/${state.botGuid}` : ''),
+  },
   actions: {
+    onBotChange(botTypeStr: string) {
+      // const [productType, botGuid] = botTypeStr.split('_')
+      // this.$state.botGuid =
+    },
     setLoginInfo(info: LoginInfoRes) {
-      const state = this as BotState
-      state.orgGuid = info.organization.GUID
-      state.botGuid = info.bots[0].GUID
+      this.loginInfo = info
+      this.botInfo = info.bots[0]
+      this.botGuid = info.bots[0].GUID
+      this.productType - info.bots[0].product_type_id
     },
   },
 })
