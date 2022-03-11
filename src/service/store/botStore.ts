@@ -25,6 +25,10 @@ export const useBotStore = defineStore('botStore', () => {
       picture: info.picture,
     }
   }
+  const updateBot = (newBot: Bot) => {
+    console.log(newBot)
+    bot.value = newBot
+  }
   return {
     bot,
     org,
@@ -37,6 +41,7 @@ export const useBotStore = defineStore('botStore', () => {
     botApiPath: computed(() => (bot.value ? `${productApiPathMap[bot.value.product_type_id]}/${bot.value.GUID}` : '')),
 
     gotLoginInfo,
+    updateBot,
   }
 })
 // export const useBotStore = defineStore('botStore', {

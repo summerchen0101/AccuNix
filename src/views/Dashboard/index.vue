@@ -34,7 +34,7 @@ export default defineComponent({
     watchEffect(() => {
       selected.value = bot.value.default_richmenu_id
     })
-    return { selected, bot, isLoading, list }
+    return { bot }
   },
   components: {
     LifeCycle,
@@ -60,8 +60,8 @@ export default defineComponent({
 
       <div class="bg-white rounded-md shadow-md text-sm text-gray-600 flex flex-col gap-y-4 p-7">
         <div class="flex space-x-5">
-          <div>Webhook 狀態：{{ bot?.webhook.active ? '啟用中' : '未啟用' }}</div>
-          <div>串接狀態：{{ bot?.webhook.endpoint ? '已串接' : '未串接' }}</div>
+          <div>Webhook 狀態：{{ bot?.webhook?.active ? '啟用中' : '未啟用' }}</div>
+          <div>串接狀態：{{ bot?.webhook?.endpoint ? '已串接' : '未串接' }}</div>
         </div>
         <div class="flex items-center">
           Webhook 轉發：

@@ -11,7 +11,7 @@
         <i class="w-10" :class="menu.icon"></i>
         <span v-if="!isMiniSidebar" class="transition-all text-sm">{{ menu.label }}</span>
         <div class="flex-1"></div>
-        <i v-if="!isMiniSidebar" class="el-icon-arrow-down" :class="isSubOpen && 'rotate-180'"></i>
+        <i v-if="!isMiniSidebar" class="fas fa-angle-down" :class="isSubOpen && 'rotate-180'"></i>
         <!-- Mini模式的浮動窗 -->
         <div class="relative hidden float-sub text-sm">
           <div class="absolute left-0 top-0 -mt-5 pl-5">

@@ -17,19 +17,7 @@
     </div>
     <div class="relative z-20 sidebar h-full" :class="isMiniSidebar ? 'w-12 mini' : 'w-52 md:w-52'">
       <div class="w-full flex flex-col">
-        <div class="p-2">
-          <el-select
-            :class="isMiniSidebar && 'invisible opacity-0 -translate-x-full'"
-            class="w-full transition-all"
-            size="small"
-            v-model="bot"
-          >
-            <el-option v-for="opt in botOpts" :key="opt.value" :label="opt.label" :value="opt.value">
-              <img :src="opt.img" class="rounded-full w-7 h-7 inline-block mr-2" alt="" />
-              {{ opt.label }}
-            </el-option>
-          </el-select>
-        </div>
+        <BotSelector />
         <ul class="flex-1">
           <MenuItem v-for="m in menuList" :key="m.label" :menu="m" :stage="1" />
         </ul>
@@ -43,12 +31,14 @@ import { menuList } from '@/lib/menu'
 import { useLayoutState } from '@/providers/layoutProvider'
 import { useBotStore } from '@/service/store/botStore'
 import MenuItem from '@/views/Layout/components/MenuItem.vue'
-import { computed, defineComponent } from 'vue'
+import { computed, defineComponent, toRef } from 'vue'
+import BotSelector from './BotSelector.vue'
 
 export default defineComponent({
   name: 'Sidebar',
   components: {
     MenuItem,
+    BotSelector,
   },
   setup(props) {
     const { isMiniSidebar } = useLayoutState()
@@ -56,8 +46,8 @@ export default defineComponent({
     const botOpts = computed(() =>
       botStore.botList.map((t) => ({
         guid: t.GUID,
-        label: `${t.name}`,
-        value: `${t.product_type_id}_${t.GUID}`,
+        label: t.name,
+        value: t,
         img: t.picture,
       })),
     )
@@ -66,7 +56,8 @@ export default defineComponent({
       isMiniSidebar,
       menuList,
       botOpts,
-      bot: botStore.bot,
+      bot: toRef(botStore, 'bot'),
+      updateBot: botStore.updateBot,
     }
   },
 })
