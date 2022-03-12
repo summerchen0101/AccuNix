@@ -21,14 +21,24 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('@/views/Dashboard/index.vue'),
       },
       {
-        path: '/line/Richmenu',
+        path: '/line/richmenu',
         name: 'LineRichmenu',
         component: () => import('@/views/Line/Richmenu/List/index.vue'),
       },
       {
-        path: '/line/Richmenu/create',
+        path: '/line/richmenu/create',
         name: 'LineRichmenuCreate',
         component: () => import('@/views/Line/Richmenu/Create/index.vue'),
+      },
+      {
+        path: '/line/message',
+        name: 'LineMessage',
+        component: () => import('@/views/Line/Message/List/index.vue'),
+      },
+      {
+        path: '/line/message/create',
+        name: 'LineMessageCreate',
+        component: () => import('@/views/Line/Message/Create/index.vue'),
       },
     ],
   },
