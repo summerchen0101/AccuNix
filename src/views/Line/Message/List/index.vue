@@ -1,4 +1,4 @@
-<template lang="">
+<template>
   <div class="p-3">
     <div class="flex gap-2 items-center">
       <div class="text-xl text-gray-600 tracking-wider py-3">訊息列表</div>

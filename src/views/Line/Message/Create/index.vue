@@ -30,20 +30,35 @@
         <el-button class="mt-6">加入常用訊息</el-button>
       </div>
       <div class="flex-1">
-        <div class="flex items-center gap-2 relative">
-          <div class="bg-gray-100 w-10 h-10 rounded-full"></div>
-          <div class="text-sm text-gray-700">{{ nickname }}</div>
-          <i class="fas fa-pen text-sm cursor-pointer" @click="isShowNicknameEditor = true"></i>
-          <NicknameSetter v-model:visible="isShowNicknameEditor" v-model:name="nickname" />
+        <div>
+          <el-form :form="form" label-position="top">
+            <el-form-item>
+              <div class="flex items-center gap-2 relative mb-4">
+                <div class="bg-gray-100 w-10 h-10 rounded-full"></div>
+                <div class="text-sm text-gray-700">{{ nickname }}</div>
+                <i class="fas fa-pen text-sm cursor-pointer" @click="isShowNicknameEditor = true"></i>
+                <NicknameSetter v-model:visible="isShowNicknameEditor" v-model:name="nickname" />
+              </div>
+            </el-form-item>
+            <el-form-item>
+              <template #label>
+                <div class="flex items-end justify-between">
+                  輸入文字 <MessageParams :params="{ name: '用戶名稱' }" />
+                </div>
+              </template>
+              <el-input type="textarea" :rows="3" v-model="form.message" />
+            </el-form-item>
+          </el-form>
         </div>
       </div>
     </div>
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, ref, watchEffect } from 'vue'
+import { defineComponent, reactive, ref, watchEffect } from 'vue'
 import MsgTypeSelector from './components/MsgTypeSelector.vue'
 import NicknameSetter from './components/NicknameSetter.vue'
+import MessageParams from './components/MessageParams.vue'
 
 export default defineComponent({
   setup() {
@@ -51,12 +66,13 @@ export default defineComponent({
     const isShowMsgTypeSelector = ref(false)
     const isShowNicknameEditor = ref(false)
     const nickname = ref('Summer')
+    const form = reactive({ message: '' })
     watchEffect(() => {
       console.log(msgType.value)
     })
-    return { msgType, isShowMsgTypeSelector, isShowNicknameEditor, nickname }
+    return { msgType, isShowMsgTypeSelector, isShowNicknameEditor, nickname, form }
   },
-  components: { MsgTypeSelector, NicknameSetter },
+  components: { MsgTypeSelector, NicknameSetter, MessageParams },
 })
 </script>
 <style></style>
