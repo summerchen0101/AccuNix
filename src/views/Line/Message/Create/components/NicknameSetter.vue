@@ -1,5 +1,5 @@
 <template>
-  <div v-if="visible" class="absolute top-0 left-0 ml-36 w-72">
+  <div v-if="visible" class="absolute top-0 left-0 ml-36 w-72 z-10">
     <div class="fixed top-0 left-0 w-full h-full" @click="onCancel"></div>
     <div class="bg-white border border-gray-50 shadow-lg p-5">
       <div class="mb-4">
