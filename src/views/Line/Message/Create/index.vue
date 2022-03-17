@@ -2,7 +2,10 @@
   <div class="p-3">
     <div class="text-xl text-gray-600 tracking-wider py-3">新增訊息</div>
     <div class="bg-white rounded-md shadow-md p-8 flex gap-x-10">
-      <div class="flex flex-col items-center w-[350px]">
+      <div class="flex flex-col items-center w-[300px]">
+        <div class="flex justify-end w-full mb-3">
+          <TestSendBtn />
+        </div>
         <PhoneFrame>
           <div>
             <div class="flex gap-2 items-center mb-3">
@@ -39,6 +42,7 @@
         <el-button class="mt-6">加入常用訊息</el-button>
       </div>
       <div class="flex-1">
+        <h3 class="mb-4">文字</h3>
         <el-form :form="form" label-position="top">
           <el-form-item>
             <div class="flex items-center gap-2 relative mb-4">
@@ -69,6 +73,7 @@ import MessageParams from './components/MessageParams.vue'
 import PhoneFrame from '@/components/PhoneFrame.vue'
 import TextReview from './components/review/TextReview.vue'
 import ReviewWrapper from '@/components/ReviewWrapper.vue'
+import TestSendBtn from './components/TestSendBtn.vue'
 
 export default defineComponent({
   setup() {
@@ -81,7 +86,7 @@ export default defineComponent({
 
     return { msgType, isShowMsgTypeSelector, isShowNicknameEditor, nickname, form, targetIndex }
   },
-  components: { MsgTypeSelector, NicknameSetter, MessageParams, PhoneFrame, TextReview, ReviewWrapper },
+  components: { MsgTypeSelector, NicknameSetter, MessageParams, PhoneFrame, TextReview, ReviewWrapper, TestSendBtn },
 })
 </script>
 <style></style>
