@@ -21,3 +21,8 @@ export enum ProductType {
   LINE = 1,
   FB = 2,
 }
+
+export enum MessageType {
+  Text = 'Text',
+  Button = 'Button',
+}

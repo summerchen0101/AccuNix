@@ -13,9 +13,20 @@
               <div class="text-sm text-gray-700">{{ nickname }}</div>
             </div>
             <div class="ml-6 space-y-2">
-              <ReviewWrapper v-for="i in 3" :key="i" :isActive="targetIndex === i" @click="targetIndex = i">
-                <TextReview text="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Blanditiis excepturi"
-              /></ReviewWrapper>
+              <ReviewWrapper
+                v-for="(msg, i) in messages"
+                :key="i"
+                :isActive="targetIndex === i"
+                @click="targetIndex = i"
+              >
+                <TextReview v-if="msg.type === MessageType.Text" :content="msg.content" />
+                <BtnReview
+                  v-if="msg.type === MessageType.Button"
+                  :title="msg.title"
+                  :content="msg.content"
+                  :btns="msg.btns"
+                />
+              </ReviewWrapper>
             </div>
           </div>
           <div class="border-t border-gray-400 relative mt-8">
@@ -74,6 +85,22 @@ import PhoneFrame from '@/components/PhoneFrame.vue'
 import TextReview from './components/review/TextReview.vue'
 import ReviewWrapper from '@/components/ReviewWrapper.vue'
 import TestSendBtn from './components/TestSendBtn.vue'
+import BtnReview, { BtnItem } from './components/review/BtnReview.vue'
+import { MessageType } from '@/lib/enum'
+
+export interface TextMsg {
+  type: MessageType.Text
+  content: string
+}
+
+export interface BtnMsg {
+  type: MessageType.Button
+  title: string
+  content: string
+  btns: BtnItem[]
+}
+
+export type MessageItem = TextMsg | BtnMsg
 
 export default defineComponent({
   setup() {
@@ -83,10 +110,31 @@ export default defineComponent({
     const nickname = ref('Summer')
     const form = reactive({ message: '' })
     const targetIndex = ref(0)
+    const messages = reactive<MessageItem[]>([
+      { type: MessageType.Text, content: 'Lorem ipsum dolor sit, dolor, amet consectetur adipisicing' },
+      {
+        type: MessageType.Button,
+        title: '測試的標題',
+        content: 'Lorem ipsum dolor sit, dolor, amet consectetur adipisicing',
+        btns: [
+          { label: '立即購買', action: 'Replay' },
+          { label: '開啟網站', action: 'Link' },
+        ],
+      },
+    ])
 
-    return { msgType, isShowMsgTypeSelector, isShowNicknameEditor, nickname, form, targetIndex }
+    return { msgType, isShowMsgTypeSelector, isShowNicknameEditor, nickname, form, targetIndex, messages, MessageType }
   },
-  components: { MsgTypeSelector, NicknameSetter, MessageParams, PhoneFrame, TextReview, ReviewWrapper, TestSendBtn },
+  components: {
+    MsgTypeSelector,
+    NicknameSetter,
+    MessageParams,
+    PhoneFrame,
+    TextReview,
+    ReviewWrapper,
+    TestSendBtn,
+    BtnReview,
+  },
 })
 </script>
 <style></style>

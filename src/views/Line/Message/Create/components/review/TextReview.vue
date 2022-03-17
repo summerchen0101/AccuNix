@@ -1,6 +1,6 @@
 <template>
-  <div>
-    {{ text }}
+  <div class="text-sm">
+    {{ content }}
   </div>
 </template>
 <script lang="ts">
@@ -8,7 +8,7 @@ import { defineComponent } from 'vue'
 
 export default defineComponent({
   props: {
-    text: String,
+    content: String,
   },
   setup(props) {
     return {}
