@@ -29,27 +29,8 @@
               </ReviewWrapper>
             </div>
           </div>
-          <div class="border-t border-gray-400 relative mt-8">
-            <div
-              class="
-                fas
-                fa-plus-circle
-                text-gray-400
-                hover:text-primary-400
-                absolute
-                top-0
-                left-0
-                ml-[calc(50%-7px)]
-                -mt-3.5
-                bg-gray-200
-                text-xl
-                cursor-pointer
-              "
-              @click="isShowMsgTypeSelector = true"
-            ></div>
-          </div>
-          <MsgTypeSelector v-model:visible="isShowMsgTypeSelector" v-model="msgType"
-        /></PhoneFrame>
+          <PhoneCreateBtn />
+        </PhoneFrame>
         <el-button class="mt-6">加入常用訊息</el-button>
       </div>
       <div class="flex-1">
@@ -87,6 +68,7 @@ import ReviewWrapper from '@/components/ReviewWrapper.vue'
 import TestSendBtn from './components/TestSendBtn.vue'
 import BtnReview, { BtnItem } from './components/review/BtnReview.vue'
 import { MessageType } from '@/lib/enum'
+import PhoneCreateBtn from './components/PhoneCreateBtn.vue'
 
 export interface TextMsg {
   type: MessageType.Text
@@ -104,8 +86,6 @@ export type MessageItem = TextMsg | BtnMsg
 
 export default defineComponent({
   setup() {
-    const msgType = ref('')
-    const isShowMsgTypeSelector = ref(false)
     const isShowNicknameEditor = ref(false)
     const nickname = ref('Summer')
     const form = reactive({ message: '' })
@@ -123,10 +103,9 @@ export default defineComponent({
       },
     ])
 
-    return { msgType, isShowMsgTypeSelector, isShowNicknameEditor, nickname, form, targetIndex, messages, MessageType }
+    return { isShowNicknameEditor, nickname, form, targetIndex, messages, MessageType }
   },
   components: {
-    MsgTypeSelector,
     NicknameSetter,
     MessageParams,
     PhoneFrame,
@@ -134,6 +113,7 @@ export default defineComponent({
     ReviewWrapper,
     TestSendBtn,
     BtnReview,
+    PhoneCreateBtn,
   },
 })
 </script>

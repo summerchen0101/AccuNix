@@ -13,6 +13,8 @@
         absolute
         top-0
         left-0
+        mt-32
+        -ml-8
         w-max
         z-10
       "
