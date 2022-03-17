@@ -6,15 +6,17 @@
     >
       <slot></slot>
     </div>
-    <div class="absolute left-0 top-0 -ml-7 space-y-1 hidden group-hover:block">
-      <div class="r-circle">
-        <i class="far fa-arrows"></i>
-      </div>
-      <div class="r-circle">
-        <i class="far fa-copy"></i>
-      </div>
-      <div class="r-circle">
-        <i class="far fa-trash-alt"></i>
+    <div class="absolute -left-7 top-0 hidden group-hover:block pr-1">
+      <div class="space-y-1">
+        <div class="r-circle">
+          <i class="fas fa-arrows-alt"></i>
+        </div>
+        <div class="r-circle">
+          <i class="far fa-copy"></i>
+        </div>
+        <div class="r-circle">
+          <i class="far fa-trash-alt"></i>
+        </div>
       </div>
     </div>
   </div>
