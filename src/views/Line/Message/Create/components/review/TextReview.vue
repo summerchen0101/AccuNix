@@ -4,8 +4,8 @@
   </div>
 </template>
 <script lang="ts">
+import { TextMsg } from '@/service/store/msgStore'
 import { defineComponent, PropType } from 'vue'
-import { TextMsg } from '../../index.vue'
 
 export default defineComponent({
   props: {

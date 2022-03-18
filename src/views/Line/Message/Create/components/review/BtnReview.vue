@@ -10,14 +10,8 @@
   </div>
 </template>
 <script lang="ts">
+import { BtnMsg } from '@/service/store/msgStore'
 import { defineComponent, PropType } from 'vue'
-import { BtnMsg } from '../../index.vue'
-
-export interface BtnItem {
-  label: string
-  action: string
-  message?: string
-}
 
 export default defineComponent({
   props: {

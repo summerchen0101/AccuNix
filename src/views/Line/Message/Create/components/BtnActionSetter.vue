@@ -43,9 +43,9 @@
   </div>
 </template>
 <script lang="ts">
+import { BtnItem } from '@/service/store/msgStore'
 import { number } from '@intlify/core-base'
 import { defineComponent, PropType, reactive, ref, watch, watchEffect } from 'vue'
-import { BtnItem } from './review/BtnReview.vue'
 
 export default defineComponent({
   props: {

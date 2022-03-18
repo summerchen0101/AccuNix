@@ -42,24 +42,11 @@ import { MessageType } from '@/lib/enum'
 import { computed, defineComponent, reactive, ref } from 'vue'
 import TextEditor from './components/editor/TextEditor.vue'
 import PhoneCreateBtn from './components/PhoneCreateBtn.vue'
-import BtnReview, { BtnItem } from './components/review/BtnReview.vue'
+import BtnReview from './components/review/BtnReview.vue'
 import TextReview from './components/review/TextReview.vue'
 import TestSendBtn from './components/TestSendBtn.vue'
 import BtnEditor from './components/editor/BtnEditor.vue'
-
-export interface TextMsg {
-  type: MessageType.Text
-  content: string
-}
-
-export interface BtnMsg {
-  type: MessageType.Button
-  title: string
-  content: string
-  btns: BtnItem[]
-}
-
-export type MessageItem = TextMsg | BtnMsg
+import { MessageItem } from '@/service/store/msgStore'
 
 export default defineComponent({
   setup() {

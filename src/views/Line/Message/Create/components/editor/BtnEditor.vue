@@ -53,7 +53,7 @@ import { defineComponent, reactive, ref } from 'vue'
 import NicknameSetter from '../NicknameSetter.vue'
 import MessageParams from '../MessageParams.vue'
 import BtnActionSetter from '../BtnActionSetter.vue'
-import { BtnItem } from '../review/BtnReview.vue'
+import { BtnItem } from '@/service/store/msgStore'
 
 export default defineComponent({
   setup(props) {
