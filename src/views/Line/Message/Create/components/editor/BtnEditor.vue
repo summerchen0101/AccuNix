@@ -33,7 +33,13 @@
         </el-form-item>
         <el-form-item>
           <div class="space-y-3">
-            <el-button class="w-full">按鈕一</el-button>
+            <BtnActionSetter
+              v-for="(_, i) in btns"
+              :key="i"
+              v-model:btn="btns[i]"
+              :index="i"
+              v-model:activeIndex="activeBtn"
+            />
             <el-button class="w-full border-dashed text-gray-400">增加按鈕</el-button>
           </div>
         </el-form-item>
@@ -45,16 +51,23 @@
 import { defineComponent, reactive, ref } from 'vue'
 import NicknameSetter from '../NicknameSetter.vue'
 import MessageParams from '../MessageParams.vue'
+import BtnActionSetter from '../BtnActionSetter.vue'
+import { BtnItem } from '../review/BtnReview.vue'
 
 export default defineComponent({
   setup(props) {
     const isShowNicknameEditor = ref(false)
     const nickname = ref('Summer')
     const form = reactive({ reivewText: '', title: '', content: '' })
+    const activeBtn = ref<number | null>(null)
+    const btns = ref<BtnItem[]>([
+      { label: '按鈕1', action: '' },
+      { label: '按鈕2', action: '' },
+    ])
 
-    return { isShowNicknameEditor, nickname, form }
+    return { isShowNicknameEditor, nickname, form, activeBtn, btns }
   },
-  components: { NicknameSetter, MessageParams },
+  components: { NicknameSetter, MessageParams, BtnActionSetter },
 })
 </script>
 <style></style>
