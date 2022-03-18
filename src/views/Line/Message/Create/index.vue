@@ -19,13 +19,8 @@
                 :isActive="targetIndex === i"
                 @click="targetIndex = i"
               >
-                <TextReview v-if="msg.type === MessageType.Text" :content="msg.content" />
-                <BtnReview
-                  v-if="msg.type === MessageType.Button"
-                  :title="msg.title"
-                  :content="msg.content"
-                  :btns="msg.btns"
-                />
+                <TextReview v-if="msg.type === MessageType.Text" :data="msg" />
+                <BtnReview v-if="msg.type === MessageType.Button" :data="msg" />
               </ReviewWrapper>
             </div>
           </div>
