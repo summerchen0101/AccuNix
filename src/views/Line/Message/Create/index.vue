@@ -34,41 +34,23 @@
         <el-button class="mt-6">加入常用訊息</el-button>
       </div>
       <div class="flex-1">
-        <h3 class="mb-4">文字</h3>
-        <el-form :form="form" label-position="top">
-          <el-form-item>
-            <div class="flex items-center gap-2 relative mb-4">
-              <div class="bg-gray-100 w-10 h-10 rounded-full"></div>
-              <div class="text-sm text-gray-700">{{ nickname }}</div>
-              <i class="fas fa-pen text-sm cursor-pointer" @click="isShowNicknameEditor = true"></i>
-              <NicknameSetter v-model:visible="isShowNicknameEditor" v-model:name="nickname" />
-            </div>
-          </el-form-item>
-          <el-form-item>
-            <template #label>
-              <div class="flex items-end justify-between">
-                輸入文字 <MessageParams :params="{ name: '用戶名稱' }" />
-              </div>
-            </template>
-            <el-input type="textarea" :rows="3" v-model="form.message" />
-          </el-form-item>
-        </el-form>
+        <TextEditor v-if="targetMsg.type === MessageType.Text" />
+        <BtnEditor v-if="targetMsg.type === MessageType.Button" />
       </div>
     </div>
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, reactive, ref, watchEffect } from 'vue'
-import MsgTypeSelector from './components/MsgTypeSelector.vue'
-import NicknameSetter from './components/NicknameSetter.vue'
-import MessageParams from './components/MessageParams.vue'
 import PhoneFrame from '@/components/PhoneFrame.vue'
-import TextReview from './components/review/TextReview.vue'
 import ReviewWrapper from '@/components/ReviewWrapper.vue'
-import TestSendBtn from './components/TestSendBtn.vue'
-import BtnReview, { BtnItem } from './components/review/BtnReview.vue'
 import { MessageType } from '@/lib/enum'
+import { computed, defineComponent, reactive, ref } from 'vue'
+import TextEditor from './components/editor/TextEditor.vue'
 import PhoneCreateBtn from './components/PhoneCreateBtn.vue'
+import BtnReview, { BtnItem } from './components/review/BtnReview.vue'
+import TextReview from './components/review/TextReview.vue'
+import TestSendBtn from './components/TestSendBtn.vue'
+import BtnEditor from './components/editor/BtnEditor.vue'
 
 export interface TextMsg {
   type: MessageType.Text
@@ -86,9 +68,7 @@ export type MessageItem = TextMsg | BtnMsg
 
 export default defineComponent({
   setup() {
-    const isShowNicknameEditor = ref(false)
     const nickname = ref('Summer')
-    const form = reactive({ message: '' })
     const targetIndex = ref(0)
     const messages = reactive<MessageItem[]>([
       { type: MessageType.Text, content: 'Lorem ipsum dolor sit, dolor, amet consectetur adipisicing' },
@@ -103,17 +83,19 @@ export default defineComponent({
       },
     ])
 
-    return { isShowNicknameEditor, nickname, form, targetIndex, messages, MessageType }
+    const targetMsg = computed(() => messages[targetIndex.value])
+
+    return { nickname, targetIndex, messages, MessageType, targetMsg }
   },
   components: {
-    NicknameSetter,
-    MessageParams,
     PhoneFrame,
     TextReview,
     ReviewWrapper,
     TestSendBtn,
     BtnReview,
     PhoneCreateBtn,
+    TextEditor,
+    BtnEditor,
   },
 })
 </script>
