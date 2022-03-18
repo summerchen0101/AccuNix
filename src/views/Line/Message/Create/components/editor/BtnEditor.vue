@@ -36,11 +36,12 @@
             <BtnActionSetter
               v-for="(_, i) in btns"
               :key="i"
-              v-model:btn="btns[i]"
+              v-model:data="btns[i]"
               :index="i"
               v-model:activeIndex="activeBtn"
+              @remove="btns.splice(i, 1)"
             />
-            <el-button class="w-full border-dashed text-gray-400">增加按鈕</el-button>
+            <el-button class="w-full border-dashed text-gray-400" @click="addBtn"> 增加按鈕 </el-button>
           </div>
         </el-form-item>
       </div>
@@ -65,7 +66,11 @@ export default defineComponent({
       { label: '按鈕2', action: '' },
     ])
 
-    return { isShowNicknameEditor, nickname, form, activeBtn, btns }
+    const addBtn = () => {
+      btns.value.push({ label: `按鈕${btns.value.length + 1}`, action: '' })
+    }
+
+    return { isShowNicknameEditor, nickname, form, activeBtn, btns, addBtn }
   },
   components: { NicknameSetter, MessageParams, BtnActionSetter },
 })

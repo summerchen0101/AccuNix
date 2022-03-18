@@ -15,6 +15,7 @@ import { defineComponent, PropType } from 'vue'
 export interface BtnItem {
   label: string
   action: string
+  message?: string
 }
 
 export default defineComponent({

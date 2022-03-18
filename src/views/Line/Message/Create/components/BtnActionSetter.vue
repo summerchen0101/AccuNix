@@ -5,7 +5,7 @@
       class="w-full relative z-40"
       @click="$emit('update:activeIndex', index)"
     >
-      {{ form.name }}
+      {{ form.label }}
     </el-button>
 
     <div :class="activeIndex === index ? 'block' : 'hidden'">
@@ -27,13 +27,16 @@
         "
       >
         <el-form-item label="按鈕名稱">
-          <el-input v-model="form.name" placeholder="請輸入按鈕名稱" />
+          <el-input v-model="form.label" placeholder="請輸入按鈕名稱" />
         </el-form-item>
         <el-form-item label="動作">
           <el-select v-model="form.action" placeholder="請選擇動作" class="w-full" />
         </el-form-item>
         <el-form-item label="回覆文字">
-          <el-input v-model="form.replayContent" placeholder="請輸入回覆文字" />
+          <el-input v-model="form.message" placeholder="請輸入回覆文字" />
+        </el-form-item>
+        <el-form-item>
+          <el-button type="danger" @click="$emit('remove')" class="w-full">刪除</el-button>
         </el-form-item>
       </div>
     </div>
@@ -41,7 +44,7 @@
 </template>
 <script lang="ts">
 import { number } from '@intlify/core-base'
-import { defineComponent, PropType, reactive, ref } from 'vue'
+import { defineComponent, PropType, reactive, ref, watch, watchEffect } from 'vue'
 import { BtnItem } from './review/BtnReview.vue'
 
 export default defineComponent({
@@ -50,13 +53,25 @@ export default defineComponent({
     data: Object as PropType<BtnItem>,
     activeIndex: Number,
   },
-  emits: ['update:activeIndex', 'update:data'],
+  emits: ['update:activeIndex', 'update:data', 'remove'],
   setup(props, { emit }) {
-    const form = reactive({ name: '按鈕', action: '', replayContent: '' })
+    const form = reactive<BtnItem>({ label: '按鈕', action: '', message: '' })
     // const showSetter = ref(false)
+
+    watchEffect(() => {
+      form.label = props.data.label
+      form.action = props.data.action
+    })
+    watch(
+      () => props.activeIndex,
+      (val) => {
+        if (val !== props.index) {
+          emit('update:data', form)
+        }
+      },
+    )
     const onClose = () => {
       emit('update:activeIndex', null)
-      emit('update:data', form)
     }
     return { form, onClose }
   },
