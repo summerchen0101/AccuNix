@@ -55,7 +55,7 @@ export const useMsgStore = defineStore('msgStore', () => {
     msgs[index] = newMsg
   }
 
-  const createMsg = function (type: MessageType) {
+  const createMsg = (type: MessageType) => {
     switch (type) {
       case MessageType.Text:
         msgs.push({ type, content: '內容在這裡' })
@@ -76,6 +76,10 @@ export const useMsgStore = defineStore('msgStore', () => {
     targetIndex.value = msgs.length - 1
   }
 
+  const copyMsg = (msg: MessageItem, index: number) => {
+    msgs.splice(index, 0, msg)
+  }
+
   const removeMsg = (index: number) => {
     msgs.splice(index, 1)
     const newIndex = index - 1
@@ -89,5 +93,6 @@ export const useMsgStore = defineStore('msgStore', () => {
     createMsg,
     updateMsg,
     removeMsg,
+    copyMsg,
   }
 })

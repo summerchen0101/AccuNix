@@ -20,6 +20,7 @@
                 :isActive="targetIndex === i"
                 @select="targetIndex = i"
                 @remove="handleRemove(i)"
+                @copy="handleCopy(msg, i)"
               >
                 <TextReview v-if="msg.type === MessageType.Text" :data="msg" />
                 <BtnReview v-if="msg.type === MessageType.Button" :data="msg" />
@@ -69,6 +70,7 @@ export default defineComponent({
       targetMsg,
       handleCreate: msgStore.createMsg,
       handleRemove: msgStore.removeMsg,
+      handleCopy: msgStore.copyMsg,
     }
   },
   components: {

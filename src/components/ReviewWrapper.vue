@@ -12,7 +12,7 @@
         <div class="r-circle">
           <i class="fas fa-arrows-alt"></i>
         </div>
-        <div class="r-circle">
+        <div class="r-circle" @click="$emit('copy')">
           <i class="far fa-copy"></i>
         </div>
         <div class="r-circle" @click="$emit('remove')">
@@ -29,7 +29,7 @@ export default defineComponent({
   props: {
     isActive: Boolean,
   },
-  emits: ['remove', 'select'],
+  emits: ['remove', 'select', 'copy'],
   setup(props) {
     return {}
   },
