@@ -18,16 +18,18 @@
       @click="isShowMsgTypeSelector = true"
     ></div>
   </div>
-  <MsgTypeSelector v-model:visible="isShowMsgTypeSelector" v-model="msgType" />
+  <MsgTypeSelector v-model:visible="isShowMsgTypeSelector" @select="(val) => $emit('select', val)" />
 </template>
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
 import MsgTypeSelector from './MsgTypeSelector.vue'
 
 export default defineComponent({
-  setup(props) {
+  emits: ['select'],
+  setup(props, { emit }) {
     const msgType = ref('')
     const isShowMsgTypeSelector = ref(false)
+
     return { msgType, isShowMsgTypeSelector }
   },
   components: { MsgTypeSelector },

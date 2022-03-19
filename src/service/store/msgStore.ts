@@ -55,10 +55,39 @@ export const useMsgStore = defineStore('msgStore', () => {
     msgs[index] = newMsg
   }
 
+  const createMsg = function (type: MessageType) {
+    switch (type) {
+      case MessageType.Text:
+        msgs.push({ type, content: '內容在這裡' })
+        break
+      case MessageType.Button:
+        msgs.push({
+          type,
+          reviewMsg: '',
+          title: '標題在這裡',
+          content: '內容在這裡',
+          btns: [{ label: '按鈕1', action: '', message: '' }],
+        })
+        break
+
+      default:
+        break
+    }
+    targetIndex.value = msgs.length - 1
+  }
+
+  const removeMsg = (index: number) => {
+    msgs.splice(index, 1)
+    const newIndex = index - 1
+    targetIndex.value = newIndex >= 0 ? newIndex : 0
+  }
+
   return {
     msgs,
     targetIndex,
     targetMsg,
+    createMsg,
     updateMsg,
+    removeMsg,
   }
 })

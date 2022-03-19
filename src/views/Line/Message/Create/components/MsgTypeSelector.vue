@@ -1,9 +1,9 @@
 <template>
-  <div v-if="visible" class="">
-    <div class="fixed top-0 left-0 w-full h-full" @click="$emit('update:visible', false)"></div>
+  <div v-if="visible">
+    <div class="fixed top-0 left-0 w-full h-full z-50" @click="$emit('update:visible', false)"></div>
     <div
       class="
-        border border-primary-300
+        border border-gray-300
         rounded-xl
         p-6
         grid grid-cols-5
@@ -16,7 +16,7 @@
         mt-32
         -ml-8
         w-max
-        z-10
+        z-50
       "
     >
       <div
@@ -63,6 +63,7 @@
   </div>
 </template>
 <script lang="ts">
+import { MessageType } from '@/lib/enum'
 import { defineComponent } from 'vue'
 
 interface Option<T> {
@@ -75,33 +76,32 @@ interface Option<T> {
 export default defineComponent({
   props: {
     visible: Boolean,
-    modelValue: String,
   },
-  emits: ['update:visible', 'update:modelValue'],
+  emits: ['update:visible', 'select'],
   setup(props, { emit }) {
-    const options: Option<string>[] = [
-      { label: '文字', value: 'text', icon: 'fas fa-users' },
-      { label: '按鈕', value: 'btn', icon: 'fas fa-home' },
-      { label: '圖片', value: 'img', icon: 'fas fa-users' },
-      { label: '影片', value: 'video', icon: 'fas fa-users' },
-      { label: '圖卡樣板', value: 'card', icon: 'fas fa-users' },
-      { label: '圖片樣板', value: 'img-tpl', icon: 'fas fa-users' },
-      { label: '進階圖片', value: 'advance-img', icon: 'fas fa-users' },
-      { label: '進階影片', value: 'advance-video', icon: 'fas fa-users' },
+    const options: Option<MessageType>[] = [
+      { label: '文字', value: MessageType.Text, icon: 'fas fa-users' },
+      { label: '按鈕', value: MessageType.Button, icon: 'fas fa-home' },
+      { label: '圖片', value: MessageType.Image, icon: 'fas fa-users' },
+      { label: '影片', value: MessageType.Video, icon: 'fas fa-users' },
+      { label: '圖卡樣板', value: MessageType.Card, icon: 'fas fa-users' },
+      { label: '圖片樣板', value: MessageType.ImageTpl, icon: 'fas fa-users' },
+      { label: '進階圖片', value: MessageType.RichImage, icon: 'fas fa-users' },
+      { label: '進階影片', value: MessageType.RichVideo, icon: 'fas fa-users' },
       {
         label: 'Flex Message',
-        value: 'flex',
+        value: MessageType.Flex,
         icon: 'fas fa-users',
         subs: [
-          { label: '按鈕', value: 'flex-btn' },
-          { label: '圖卡樣板', value: 'flex-card' },
-          { label: '圖片樣板', value: 'flex-img-tpl' },
-          { label: '自定義', value: 'flex-custom' },
+          { label: '按鈕', value: MessageType.FlexBtn },
+          { label: '圖卡樣板', value: MessageType.FlexCard },
+          { label: '圖片樣板', value: MessageType.FlexImage },
+          { label: '自定義', value: MessageType.FlexCustom },
         ],
       },
     ]
     const handleSelected = (val: string) => {
-      emit('update:modelValue', val)
+      emit('select', val)
       emit('update:visible', false)
     }
     return { options, handleSelected }

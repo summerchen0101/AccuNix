@@ -6,6 +6,7 @@
         <div class="flex justify-end w-full mb-3">
           <TestSendBtn />
         </div>
+
         <PhoneFrame>
           <div>
             <div class="flex gap-2 items-center mb-3">
@@ -17,21 +18,24 @@
                 v-for="(msg, i) in msgs"
                 :key="i"
                 :isActive="targetIndex === i"
-                @click="targetIndex = i"
-                @remove="msgs.splice(i, 1)"
+                @select="targetIndex = i"
+                @remove="handleRemove(i)"
               >
                 <TextReview v-if="msg.type === MessageType.Text" :data="msg" />
                 <BtnReview v-if="msg.type === MessageType.Button" :data="msg" />
               </ReviewWrapper>
             </div>
           </div>
-          <PhoneCreateBtn />
+
+          <PhoneCreateBtn @select="handleCreate" />
         </PhoneFrame>
         <el-button class="mt-6">加入常用訊息</el-button>
       </div>
       <div class="flex-1">
-        <TextEditor v-if="targetMsg.type === MessageType.Text" v-model:targetMsg="targetMsg" />
-        <BtnEditor v-if="targetMsg.type === MessageType.Button" v-model:targetMsg="targetMsg" />
+        <template v-if="targetMsg">
+          <TextEditor v-if="targetMsg.type === MessageType.Text" v-model:targetMsg="targetMsg" />
+          <BtnEditor v-if="targetMsg.type === MessageType.Button" v-model:targetMsg="targetMsg" />
+        </template>
       </div>
     </div>
   </div>
@@ -42,7 +46,7 @@ import ReviewWrapper from '@/components/ReviewWrapper.vue'
 import { MessageType } from '@/lib/enum'
 import { useMsgStore } from '@/service/store/msgStore'
 import { storeToRefs } from 'pinia'
-import { computed, defineComponent, ref, toRefs } from 'vue'
+import { computed, defineComponent, getCurrentInstance, ref, toRefs, watch, watchEffect } from 'vue'
 import BtnEditor from './components/editor/BtnEditor.vue'
 import TextEditor from './components/editor/TextEditor.vue'
 import PhoneCreateBtn from './components/PhoneCreateBtn.vue'
@@ -53,9 +57,19 @@ import TestSendBtn from './components/TestSendBtn.vue'
 export default defineComponent({
   setup() {
     const nickname = ref('Summer')
+    const msgStore = useMsgStore()
+
     const { msgs, targetIndex, targetMsg } = storeToRefs(useMsgStore())
 
-    return { nickname, targetIndex, msgs, MessageType, targetMsg }
+    return {
+      nickname,
+      targetIndex,
+      msgs,
+      MessageType,
+      targetMsg,
+      handleCreate: msgStore.createMsg,
+      handleRemove: msgStore.removeMsg,
+    }
   },
   components: {
     PhoneFrame,

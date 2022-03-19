@@ -3,6 +3,7 @@
     <div
       class="border-2 border-gray-300 bg-white rounded-md p-3 text-gray-500 cursor-pointer"
       :class="isActive ? 'border-primary-300' : ''"
+      @click="$emit('select')"
     >
       <slot></slot>
     </div>
@@ -28,7 +29,7 @@ export default defineComponent({
   props: {
     isActive: Boolean,
   },
-  emits: ['remove'],
+  emits: ['remove', 'select'],
   setup(props) {
     return {}
   },
