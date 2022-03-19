@@ -13,12 +13,7 @@
               <div class="text-sm text-gray-700">{{ nickname }}</div>
             </div>
             <div class="ml-6 space-y-2">
-              <ReviewWrapper
-                v-for="(msg, i) in messages"
-                :key="i"
-                :isActive="targetIndex === i"
-                @click="targetIndex = i"
-              >
+              <ReviewWrapper v-for="(msg, i) in msgs" :key="i" :isActive="targetIndex === i" @click="targetIndex = i">
                 <TextReview v-if="msg.type === MessageType.Text" :data="msg" />
                 <BtnReview v-if="msg.type === MessageType.Button" :data="msg" />
               </ReviewWrapper>
@@ -39,35 +34,22 @@
 import PhoneFrame from '@/components/PhoneFrame.vue'
 import ReviewWrapper from '@/components/ReviewWrapper.vue'
 import { MessageType } from '@/lib/enum'
-import { computed, defineComponent, reactive, ref } from 'vue'
+import { useMsgStore } from '@/service/store/msgStore'
+import { storeToRefs } from 'pinia'
+import { computed, defineComponent, ref, toRefs } from 'vue'
+import BtnEditor from './components/editor/BtnEditor.vue'
 import TextEditor from './components/editor/TextEditor.vue'
 import PhoneCreateBtn from './components/PhoneCreateBtn.vue'
 import BtnReview from './components/review/BtnReview.vue'
 import TextReview from './components/review/TextReview.vue'
 import TestSendBtn from './components/TestSendBtn.vue'
-import BtnEditor from './components/editor/BtnEditor.vue'
-import { MessageItem } from '@/service/store/msgStore'
 
 export default defineComponent({
   setup() {
     const nickname = ref('Summer')
-    const targetIndex = ref(0)
-    const messages = reactive<MessageItem[]>([
-      { type: MessageType.Text, content: 'Lorem ipsum dolor sit, dolor, amet consectetur adipisicing' },
-      {
-        type: MessageType.Button,
-        title: '測試的標題',
-        content: 'Lorem ipsum dolor sit, dolor, amet consectetur adipisicing',
-        btns: [
-          { label: '立即購買', action: 'Replay' },
-          { label: '開啟網站', action: 'Link' },
-        ],
-      },
-    ])
+    const { msgs, targetIndex, targetMsg } = storeToRefs(useMsgStore())
 
-    const targetMsg = computed(() => messages[targetIndex.value])
-
-    return { nickname, targetIndex, messages, MessageType, targetMsg }
+    return { nickname, targetIndex, msgs, MessageType, targetMsg }
   },
   components: {
     PhoneFrame,

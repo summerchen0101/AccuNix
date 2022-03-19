@@ -1,6 +1,6 @@
 <template>
   <h3 class="mb-4">按鈕</h3>
-  <el-form :form="form" label-position="top">
+  <el-form v-if="targetMsg.type === MessageType.Button" :form="targetMsg" label-position="top">
     <el-form-item>
       <div class="flex items-center gap-2 relative mb-4">
         <div class="bg-gray-100 w-10 h-10 rounded-full"></div>
@@ -16,30 +16,30 @@
         </div>
       </template>
       <MessageParams :params="{ name: '用戶名稱' }">
-        <el-input v-model="form.reivewText" placeholder="請輸入預覽文字" />
+        <el-input v-model="targetMsg.reviewMsg" placeholder="請輸入預覽文字" />
       </MessageParams>
     </el-form-item>
     <el-form-item label="編輯按鈕" class="mt-6">
       <div class="bg-white rounded-md shadow-md border border-gray-100 p-4 space-y-3 w-72">
         <el-form-item>
           <MessageParams :params="{ name: '用戶名稱' }">
-            <el-input v-model="form.title" placeholder="請輸入標題" />
+            <el-input v-model="targetMsg.title" placeholder="請輸入標題" />
           </MessageParams>
         </el-form-item>
         <el-form-item>
           <MessageParams :params="{ name: '用戶名稱' }">
-            <el-input type="textarea" v-model="form.content" placeholder="請輸入內容" :rows="4" />
+            <el-input type="textarea" v-model="targetMsg.content" placeholder="請輸入內容" :rows="4" />
           </MessageParams>
         </el-form-item>
         <el-form-item>
           <div class="space-y-3">
             <BtnActionSetter
-              v-for="(_, i) in btns"
+              v-for="(_, i) in targetMsg.btns"
               :key="i"
-              v-model:data="btns[i]"
+              v-model:data="targetMsg.btns[i]"
               :index="i"
               v-model:activeIndex="activeBtn"
-              @remove="btns.splice(i, 1)"
+              @remove="targetMsg.btns.splice(i, 1)"
             />
             <el-button class="w-full border-dashed text-gray-400" @click="addBtn"> 增加按鈕 </el-button>
           </div>
@@ -49,28 +49,31 @@
   </el-form>
 </template>
 <script lang="ts">
-import { defineComponent, reactive, ref } from 'vue'
+import { defineComponent, PropType, reactive, ref, watch, watchEffect } from 'vue'
 import NicknameSetter from '../NicknameSetter.vue'
 import MessageParams from '../MessageParams.vue'
 import BtnActionSetter from '../BtnActionSetter.vue'
-import { BtnItem } from '@/service/store/msgStore'
+import { BtnItem, BtnMsg, useMsgStore } from '@/service/store/msgStore'
+import { storeToRefs } from 'pinia'
+import { MessageType } from '@/lib/enum'
 
 export default defineComponent({
+  props: {
+    data: Object as PropType<BtnMsg>,
+  },
   setup(props) {
     const isShowNicknameEditor = ref(false)
     const nickname = ref('Summer')
-    const form = reactive({ reivewText: '', title: '', content: '' })
+
+    const { targetMsg } = storeToRefs(useMsgStore())
+
     const activeBtn = ref<number | null>(null)
-    const btns = ref<BtnItem[]>([
-      { label: '按鈕1', action: '' },
-      { label: '按鈕2', action: '' },
-    ])
 
     const addBtn = () => {
-      btns.value.push({ label: `按鈕${btns.value.length + 1}`, action: '' })
+      // form.btns.push({ label: `按鈕${form.btns.length + 1}`, action: '' })
     }
 
-    return { isShowNicknameEditor, nickname, form, activeBtn, btns, addBtn }
+    return { isShowNicknameEditor, nickname, activeBtn, addBtn, targetMsg, MessageType }
   },
   components: { NicknameSetter, MessageParams, BtnActionSetter },
 })

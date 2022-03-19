@@ -1,7 +1,7 @@
 <template>
   <div class="relative">
     <el-button
-      :type="activeIndex === index && 'primary'"
+      :type="activeIndex === index ? 'primary' : undefined"
       class="w-full relative z-40"
       @click="$emit('update:activeIndex', index)"
     >

@@ -7,10 +7,8 @@
     >
       <Header />
       <div class="bg-gray-100 flex-1 overflow-y-auto static">
-        <transition name="fade">
-          <router-view v-if="botStore.botApiPath"></router-view>
-          <Spinner v-else />
-        </transition>
+        <router-view v-if="botStore.botApiPath"></router-view>
+        <Spinner v-else />
       </div>
     </div>
   </div>
