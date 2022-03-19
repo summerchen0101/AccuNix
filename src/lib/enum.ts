@@ -25,4 +25,15 @@ export enum ProductType {
 export enum MessageType {
   Text = 'Text',
   Button = 'Button',
+  Image = 'Image',
+  Video = 'Video',
+  Card = 'Card',
+  ImageTpl = 'ImageTpl',
+  RichImage = 'RichImage',
+  RichVideo = 'RichVideo',
+  Flex = 'Flex',
+  FlexBtn = 'FlexBtn',
+  FlexCard = 'FlexCard',
+  FlexImage = 'FlexImage',
+  FlexCustom = 'FlexCustom',
 }
