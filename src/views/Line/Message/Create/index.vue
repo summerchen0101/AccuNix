@@ -13,7 +13,13 @@
               <div class="text-sm text-gray-700">{{ nickname }}</div>
             </div>
             <div class="ml-6 space-y-2">
-              <ReviewWrapper v-for="(msg, i) in msgs" :key="i" :isActive="targetIndex === i" @click="targetIndex = i">
+              <ReviewWrapper
+                v-for="(msg, i) in msgs"
+                :key="i"
+                :isActive="targetIndex === i"
+                @click="targetIndex = i"
+                @remove="msgs.splice(i, 1)"
+              >
                 <TextReview v-if="msg.type === MessageType.Text" :data="msg" />
                 <BtnReview v-if="msg.type === MessageType.Button" :data="msg" />
               </ReviewWrapper>

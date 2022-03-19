@@ -14,7 +14,7 @@
         <div class="r-circle">
           <i class="far fa-copy"></i>
         </div>
-        <div class="r-circle">
+        <div class="r-circle" @click="$emit('remove')">
           <i class="far fa-trash-alt"></i>
         </div>
       </div>
@@ -28,6 +28,7 @@ export default defineComponent({
   props: {
     isActive: Boolean,
   },
+  emits: ['remove'],
   setup(props) {
     return {}
   },
