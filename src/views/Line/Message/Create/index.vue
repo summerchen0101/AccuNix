@@ -24,8 +24,8 @@
         <el-button class="mt-6">加入常用訊息</el-button>
       </div>
       <div class="flex-1">
-        <TextEditor v-if="targetMsg.type === MessageType.Text" />
-        <BtnEditor v-if="targetMsg.type === MessageType.Button" />
+        <TextEditor v-if="targetMsg.type === MessageType.Text" v-model:targetMsg="targetMsg" />
+        <BtnEditor v-if="targetMsg.type === MessageType.Button" v-model:targetMsg="targetMsg" />
       </div>
     </div>
   </div>
