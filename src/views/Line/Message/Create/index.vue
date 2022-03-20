@@ -1,8 +1,8 @@
 <template>
   <div class="p-3">
     <div class="text-xl text-gray-600 tracking-wider py-3">新增訊息</div>
-    <div class="bg-white rounded-md shadow-md p-8 flex gap-x-10">
-      <div class="flex flex-col items-center w-[300px]">
+    <div class="bg-white rounded-md shadow-md p-8 flex gap-x-16">
+      <div class="flex flex-col items-center w-[350px]">
         <div class="flex justify-end w-full mb-3">
           <TestSendBtn />
         </div>
@@ -30,7 +30,7 @@
 
           <PhoneCreateBtn @select="handleCreate" />
         </PhoneFrame>
-        <el-button class="mt-6">加入常用訊息</el-button>
+        <el-button class="mt-4">加入常用訊息</el-button>
       </div>
       <div class="flex-1">
         <template v-if="targetMsg">
