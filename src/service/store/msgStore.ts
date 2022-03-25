@@ -1,4 +1,4 @@
-import { MessageType } from '@/lib/enum'
+import { MessageBtnAction, MessageType } from '@/lib/enum'
 import { defineStore } from 'pinia'
 import { computed, reactive, ref } from 'vue'
 
@@ -13,11 +13,21 @@ export interface TextMsg {
   content: string
 }
 
-export interface BtnItem {
-  label: string
-  action: string
-  message?: string
+export interface BtnAction_Text {
+  action: MessageBtnAction.Text
+  message: string
 }
+export interface BtnAction_URL {
+  action: MessageBtnAction.URL
+  url: string
+  tags: number[]
+}
+
+export type BtnAction = BtnAction_Text | BtnAction_URL
+
+export type BtnItem = {
+  label: string
+} & BtnAction
 
 export interface BtnMsg {
   type: MessageType.Button
@@ -38,8 +48,8 @@ export const useMsgStore = defineStore('msgStore', () => {
       reviewMsg: '',
       content: 'Lorem ipsum dolor sit, dolor, amet consectetur adipisicing',
       btns: [
-        { label: '立即購買', action: 'Replay' },
-        { label: '開啟網站', action: 'Link' },
+        { label: '立即購買', action: MessageBtnAction.Text, message: '' },
+        { label: '開啟網站', action: MessageBtnAction.URL, url: '', tags: [] },
       ],
     },
   ])
@@ -66,7 +76,7 @@ export const useMsgStore = defineStore('msgStore', () => {
           reviewMsg: '',
           title: '標題在這裡',
           content: '內容在這裡',
-          btns: [{ label: '按鈕1', action: '', message: '' }],
+          btns: [{ label: '按鈕1', action: MessageBtnAction.Text, message: '' }],
         })
         break
 

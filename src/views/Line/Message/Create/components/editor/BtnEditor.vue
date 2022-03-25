@@ -57,7 +57,7 @@
   </el-form>
 </template>
 <script lang="ts">
-import { MessageType } from '@/lib/enum'
+import { MessageBtnAction, MessageType } from '@/lib/enum'
 import { BtnMsg } from '@/service/store/msgStore'
 import { computed, defineComponent, PropType, ref } from 'vue'
 import BtnActionSetter from '../BtnActionSetter.vue'
@@ -80,7 +80,11 @@ export default defineComponent({
     const activeBtnIndex = ref<number | null>(null)
 
     const addBtn = () => {
-      form.value.btns.push({ label: `按鈕${form.value.btns.length + 1}`, action: '' })
+      form.value.btns.push({
+        label: `按鈕${form.value.btns.length + 1}`,
+        action: MessageBtnAction.Text,
+        message: '',
+      })
       activeBtnIndex.value = form.value.btns.length - 1
     }
 

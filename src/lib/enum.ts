@@ -37,3 +37,16 @@ export enum MessageType {
   FlexImage = 'FlexImage',
   FlexCustom = 'FlexCustom',
 }
+
+export enum MessageBtnAction {
+  Text = 'Text',
+  URL = 'URL',
+  CommonMessage = 'CommonMessage',
+  RichMenu = 'RichMenu',
+  Share = 'Share',
+  OpenCoupon = 'OpenCoupon',
+  SendCoupon = 'SendCoupon',
+  SendCoupons = 'SendCoupons',
+  MemberCenter = 'MemberCenter',
+  ECard = 'ECard',
+}

@@ -1,4 +1,4 @@
-import { ProductType } from './enum'
+import { MessageBtnAction, ProductType } from './enum'
 
 export const orderTypeMap = {
   descending: 'desc',
@@ -15,4 +15,9 @@ export const productIconMap = {
 export const productApiPathMap = {
   [ProductType.LINE]: 'LINEBot',
   [ProductType.FB]: 'FBMessengerBot',
+}
+
+export const msgBtnActionMap = {
+  [MessageBtnAction.Text]: '回覆文字',
+  [MessageBtnAction.URL]: '開啟連結',
 }
