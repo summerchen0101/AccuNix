@@ -55,6 +55,7 @@
       </div>
     </el-form-item>
   </el-form>
+  <TagCreatePopup />
 </template>
 <script lang="ts">
 import { MessageBtnAction, MessageType } from '@/lib/enum'
@@ -63,6 +64,7 @@ import { computed, defineComponent, PropType, ref } from 'vue'
 import BtnActionSetter from '../BtnActionSetter.vue'
 import MessageParams from '../MessageParams.vue'
 import NicknameSetter from '../NicknameSetter.vue'
+import TagCreatePopup from '../TagCreatePopup.vue'
 
 export default defineComponent({
   props: {
@@ -90,7 +92,7 @@ export default defineComponent({
 
     return { isShowNicknameEditor, nickname, activeBtnIndex, addBtn, form, MessageType }
   },
-  components: { NicknameSetter, MessageParams, BtnActionSetter },
+  components: { NicknameSetter, MessageParams, BtnActionSetter, TagCreatePopup },
 })
 </script>
 <style></style>

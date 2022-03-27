@@ -1,3 +1,4 @@
+import { TagOpt } from './../service/api/useTagOpts'
 import { inject, provide, ref } from 'vue'
 
 export interface BreadcrumbItem {
@@ -11,6 +12,8 @@ const isShowTagPopup = ref(false)
 const state = {
   breadcrumb: ref<BreadcrumbItem[]>([]),
   isShowTagPopup,
+  tagOpts: ref<TagOpt[]>([]),
+  tagTotal: ref<number>(0),
 }
 
 export const useGlobalProvider = function () {

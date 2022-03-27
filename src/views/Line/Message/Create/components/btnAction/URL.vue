@@ -33,7 +33,7 @@ export default defineComponent({
       get: () => props.data,
       set: (data) => emit('update:data', data),
     })
-    const { list: tagOpts, fetchData: fetchTagOpts } = useTagOpts()
+    const { tagOpts, fetchData: fetchTagOpts } = useTagOpts()
 
     onMounted(() => {
       fetchTagOpts()

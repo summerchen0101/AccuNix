@@ -72,7 +72,7 @@ export default defineComponent({
 
     const { doUpload, isLoading: isUploadLoading } = useImgUpload()
     const { doCreate, isLoading } = useInboxCreate()
-    const { fetchData: fetchTagOpts, list: tagOpts, isLoading: isTagOptsLoading } = useTagOpts()
+    const { fetchData: fetchTagOpts, tagOpts, isLoading: isTagOptsLoading } = useTagOpts()
 
     onMounted(() => {
       activePage.value = 'richmenu'
