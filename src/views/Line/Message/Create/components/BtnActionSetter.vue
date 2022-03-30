@@ -29,18 +29,11 @@ export default defineComponent({
   },
   emits: ['update:btn', 'remove', 'close'],
   setup(props, { emit }) {
-    // const form = reactive<BtnItem>({ label: '按鈕', action: '', message: '' })
-    // const showSetter = ref(false)
     const form = computed<BtnItem>({
       get: () => props.btn,
       set: (data) => emit('update:btn', data),
     })
-    // const actionComp = computed(() => {
-    //   const compMap = {
-    //     [MessageBtnAction.Text]: Text,
-    //   }
-    //   return
-    // })
+
     return { form, msgBtnActionMap }
   },
   components: { ...BtnActionComps },

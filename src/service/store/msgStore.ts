@@ -75,7 +75,19 @@ export type BtnAction = BtnAction_Text | BtnAction_URL
 
 export type BtnItem = {
   label: string
-} & BtnAction
+  action: MessageBtnAction
+  campaignGuid?: string
+  couponGuid?: string
+  richmenuGuid?: string
+  messageGuid?: string
+  openWallet?: boolean
+  openMemberCenter?: boolean
+  original?: boolean
+  uri?: string
+  text?: string
+  cardGuid?: string
+  tags?: string[]
+}
 
 export interface BtnMsg {
   type: MessageType.Button
