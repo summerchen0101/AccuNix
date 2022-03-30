@@ -6,10 +6,7 @@
     </template>
     <el-input v-model="form.uri" placeholder="請輸入URL" />
     <div class="text-primary-400 leading-relaxed mt-2">
-      <span class="outline-btn">
-        <i class="fas fa-copy mr-1"></i>
-        <span v-text="`{{user_token}}`"></span>
-      </span>
+      <CopyTextBtn text="{{user_token}}" />
       在連結網頁中識別好友id
     </div>
   </el-form-item>
@@ -22,6 +19,7 @@ import useTagOpts from '@/service/api/useTagOpts'
 import { BtnAction_URL } from '@/service/store/msgStore'
 import { computed, defineComponent, onMounted, PropType, watchEffect } from 'vue'
 import TagSelector from '../TagSelector.vue'
+import CopyTextBtn from '@/components/CopyTextBtn.vue'
 
 export default defineComponent({
   props: {
@@ -40,7 +38,7 @@ export default defineComponent({
     })
     return { form, tagOpts }
   },
-  components: { TagSelector },
+  components: { TagSelector, CopyTextBtn },
 })
 </script>
 <style lang=""></style>
