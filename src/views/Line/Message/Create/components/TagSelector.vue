@@ -22,7 +22,7 @@ import { defineComponent, onMounted, PropType, ref } from 'vue'
 export default defineComponent({
   props: {
     modelValue: {
-      type: Array as PropType<number[]>,
+      type: Array as PropType<string[]>,
       default: () => [],
     },
   },

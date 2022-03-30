@@ -49,4 +49,5 @@ export enum MessageBtnAction {
   SendCoupons = 'SendCoupons',
   MemberCenter = 'MemberCenter',
   ECard = 'ECard',
+  Keyword = 'Keyword',
 }

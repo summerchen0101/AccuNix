@@ -85,7 +85,7 @@ export default defineComponent({
       form.value.btns.push({
         label: `按鈕${form.value.btns.length + 1}`,
         action: MessageBtnAction.Text,
-        message: '',
+        text: '',
       })
       activeBtnIndex.value = form.value.btns.length - 1
     }

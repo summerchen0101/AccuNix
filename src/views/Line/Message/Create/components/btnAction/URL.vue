@@ -4,7 +4,7 @@
       按鈕開啟連結
       <el-checkbox class="float-right text-red-400" label="取消轉跳頁" />
     </template>
-    <el-input v-model="form.url" placeholder="請輸入URL" />
+    <el-input v-model="form.uri" placeholder="請輸入URL" />
     <div class="text-primary-400 leading-relaxed mt-2">
       <span class="outline-btn">
         <i class="fas fa-copy mr-1"></i>

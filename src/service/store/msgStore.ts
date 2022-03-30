@@ -15,12 +15,50 @@ export interface TextMsg {
 
 export interface BtnAction_Text {
   action: MessageBtnAction.Text
-  message: string
+  text: string
 }
 export interface BtnAction_URL {
   action: MessageBtnAction.URL
-  url: string
-  tags: number[]
+  original: boolean
+  uri: string
+  tags: string[]
+}
+export interface BtnAction_Share {
+  action: MessageBtnAction.Share
+  original: boolean
+  uri: string
+}
+export interface BtnAction_CommonMsg {
+  action: MessageBtnAction.CommonMessage
+  messageGuid: string
+  tags: string[]
+}
+export interface BtnAction_Richmenu {
+  action: MessageBtnAction.RichMenu
+  richmenuGuid: string
+  tags: string[]
+}
+export interface BtnAction_Keyword {
+  action: MessageBtnAction.Keyword
+  text: string
+}
+export interface BtnAction_OpenCoupon {
+  action: MessageBtnAction.OpenCoupon
+  openWallet: boolean
+  original: boolean
+  uri: string
+}
+export interface BtnAction_SendCoupon {
+  action: MessageBtnAction.SendCoupon
+  campaignGuid: string
+  original: boolean
+  uri: string
+}
+export interface BtnAction_MemberCenter {
+  action: MessageBtnAction.MemberCenter
+  openMemberCenter: boolean
+  original: boolean
+  uri: string
 }
 
 export type BtnAction = BtnAction_Text | BtnAction_URL
@@ -48,8 +86,8 @@ export const useMsgStore = defineStore('msgStore', () => {
       reviewMsg: '',
       content: 'Lorem ipsum dolor sit, dolor, amet consectetur adipisicing',
       btns: [
-        { label: '立即購買', action: MessageBtnAction.Text, message: '' },
-        { label: '開啟網站', action: MessageBtnAction.URL, url: '', tags: [] },
+        { label: '立即購買', action: MessageBtnAction.Text, text: '' },
+        { label: '開啟網站', action: MessageBtnAction.URL, original: false, uri: '', tags: [] },
       ],
     },
   ])
@@ -76,7 +114,7 @@ export const useMsgStore = defineStore('msgStore', () => {
           reviewMsg: '',
           title: '標題在這裡',
           content: '內容在這裡',
-          btns: [{ label: '按鈕1', action: MessageBtnAction.Text, message: '' }],
+          btns: [{ label: '按鈕1', action: MessageBtnAction.Text, text: '' }],
         })
         break
 

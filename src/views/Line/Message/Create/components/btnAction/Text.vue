@@ -1,6 +1,6 @@
 <template>
   <el-form-item label="回覆文字">
-    <el-input v-model="form.message" placeholder="請輸入回覆文字" />
+    <el-input v-model="form.text" placeholder="請輸入回覆文字" />
   </el-form-item>
 </template>
 <script lang="ts">
