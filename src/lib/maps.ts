@@ -21,7 +21,7 @@ export const msgBtnActionMap = {
   [MessageBtnAction.Text]: '回覆文字',
   [MessageBtnAction.URL]: '開啟連結',
   [MessageBtnAction.CommonMessage]: '發送常用訊息',
-  [MessageBtnAction.RichMenu]: '切換主選單',
+  [MessageBtnAction.Richmenu]: '切換主選單',
   [MessageBtnAction.Share]: '分享好友',
   [MessageBtnAction.OpenCoupon]: '開啟票券券夾',
   [MessageBtnAction.SendCoupon]: '發送票券活動',

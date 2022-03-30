@@ -42,7 +42,7 @@ export enum MessageBtnAction {
   Text = 'Text',
   URL = 'URL',
   CommonMessage = 'CommonMessage',
-  RichMenu = 'RichMenu',
+  Richmenu = 'Richmenu',
   Share = 'Share',
   OpenCoupon = 'OpenCoupon',
   SendCoupon = 'SendCoupon',

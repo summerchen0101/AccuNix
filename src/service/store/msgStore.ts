@@ -28,13 +28,13 @@ export interface BtnAction_Share {
   original: boolean
   uri: string
 }
-export interface BtnAction_CommonMsg {
+export interface BtnAction_CommonMessage {
   action: MessageBtnAction.CommonMessage
   messageGuid: string
   tags: string[]
 }
 export interface BtnAction_Richmenu {
-  action: MessageBtnAction.RichMenu
+  action: MessageBtnAction.Richmenu
   richmenuGuid: string
   tags: string[]
 }
@@ -54,11 +54,21 @@ export interface BtnAction_SendCoupon {
   original: boolean
   uri: string
 }
+export interface BtnAction_SendCoupons {
+  action: MessageBtnAction.SendCoupons
+  couponGuid: string
+  original: boolean
+  uri: string
+}
 export interface BtnAction_MemberCenter {
   action: MessageBtnAction.MemberCenter
   openMemberCenter: boolean
   original: boolean
   uri: string
+}
+export interface BtnAction_ECard {
+  action: MessageBtnAction.ECard
+  cardGuid: string
 }
 
 export type BtnAction = BtnAction_Text | BtnAction_URL
