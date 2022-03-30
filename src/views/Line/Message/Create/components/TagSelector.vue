@@ -5,10 +5,13 @@
     placeholder="請選擇標籤"
     class="w-full"
     multiple
+    :multiple-limit="max"
   >
     <el-option v-for="opt in tagOpts" :key="opt.id" :label="opt.name" :value="opt.id" />
   </el-select>
-  <p class="text-primary-400 leading-normal mt-1">標籤設定最多3個，目前額度：0/3</p>
+  <p class="text-primary-400 leading-normal mt-1">
+    標籤設定最多{{ max }}個，目前額度：{{ modelValue.length }}/{{ max }}
+  </p>
   <div class="outline-btn" @click="isShowTagPopup = true">
     <i class="fas fa-plus mr-1"></i>
     <span>新增標籤</span>
@@ -24,6 +27,10 @@ export default defineComponent({
     modelValue: {
       type: Array as PropType<string[]>,
       default: () => [],
+    },
+    max: {
+      type: Number,
+      default: 3,
     },
   },
   emits: ['update:modelValue'],
