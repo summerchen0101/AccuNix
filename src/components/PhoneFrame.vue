@@ -7,7 +7,12 @@
       <!-- 瀏海 -->
       <div class="bg-white rounded-lg h-8 w-36 absolute top-0 left-[calc(145px-4.5rem)] z-10 -mt-3"></div>
     </div>
-    <div class="absolute top-0 left-0 ml-9 mt-12"><slot></slot></div>
+    <div class="absolute top-0 left-0 ml-5 mt-12 h-[540px] w-[290px]">
+      <div class="overflow-y-auto h-full w-full px-4">
+        <slot></slot>
+        <!-- <div class="w-[600px] h-[300px] bg-red-500/50 absolute top-0 left-0"></div> -->
+      </div>
+    </div>
   </div>
 </template>
 <script lang="ts">
