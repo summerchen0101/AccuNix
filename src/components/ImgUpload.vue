@@ -4,6 +4,7 @@
     :show-file-list="false"
     :on-success="onSuccess"
     :before-upload="beforeUpload"
+    accept=".png, .jpg, .jpeg"
   >
     <LoadingCover :is-loading="isLoading">
       <div class="bg-white rounded-md shadow-md p-3 h-64 w-64 border border-gray-200">
