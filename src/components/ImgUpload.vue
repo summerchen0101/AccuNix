@@ -7,11 +7,30 @@
     accept=".png, .jpg, .jpeg"
   >
     <LoadingCover :is-loading="isLoading">
-      <div class="bg-white rounded-md shadow-md p-3 h-64 w-64 border border-gray-200">
+      <div class="bg-white rounded-md shadow-md p-3 h-64 w-64 border border-gray-200 group">
         <div class="border border-dashed border-gray-300 h-full w-full grid place-items-center rounded-md relative">
           <img v-if="modelValue" :src="modelValue" class="absolute top-0 left-0 w-full h-full object-cover" alt="" />
           <div>
             <i class="far fa-image fa-3x text-gray-300"></i>
+          </div>
+          <div
+            class="
+              absolute
+              top-0
+              left-0
+              bg-black/40
+              h-full
+              w-full
+              hidden
+              group-hover:grid
+              place-items-center
+              text-white
+            "
+          >
+            <div class="flex items-center gap-1">
+              <i class="fas fa-arrow-circle-up text-xl"></i>
+              重新上傳
+            </div>
           </div>
         </div>
       </div>
