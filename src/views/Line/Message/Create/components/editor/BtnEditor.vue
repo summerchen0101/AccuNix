@@ -33,10 +33,10 @@
         </el-form-item>
         <el-form-item>
           <div class="space-y-3">
-            <div class="relative" v-for="(btn, i) in form.btns" :key="i">
+            <div class="" v-for="(btn, i) in form.btns" :key="i">
               <el-button
                 :type="activeBtnIndex === i ? 'primary' : undefined"
-                class="w-full relative z-40"
+                class="w-full"
                 @click="activeBtnIndex = i"
               >
                 {{ btn.label }}
@@ -49,7 +49,7 @@
               />
             </div>
 
-            <el-button class="w-full border-dashed text-gray-400 relative z-50" @click="addBtn"> 增加按鈕 </el-button>
+            <el-button class="w-full border-dashed text-gray-400 relative z-10" @click="addBtn"> 增加按鈕 </el-button>
           </div>
         </el-form-item>
       </div>

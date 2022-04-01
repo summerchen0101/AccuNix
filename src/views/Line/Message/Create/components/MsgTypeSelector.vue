@@ -1,6 +1,6 @@
 <template>
   <div v-if="visible">
-    <div class="fixed top-0 left-0 w-full h-full z-50" @click="$emit('update:visible', false)"></div>
+    <div class="fixed top-0 left-0 w-full h-full z-10" @click="$emit('update:visible', false)"></div>
     <div
       class="
         border border-gray-300
@@ -16,7 +16,7 @@
         mt-32
         -ml-8
         w-max
-        z-50
+        z-10
       "
     >
       <div

@@ -1,5 +1,5 @@
 <template>
-  <div class="relative h-[580px] w-[290px] m-5 mb-12 scale-75 md:scale-100 origin-top-left">
+  <div class="relative h-[580px] w-[290px] m-5 mb-12 origin-top-left z-50">
     <!-- 底圖 -->
     <div class="bg-gray-200 w-full h-full p-4 m-5"></div>
     <!-- 外框 -->
