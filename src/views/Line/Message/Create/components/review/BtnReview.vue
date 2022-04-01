@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="review-wrapper text-sm" :class="{ active }">
     <h5 class="text-sm mb-1">{{ data.title }}</h5>
     <div class="text-sm text-gray-400">{{ data.content }}</div>
     <div class="space-y-1.5 mt-3">
@@ -15,6 +15,7 @@ import { defineComponent, PropType } from 'vue'
 
 export default defineComponent({
   props: {
+    active: Boolean,
     data: Object as PropType<BtnMsg>,
   },
   setup(props) {

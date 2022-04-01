@@ -1,10 +1,7 @@
 import Axios, { AxiosRequestConfig, Method } from 'axios'
 import store from 'store2'
 
-const useRequest = async function <
-  R extends { message?: string } = {},
-  B extends {} = {},
->({
+const useRequest = async function <R extends { message?: string } = {}, B extends {} = {}>({
   method,
   url,
   data,

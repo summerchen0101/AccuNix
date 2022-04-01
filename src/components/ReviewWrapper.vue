@@ -1,10 +1,6 @@
 <template>
   <div class="relative group">
-    <div
-      class="border-2 border-gray-300 bg-white rounded-md p-3 text-gray-500 cursor-pointer"
-      :class="isActive ? 'border-primary-300' : ''"
-      @click="$emit('select')"
-    >
+    <div @click="$emit('select')">
       <slot></slot>
     </div>
     <div class="absolute -left-7 top-0 hidden group-hover:block pr-1">
@@ -26,9 +22,6 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  props: {
-    isActive: Boolean,
-  },
   emits: ['remove', 'select', 'copy'],
   setup(props) {
     return {}

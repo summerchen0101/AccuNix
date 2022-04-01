@@ -1,5 +1,5 @@
 <template>
-  <div class="text-sm">
+  <div class="review-wrapper text-sm" :class="{ active }">
     {{ data.content }}
   </div>
 </template>
@@ -9,11 +9,13 @@ import { defineComponent, PropType } from 'vue'
 
 export default defineComponent({
   props: {
+    active: Boolean,
     data: {
       type: Object as PropType<TextMsg>,
       default: () => ({ content: '' }),
     },
   },
+  emits: ['select'],
   setup(props) {
     return {}
   },

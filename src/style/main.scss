@@ -183,3 +183,11 @@ body,
 .outline-btn {
   @apply border rounded-md border-primary-400 px-2 py-0.5 cursor-pointer text-primary-400 leading-relaxed inline-block
 }
+
+
+.review-wrapper {
+  @apply border-2 border-gray-300 bg-white rounded-md p-3 text-gray-500 cursor-pointer;
+  &.active {
+    @apply border-primary-300;
+  }
+}

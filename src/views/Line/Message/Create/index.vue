@@ -17,13 +17,11 @@
               <ReviewWrapper
                 v-for="(msg, i) in msgs"
                 :key="i"
-                :isActive="targetIndex === i"
-                @select="targetIndex = i"
                 @remove="handleRemove(i)"
                 @copy="handleCopy(msg, i)"
+                @select="targetIndex = i"
               >
-                <TextReview v-if="msg.type === MessageType.Text" :data="msg" />
-                <BtnReview v-if="msg.type === MessageType.Button" :data="msg" />
+                <component :is="reiviewMap[msg.type]" :active="targetIndex === i" :data="msg" />
               </ReviewWrapper>
             </div>
           </div>
@@ -36,6 +34,7 @@
         <template v-if="targetMsg">
           <TextEditor v-if="targetMsg.type === MessageType.Text" v-model:targetMsg="targetMsg" />
           <BtnEditor v-if="targetMsg.type === MessageType.Button" v-model:targetMsg="targetMsg" />
+          <ImgEditor v-if="targetMsg.type === MessageType.Image" v-model:targetMsg="targetMsg" />
         </template>
       </div>
     </div>
@@ -50,9 +49,11 @@ import { storeToRefs } from 'pinia'
 import { defineComponent, ref } from 'vue'
 import BtnEditor from './components/editor/BtnEditor.vue'
 import TextEditor from './components/editor/TextEditor.vue'
+import ImgEditor from './components/editor/ImgEditor.vue'
 import PhoneCreateBtn from './components/PhoneCreateBtn.vue'
 import BtnReview from './components/review/BtnReview.vue'
 import TextReview from './components/review/TextReview.vue'
+import ImgReview from './components/review/ImgReview.vue'
 import TestSendBtn from './components/TestSendBtn.vue'
 
 export default defineComponent({
@@ -61,6 +62,12 @@ export default defineComponent({
     const msgStore = useMsgStore()
 
     const { msgs, targetIndex, targetMsg } = storeToRefs(useMsgStore())
+
+    const reiviewMap = {
+      [MessageType.Text]: TextReview,
+      [MessageType.Button]: BtnReview,
+      [MessageType.Image]: ImgReview,
+    }
 
     return {
       nickname,
@@ -71,10 +78,12 @@ export default defineComponent({
       handleCreate: msgStore.createMsg,
       handleRemove: msgStore.removeMsg,
       handleCopy: msgStore.copyMsg,
+      reiviewMap,
     }
   },
   components: {
     PhoneFrame,
+    ImgReview,
     TextReview,
     ReviewWrapper,
     TestSendBtn,
@@ -82,6 +91,7 @@ export default defineComponent({
     PhoneCreateBtn,
     TextEditor,
     BtnEditor,
+    ImgEditor,
   },
 })
 </script>

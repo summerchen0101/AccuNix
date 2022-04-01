@@ -13,6 +13,11 @@ export interface TextMsg {
   content: string
 }
 
+export interface ImgMsg {
+  type: MessageType.Image
+  img: string
+}
+
 export interface BtnAction_Text {
   action: MessageBtnAction.Text
   text: string
@@ -97,7 +102,7 @@ export interface BtnMsg {
   btns: BtnItem[]
 }
 
-export type MessageItem = TextMsg | BtnMsg
+export type MessageItem = TextMsg | BtnMsg | ImgMsg
 
 export const useMsgStore = defineStore('msgStore', () => {
   const msgs = reactive<MessageItem[]>([
@@ -137,6 +142,12 @@ export const useMsgStore = defineStore('msgStore', () => {
           title: '標題在這裡',
           content: '內容在這裡',
           btns: [{ label: '按鈕1', action: MessageBtnAction.Text, text: '' }],
+        })
+        break
+      case MessageType.Image:
+        msgs.push({
+          type,
+          img: null,
         })
         break
 
