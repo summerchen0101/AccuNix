@@ -9,9 +9,9 @@
         <img :src="bot?.picture" class="rounded-full w-7 h-7 inline-block mr-2" alt="" />
         {{ bot?.name }}
       </div>
-      <i class="fas fa-angle-down px-2"></i>
+      <i class="fas fa-angle-down px-2" :hidden="isMiniSidebar"></i>
     </div>
-    <div class="absolute top-0 mt-11 w-[calc(100%-15px)] pt-1" :hidden="!isOpen">
+    <div class="absolute top-0 mt-11 w-48 pt-1" :hidden="!isOpen">
       <div class="bg-white rounded text-sm space-y-1.5 shadow-lg py-3">
         <div
           v-for="t in botList"
@@ -32,16 +32,18 @@ import { useBotStore } from '@/service/store/botStore'
 import { storeToRefs } from 'pinia'
 import { defineComponent, ref } from 'vue'
 import DropBg from '@/components/DropBg.vue'
+import { useLayoutState } from '@/providers/layoutProvider'
 
 export default defineComponent({
   setup(props) {
     const isOpen = ref(false)
+    const { isMiniSidebar } = useLayoutState()
     const { botList, bot } = storeToRefs(useBotStore())
     const onChange = (newBot: Bot) => {
       bot.value = newBot
       isOpen.value = false
     }
-    return { botList, bot, isOpen, onChange }
+    return { botList, bot, isOpen, onChange, isMiniSidebar }
   },
   components: { DropBg },
 })
