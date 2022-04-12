@@ -17,6 +17,11 @@ export interface ImgMsg {
   type: MessageType.Image
   img: string
 }
+export interface VideoMsg {
+  type: MessageType.Video
+  video: string
+  img: string
+}
 
 export interface BtnAction_Text {
   action: MessageBtnAction.Text
@@ -76,7 +81,7 @@ export interface BtnAction_ECard {
   cardGuid: string
 }
 
-export type BtnAction = BtnAction_Text | BtnAction_URL
+export type BtnAction = BtnAction_Text | BtnAction_URL | VideoMsg
 
 export type BtnItem = {
   label: string
@@ -102,7 +107,7 @@ export interface BtnMsg {
   btns: BtnItem[]
 }
 
-export type MessageItem = TextMsg | BtnMsg | ImgMsg
+export type MessageItem = TextMsg | BtnMsg | ImgMsg | VideoMsg
 
 export const useMsgStore = defineStore('msgStore', () => {
   const msgs = reactive<MessageItem[]>([
@@ -147,7 +152,14 @@ export const useMsgStore = defineStore('msgStore', () => {
       case MessageType.Image:
         msgs.push({
           type,
-          img: null,
+          img: '',
+        })
+        break
+      case MessageType.Video:
+        msgs.push({
+          type,
+          video: '',
+          img: '',
         })
         break
 

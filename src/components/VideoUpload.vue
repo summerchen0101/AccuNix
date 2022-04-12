@@ -4,17 +4,24 @@
     :show-file-list="false"
     :on-success="onSuccess"
     :before-upload="beforeUpload"
-    accept=".png, .jpg, .jpeg"
+    accept=".mp4"
     action=""
   >
     <LoadingCover :is-loading="isLoading">
       <div class="bg-white rounded-md shadow-md p-3 h-64 w-64 border border-gray-200 group" :style="{ width, height }">
         <div class="border border-dashed border-gray-300 h-full w-full grid place-items-center rounded-md relative">
-          <img v-if="modelValue" :src="modelValue" class="absolute top-0 left-0 w-full h-full object-cover" alt="" />
+          <video
+            v-if="video"
+            :src="video"
+            class="absolute top-0 left-0 w-full h-full object-cover"
+            alt=""
+            controls
+            autoplay
+          ></video>
           <div>
-            <i class="far fa-image fa-3x text-gray-300"></i>
+            <i class="fas fa-film fa-3x text-gray-300"></i>
           </div>
-          <div
+          <!-- <div
             class="
               absolute
               top-0
@@ -32,7 +39,7 @@
               <i class="fas fa-arrow-circle-up text-xl"></i>
               重新上傳
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </LoadingCover>
@@ -42,19 +49,19 @@
 import useAlert from '@/hooks/useAlert'
 import useImgUpload from '@/service/api/useImgUpload'
 import { useBotStore } from '@/service/store/botStore'
-import { getImageInfo } from '@/utils'
-import { number } from '@intlify/core-base'
 import { ElUploadRequestOptions } from 'element-plus/lib/el-upload/src/upload.type'
-import { defineComponent, ref } from 'vue'
+import VideoSnapshot from 'video-snapshot'
+import { defineComponent } from 'vue'
 import LoadingCover from './LoadingCover.vue'
 
 export default defineComponent({
   props: {
-    modelValue: String,
+    video: String,
     width: [Number, String],
     height: [Number, String],
+    snapshot: String,
   },
-  emits: ['update:modelValue'],
+  emits: ['update:snapshot', 'update:video'],
   setup(props, { emit }) {
     const botStore = useBotStore()
     const alert = useAlert()
@@ -66,13 +73,11 @@ export default defineComponent({
     }
     const { doUpload, isLoading } = useImgUpload()
     const handleFileChanged = async ({ file }: ElUploadRequestOptions) => {
-      const imgInfo = await getImageInfo(file)
-      const result = imgInfo.width < 1040 && imgInfo.height < 1040
-      if (!result) {
-        alert(`圖片尺寸錯誤`, 'error')
-        return
-      }
-      emit('update:modelValue', imgInfo.src)
+      let blobURL = URL.createObjectURL(file)
+      emit('update:video', blobURL)
+      const snapshoter = new VideoSnapshot(file)
+      const previewSrc = await snapshoter.takeSnapshot()
+      emit('update:snapshot', previewSrc)
     }
     const handleFileUpload = async ({ file }: ElUploadRequestOptions) => {
       const formData = new FormData()
@@ -82,7 +87,7 @@ export default defineComponent({
       formData.append('file', file)
       const res = await doUpload(formData)
       if (res.path) {
-        emit('update:modelValue', res.path)
+        emit('update:snapshot', res.path)
       }
     }
     return {

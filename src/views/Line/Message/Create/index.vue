@@ -31,11 +31,7 @@
         <el-button class="mt-4">加入常用訊息</el-button>
       </div>
       <div class="flex-1">
-        <template v-if="targetMsg">
-          <TextEditor v-if="targetMsg.type === MessageType.Text" v-model:targetMsg="targetMsg" />
-          <BtnEditor v-if="targetMsg.type === MessageType.Button" v-model:targetMsg="targetMsg" />
-          <ImgEditor v-if="targetMsg.type === MessageType.Image" v-model:targetMsg="targetMsg" />
-        </template>
+        <component :is="editorMap[targetMsg.type]" v-model:targetMsg="targetMsg" />
       </div>
     </div>
   </div>
@@ -55,6 +51,8 @@ import BtnReview from './components/review/BtnReview.vue'
 import TextReview from './components/review/TextReview.vue'
 import ImgReview from './components/review/ImgReview.vue'
 import TestSendBtn from './components/TestSendBtn.vue'
+import VideoReview from './components/review/VideoReview.vue'
+import VideoEditor from './components/editor/VideoEditor.vue'
 
 export default defineComponent({
   setup() {
@@ -67,6 +65,13 @@ export default defineComponent({
       [MessageType.Text]: TextReview,
       [MessageType.Button]: BtnReview,
       [MessageType.Image]: ImgReview,
+      [MessageType.Video]: VideoReview,
+    }
+    const editorMap = {
+      [MessageType.Text]: TextEditor,
+      [MessageType.Button]: BtnEditor,
+      [MessageType.Image]: ImgEditor,
+      [MessageType.Video]: VideoEditor,
     }
 
     return {
@@ -79,6 +84,7 @@ export default defineComponent({
       handleRemove: msgStore.removeMsg,
       handleCopy: msgStore.copyMsg,
       reiviewMap,
+      editorMap,
     }
   },
   components: {

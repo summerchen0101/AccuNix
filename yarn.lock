@@ -4050,6 +4050,11 @@ v8-compile-cache@^2.0.3:
   resolved "https://registry.yarnpkg.com/v8-compile-cache/-/v8-compile-cache-2.3.0.tgz#2de19618c66dc247dcfb6f99338035d8245a2cee"
   integrity sha512-l8lCEmLcLYZh4nbunNZvQCJc5pv7+RCwa8q/LdUx8u7lsWvPDKmpodJAJNwkAhJC//dFY48KuIEmjtd4RViDrA==
 
+video-snapshot@^1.0.11:
+  version "1.0.11"
+  resolved "https://registry.yarnpkg.com/video-snapshot/-/video-snapshot-1.0.11.tgz#fa578db764b42e7e6954b93a7ef6b4d8cfee1a34"
+  integrity sha512-YcMrOnfCTr+bB6Vb9j/VLorauGqBDuOiHEbYmDR9xshK5o8TrLRjZIWh1og3Z/luWnh0h31Acar6EOXOSwBGlQ==
+
 vite@^2.4.4:
   version "2.4.4"
   resolved "https://registry.yarnpkg.com/vite/-/vite-2.4.4.tgz#8c402a07ad45f168f6eb5428bead38f3e4363e47"
