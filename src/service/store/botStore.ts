@@ -37,8 +37,8 @@ export const useBotStore = defineStore('botStore', () => {
 
     orgGuid: computed(() => org.value?.GUID),
     botGuid: computed(() => bot.value?.GUID),
-    botType: computed(() => bot.value?.product_type_id),
-    botApiPath: computed(() => (bot.value ? `${productApiPathMap[bot.value.product_type_id]}/${bot.value.GUID}` : '')),
+    botType: computed(() => bot.value?.type),
+    botApiPath: computed(() => (bot.value ? `${productApiPathMap[bot.value.type]}/${bot.value.GUID}` : '')),
 
     gotLoginInfo,
     updateBot,

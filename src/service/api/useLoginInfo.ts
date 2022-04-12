@@ -1,44 +1,50 @@
 import { useApiErrHandler } from '@/hooks/useApiErrHandler'
 import useRequest from '@/hooks/useRequest'
 import { useBotStore } from '@/service/store/botStore'
+import { ResBase } from '@/types'
 import { ref } from 'vue'
 
-export interface LoginInfoRes {
+export interface LoginInfoRes extends ResBase {
   id: number
   name: string
   picture: string
-  organization: Organization
   bots: Bot[]
-  message?: string
+  organization: Organization
+  permissions: { [key: string]: boolean }
 }
 
 export interface Bot {
   id: number
-  product_type_id: number
   name: string
-  description: null | string
-  basic_id?: string
+  description: string
   picture: string
+  basic_id?: string
   GUID: string
-  default_richmenu_id?: number | null
+  default_richmenu_id?: number
   tagCount: number
+  type: number
   tagQuota: number
   followers?: number
   blocks?: number
   isAccessTokenValid: boolean
   webhook?: Webhook
-  permissions: { [key: string]: Permission }
+  menus: Menu[]
   page_id?: string
-  default_persistent_menu_id?: number
+  default_persistent_menu_id?: null | number
   euPrivacyStatus?: boolean
   usersCount?: number
   canUpdateToken?: boolean
   originTokenExpiresAt?: number
 }
 
-export interface Permission {
-  read: boolean
-  edit: boolean
+export interface Menu {
+  name: string
+  permission: null | string
+  target: null | string
+  disabled: boolean
+  href: string
+  icon: null | string
+  children?: Menu[]
 }
 
 export interface Webhook {
@@ -50,7 +56,7 @@ export interface Organization {
   id: number
   name: string
   GUID: string
-  permissions: { [key: string]: Permission }
+  tagQuota: number
 }
 
 function useLoginInfo() {
