@@ -1,7 +1,7 @@
 <template>
-  <div class="review-wrapper w-40 h-40 p-2" :class="{ active }">
+  <div class="review-wrapper w-full h-40 p-2" :class="{ active }">
     <div class="bg-gray-200 h-full w-full">
-      <img v-if="data.img" :src="data.img" alt="" class="h-full w-full object-cover" />
+      <video v-if="data.video" :src="data.video" alt="" class="h-full w-full object-cover" controls autoplay />
     </div>
   </div>
 </template>

@@ -15,14 +15,14 @@
         <span class="text-gray-400 text-xs">(圖片尺寸最大寬1040px x 高1040px, 大小10MB內, 格式JPG、JPEG、PNG)</span>
       </template>
 
-      <ImgUpload v-model="form.img" width="16rem" height="10rem" />
+      <ImgUpload v-model="form.img" width="16rem" height="11rem" />
     </el-form-item>
     <el-form-item>
       <template #label>
         上傳影片
         <span class="text-gray-400 text-xs">(影片大小10MB內, 格式MP4)</span>
       </template>
-      <VideoUpload v-model:video="form.video" v-model:snapshot="form.img" width="16rem" height="10rem" />
+      <VideoUpload v-model:video="form.video" v-model:snapshot="form.img" width="16rem" height="11rem" />
     </el-form-item>
   </el-form>
 </template>
