@@ -2,14 +2,15 @@ import { onMounted, onUnmounted, ref } from 'vue'
 
 export default function (query: string) {
   const isMatch = ref(false)
-  const onResize = () => {
+  const onCheckMediaSize = () => {
     isMatch.value = window.matchMedia(query).matches
   }
   onMounted(() => {
-    window.addEventListener('resize', onResize)
+    onCheckMediaSize()
+    window.addEventListener('resize', onCheckMediaSize)
   })
   onUnmounted(() => {
-    window.removeEventListener('resize', onResize)
+    window.removeEventListener('resize', onCheckMediaSize)
   })
   return { isMatch }
 }

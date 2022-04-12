@@ -1,13 +1,16 @@
 <template>
-  <ul class="breadcrumb text-sm flex items-center text-gray-500">
-    <li :hidden="isMobile">
-      <router-link to="/"><i class="fas fa-home text-base"></i></router-link>
-    </li>
-    <li v-for="route in breadcrumb.filter((t) => (isMobile ? t.mobileShow : true))" :key="route.name">
+  <el-breadcrumb separator="/" class="mb-2">
+    <el-breadcrumb-item :to="{ path: '/' }" class="hidden sm:block">
+      <i class="fas fa-home"></i>
+    </el-breadcrumb-item>
+    <el-breadcrumb-item
+      v-for="route in breadcrumb.filter((t) => (isMobile ? !t.mobileHidden : true))"
+      :key="route.name"
+    >
       <router-link v-if="route.path" :to="{ path: route.path }">{{ route.name }}</router-link>
       <span v-else>{{ route.name }}</span>
-    </li>
-  </ul>
+    </el-breadcrumb-item>
+  </el-breadcrumb>
 </template>
 <script lang="ts">
 import useMediaQuery from '@/hooks/useMediaQuery'

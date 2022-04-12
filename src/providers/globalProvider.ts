@@ -4,7 +4,7 @@ import { inject, provide, ref } from 'vue'
 export interface BreadcrumbItem {
   name: string
   path?: string
-  mobileShow?: boolean
+  mobileHidden?: boolean
 }
 
 const isShowTagPopup = ref(false)
