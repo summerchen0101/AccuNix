@@ -127,7 +127,7 @@ body,
 .breadcrumb > li {
   @apply after:content-['/'] last-of-type:after:content-[''];
   &::after {
-    @apply inline-block px-2.5 text-primary-400;
+    @apply inline-block px-2.5 text-gray-400;
   }
 }
 

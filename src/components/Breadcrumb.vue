@@ -1,5 +1,5 @@
 <template>
-  <ul class="breadcrumb text-sm flex items-center text-primary-100">
+  <ul class="breadcrumb text-sm flex items-center text-gray-500">
     <li :hidden="isMobile">
       <router-link to="/"><i class="fas fa-home text-base"></i></router-link>
     </li>
