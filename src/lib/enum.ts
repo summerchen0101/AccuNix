@@ -51,3 +51,12 @@ export enum MessageBtnAction {
   ECard = 'ECard',
   Keyword = 'Keyword',
 }
+
+export enum ImageRatio {
+  SQUARE = 'square',
+  RECTANGLE = 'rectangle',
+}
+export enum ImageSize {
+  COVER = 'cover',
+  CONTAIN = 'contain',
+}

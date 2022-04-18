@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed h-full w-full top-0 left-0 z-30" @click="$emit('close')"></div>
+  <!-- <div class="fixed h-full w-full top-0 left-0 z-30" @click="$emit('close')"></div> -->
   <div
     class="bg-white rounded-md shadow-md border border-gray-100 p-4 space-y-3 w-72 absolute -top-48 left-full z-40 ml-3"
   >

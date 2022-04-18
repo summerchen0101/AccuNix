@@ -185,7 +185,7 @@ body,
 }
 
 
-.review-wrapper {
+.review-box {
   @apply border-2 border-gray-300 bg-white rounded-md p-3 text-gray-500 cursor-pointer;
   &.active {
     @apply border-primary-300;

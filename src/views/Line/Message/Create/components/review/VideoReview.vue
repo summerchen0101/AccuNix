@@ -1,5 +1,5 @@
 <template>
-  <div class="review-wrapper w-full h-40 p-2" :class="{ active }">
+  <div class="review-box w-full h-40 p-2" :class="{ active }">
     <div class="bg-gray-200 h-full w-full">
       <video v-if="data.video" :src="data.video" alt="" class="h-full w-full object-cover" controls autoplay />
     </div>

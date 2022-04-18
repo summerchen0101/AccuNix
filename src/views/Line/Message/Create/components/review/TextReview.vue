@@ -1,5 +1,5 @@
 <template>
-  <div class="review-wrapper text-sm" :class="{ active }">
+  <div class="review-box text-sm" :class="{ active }">
     {{ data.content }}
   </div>
 </template>

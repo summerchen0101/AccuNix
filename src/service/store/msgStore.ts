@@ -1,4 +1,4 @@
-import { MessageBtnAction, MessageType } from '@/lib/enum'
+import { ImageRatio, ImageSize, MessageBtnAction, MessageType } from '@/lib/enum'
 import { defineStore } from 'pinia'
 import { computed, reactive, ref } from 'vue'
 
@@ -81,7 +81,18 @@ export interface BtnAction_ECard {
   cardGuid: string
 }
 
-export type BtnAction = BtnAction_Text | BtnAction_URL | VideoMsg
+export type BtnAction =
+  | BtnAction_Text
+  | BtnAction_URL
+  | BtnAction_Share
+  | BtnAction_CommonMessage
+  | BtnAction_Richmenu
+  | BtnAction_Keyword
+  | BtnAction_OpenCoupon
+  | BtnAction_SendCoupon
+  | BtnAction_SendCoupons
+  | BtnAction_MemberCenter
+  | BtnAction_ECard
 
 export type BtnItem = {
   label: string
@@ -107,7 +118,22 @@ export interface BtnMsg {
   btns: BtnItem[]
 }
 
-export type MessageItem = TextMsg | BtnMsg | ImgMsg | VideoMsg
+export interface CardItem {
+  img: string
+  title: string
+  content: string
+  btns: BtnItem[]
+}
+export interface CardMsg {
+  type: MessageType.Card
+  reviewMsg: string
+  btnCount: number
+  imageAspectRatio: ImageRatio
+  imageSize: ImageSize
+  cards: CardItem[]
+}
+
+export type MessageItem = TextMsg | BtnMsg | ImgMsg | VideoMsg | CardMsg
 
 export const useMsgStore = defineStore('msgStore', () => {
   const msgs = reactive<MessageItem[]>([
@@ -160,6 +186,23 @@ export const useMsgStore = defineStore('msgStore', () => {
           type,
           video: '',
           img: '',
+        })
+        break
+      case MessageType.Card:
+        msgs.push({
+          type,
+          reviewMsg: '',
+          btnCount: 1,
+          imageAspectRatio: ImageRatio.RECTANGLE,
+          imageSize: ImageSize.COVER,
+          cards: [
+            {
+              title: '',
+              content: '',
+              img: '',
+              btns: [],
+            },
+          ],
         })
         break
 
