@@ -18,9 +18,17 @@
       <template #label>
         <div class="flex items-end">按鈕數量 <span class="text-gray-400 ml-1">(按鈕數量需一致)</span></div>
       </template>
-      <el-radio-group v-model="form.btnCount">
-        <el-radio v-for="n in 3" :key="n" :label="n">{{ n }}</el-radio>
-      </el-radio-group>
+      <div class="flex gap-x-3 mb-4">
+        <div
+          v-for="n in 3"
+          :key="n"
+          class="border rounded-full w-8 h-8 inline-flex items-center justify-center cursor-pointer"
+          @click="form.btnCount = n"
+          :class="{ 'bg-primary-400 text-white border-transparent': n === form.btnCount }"
+        >
+          {{ n }}
+        </div>
+      </div>
     </el-form-item>
     <el-form-item>
       <template #label>
