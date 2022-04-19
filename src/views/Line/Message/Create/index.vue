@@ -54,6 +54,7 @@ import TestSendBtn from './components/TestSendBtn.vue'
 import VideoReview from './components/review/VideoReview.vue'
 import VideoEditor from './components/editor/VideoEditor.vue'
 import CardEditor from './components/editor/CardEditor.vue'
+import CardReview from './components/review/CardReview.vue'
 
 export default defineComponent({
   setup() {
@@ -67,7 +68,7 @@ export default defineComponent({
       [MessageType.Button]: BtnReview,
       [MessageType.Image]: ImgReview,
       [MessageType.Video]: VideoReview,
-      [MessageType.Card]: BtnReview,
+      [MessageType.Card]: CardReview,
     }
     const editorMap = {
       [MessageType.Text]: TextEditor,
